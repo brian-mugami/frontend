@@ -27,6 +27,6 @@ export function tokenLoader(){
 export function checkToken(){
     const token = getAuthToken()
     if (!token){
-        return redirect("/auth")  
+        return redirect("/auth?mode=login")  
     }
 }

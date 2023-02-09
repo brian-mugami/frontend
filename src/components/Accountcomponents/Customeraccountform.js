@@ -3,7 +3,7 @@ import { getAuthToken } from "../../util/Auth";
 
 
 
-function AccountForm({method, title}){
+function CustomerAccountForm({method, title}){
     const navigate = useNavigate()  
     const navigation = useNavigation()
 
@@ -13,7 +13,7 @@ function AccountForm({method, title}){
     }
 
     return(
-    <Form method="post">
+    <Form method={method}>
         <h3>Create {title} Account</h3> 
         <p>
             <label>account name</label>
@@ -38,7 +38,7 @@ function AccountForm({method, title}){
     </Form>)
 }
 
-export default AccountForm;
+export default CustomerAccountForm;
 
 export async function action({request}){
     const method = request.method
@@ -49,10 +49,9 @@ export async function action({request}){
         account_name:data.get("accname"),
         account_description:data.get("accdesc"),
         account_number:data.get("accnum"),
-        is_active:data.get("active")
     }
 
-    let url = 'http://localhost:8000/supplier/account'
+    let url = 'http://localhost:8000/customer/account'
     if(method==='POST'){
         const response = await fetch(url,{
             method: method,
@@ -68,6 +67,6 @@ export async function action({request}){
             throw json ({message: "Failed to save the account"}, {status: 500})
         }
 
-        return redirect("/account/supplier")
+        return redirect("/account/customer")
     }
 }

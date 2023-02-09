@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouteError } from "react-router-dom";
 import MainNavigation from "../../components/UserComponents/Mainnavigation";
-import PageContent from "../../components/UserComponents/PageCntent";
+import PageContent from "../../components/UserComponents/PageContent";
 
 function ErrorPage(){
     const error = useRouteError()
@@ -9,16 +9,14 @@ function ErrorPage(){
     let message = "Something went wrong!!";
 
     if (error.status === 500){
-        message = error.data.message
+        message = error.data.message + "check server"
     }
 
     if (error.status === 404) {
-        title = 'Not found!';
-        message = 'Could not find resource or page.';
+        message = error.data.message;
       }
       if (error.status === 409) {
-        title = 'Unsupported!';
-        message = 'This is an unsupported route or content.';
+        message = error.data.message;;
       }
 
     return(

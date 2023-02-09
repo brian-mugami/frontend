@@ -18,16 +18,21 @@ import { action as LogoutAction } from "./pages/UserPages/Logout";
 import AccountRoot from "./pages/AccountPages/AccountsRoot";
 import SupplierAccountsPage, {
   loader as supplieraccountsLoader,
-} from "./pages/AccountPages/SupplierAccountPage";
+} from "./pages/SupplierPages/SupplierAccounts/SupplierAccountPage";
 import CustomerAccountsPage, {
   loader as customeraccountsloader,
-} from "./pages/AccountPages/CustomeraccountPage";
+} from "./pages/CustomerPages/CustomerAccountPages/CustomeraccountPage";
 import ItemAccountsPage, {
   loader as itemaccountsloader,
-} from "./pages/AccountPages/ItemAccountPage";
-import AllAccountRoot from "./pages/SupplierPages/SupplierAccountRoot";
-import NewAccountPage from "./pages/AccountPages/Newaccount";
-import { action as AccountAction } from "./components/UserComponents/UserForm";
+} from "./pages/ItemPages/ItemAccountPages/ItemAccountPage";
+import AllAccountRoot from "./pages/AccountPages/SubAccountRoot";
+import NewSupplierAccountPage from "./pages/SupplierPages/SupplierAccounts/NewSupplierAccount";
+import NewCustomerAccountPage from "./pages/CustomerPages/CustomerAccountPages/NewCustomerAccount";
+import NewItemAccountPage from "./pages/ItemPages/ItemAccountPages/NewItemAccount";
+import {action as SupplierAccountAction} from "./components/Accountcomponents/SupplierAccountsForm"
+import {action as CreateItemAccountAction} from './components/Accountcomponents/ItemaccountForm'
+import {action as CreateCustomerAccountAction} from './components/Accountcomponents/Customeraccountform'
+import SupplierAccountDetailPage, {loader as supplierAccountLoader} from "./pages/SupplierPages/SupplierAccounts/SupplierAccountDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -61,7 +66,11 @@ const router = createBrowserRouter([
             id: "supplier",
             children:[
               {index: true, element:<SupplierAccountsPage />},
-              {path: "new", element: <NewAccountPage/>, action: AccountAction}
+              {path: "new", element: <NewSupplierAccountPage/>, action: SupplierAccountAction},
+              {path: ":id", id: "supplier-detail", loader: supplierAccountLoader, children: [
+                {index: true, element:<SupplierAccountDetailPage/>},
+                {path:"edit", element:<SupplierEditPage/>}
+              ]}
             ]
           },
           {
@@ -70,7 +79,8 @@ const router = createBrowserRouter([
             loader: customeraccountsloader,
             id:"customer",
             children:[
-              {index: true, element:<CustomerAccountsPage />}
+              {index: true, element:<CustomerAccountsPage />},
+              {path: "new", element: <NewCustomerAccountPage/>, action: CreateCustomerAccountAction}
             ]
           },
           {
@@ -79,7 +89,8 @@ const router = createBrowserRouter([
             loader: itemaccountsloader,
             id:"item",
             children:[
-              {index: true, element:<ItemAccountsPage/>}
+              {index: true, element:<ItemAccountsPage/>},
+              {path: "new", element: <NewItemAccountPage/>, action: CreateItemAccountAction}
             ]
           },
         ],

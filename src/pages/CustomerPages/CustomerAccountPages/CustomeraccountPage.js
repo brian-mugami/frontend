@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { defer, json,Await, useRouteLoaderData,  } from "react-router-dom";
-import AccountsList from "../../components/Accountcomponents/AccountsList";
-import { getAuthToken } from "../../util/Auth";
+import AccountsList from "../../../components/Accountcomponents/AccountsList";
+import { getAuthToken } from "../../../util/Auth";
 
 function CustomerAccountsPage(){
     const {accounts} = useRouteLoaderData('customer')
