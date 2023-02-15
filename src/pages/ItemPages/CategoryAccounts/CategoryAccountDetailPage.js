@@ -3,32 +3,32 @@ import React, { Suspense } from "react";
 import Accountitem from "../../../components/Accountcomponents/AccountItem";
 import { getAuthToken } from "../../../util/Auth";
 
-function SupplierAccountDetailPage(){
-const {account} = useRouteLoaderData('supplier-detail')
+function CategoryAccountDetailPage(){
+const {account} = useRouteLoaderData('item-detail')
 
     return(
         <React.Fragment>
             <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
                 <Await resolve={account}>
-                    {(loadedsupplier)=><Accountitem account={loadedsupplier} title="Supplier"/>}
+                    {(loadedsupplier)=><Accountitem account={loadedsupplier} title="Category"/>}
                 </Await>
             </Suspense>
         </React.Fragment>
     )
 }
 
-export default SupplierAccountDetailPage;
+export default CategoryAccountDetailPage;
 
-async function loadSupplier(id){
+async function loadCategory(id){
     const token = getAuthToken();
-    const response = await fetch('http://localhost:8000/supplier/account/' + id,{
+    const response = await fetch('http://localhost:8000/category/account/' + id,{
         headers : {
             'Authorization': 'Bearer ' + token
         }
     })
     if (!response.ok)
         {throw json (
-            {message: "Could not fetch supplier account"},
+            {message: "Could not fetch category account"},
             {status: 500}
         )}
     else{
@@ -41,14 +41,14 @@ async function loadSupplier(id){
 export async function loader ({request, params}){
     const id = params.id;
     return defer({
-        account: await loadSupplier(id),
+        account: await loadCategory(id),
     })
 }
 
 export async function action({request,params}){
     const token = getAuthToken();
     const id = params.id;
-    const response = await fetch("http://localhost:8000/supplier/account/" + id, {
+    const response = await fetch("http://localhost:8000/category/account/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token
@@ -62,5 +62,5 @@ export async function action({request,params}){
           }
         );
       }
-      return redirect("/account/supplier")
+      return redirect("/account/item")
 }

@@ -1,7 +1,7 @@
 import ItemAccountForm from "../../../components/Accountcomponents/ItemaccountForm";
 
 function NewItemAccountPage(){
-    return(<ItemAccountForm method="post"  title="Item"/>)
+    return(<ItemAccountForm method="post"  title="Category"/>)
 }
 
 

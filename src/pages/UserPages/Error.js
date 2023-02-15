@@ -9,15 +9,18 @@ function ErrorPage(){
     let message = "Something went wrong!!";
 
     if (error.status === 500){
-        message = error.data.message + "check server"
+        message = error.message
     }
 
     if (error.status === 404) {
         message = error.data.message;
       }
-      if (error.status === 409) {
-        message = error.data.message;;
-      }
+    if (error.status === 409) {
+    message = error.data.message;;
+    }
+    if (error.status === 401){
+    message = error.data.message
+    }
 
     return(
         <React.Fragment>

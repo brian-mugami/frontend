@@ -1,7 +1,7 @@
-import AccountForm from "../../../components/Accountcomponents/SupplierAccountsForm";
+import SupplierAccountForm from "../../../components/Accountcomponents/SupplierAccountsForm";
 
 function NewSupplierAccountPage(){
-    return(<AccountForm method="post"  title="supplier"/>)
+    return(<SupplierAccountForm method="post"  title="supplier"/>)
 }
 
 

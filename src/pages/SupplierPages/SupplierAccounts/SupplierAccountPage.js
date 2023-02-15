@@ -26,10 +26,12 @@ async function AccountLoader(){
         }
     })
     if(!response.ok){
-        throw json({message: "The response was not ok"},{status: 500})
+        throw json({message: "Could not fetch users"},{status: 500})
     }else{
         const resData = await response.json()
-        console.log(resData)
+        if (resData.status === 401){
+            throw json({message: "You are not authorized"}, {status: 401})
+        }
         return resData
     }
 };

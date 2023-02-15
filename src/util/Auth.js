@@ -15,7 +15,7 @@ export function getAuthToken(){
         return null;
     }
     if (tokenDuration < 0){
-        return 'EXPIRED';
+        return null;
     };
     return token
 }

@@ -3,7 +3,7 @@ import { getAuthToken } from "../../util/Auth";
 
 
 
-function SupplierAccountForm({method, title}){
+function SupplierAccountForm({method, title, account}){
     const navigate = useNavigate()  
     const navigation = useNavigation()
 
@@ -17,15 +17,15 @@ function SupplierAccountForm({method, title}){
         <h3>Create {title} Account</h3> 
         <p>
             <label>account name</label>
-            <input placeholder="account name" type="text" name="accname" required></input>
+            <input placeholder="account name" type="text" name="accname" required defaultValue={account? account.account_name : ""}></input>
         </p>
         <p>
             <label>account description</label>
-            <input placeholder="account description" type="text" rows="5" name="accdesc" ></input>
+            <input placeholder="account description" type="text" rows="5" name="accdesc" defaultValue={account? account.account_description : ''}></input>
         </p>
         <p>
             <label>account number</label>
-            <input placeholder="account number" type="text"  name="accnum" required></input>
+            <input placeholder="account number" type="text"  name="accnum" required defaultValue={account? account.account_number: ''}></input>
         </p>
         <div>
         <button type="button" onClick={cancelHandler} disabled={isSubmitting}>
@@ -40,7 +40,7 @@ function SupplierAccountForm({method, title}){
 
 export default SupplierAccountForm;
 
-export async function action({request}){
+export async function action({request, params}){
     const method = request.method
     const data = await request.formData()
     const token = getAuthToken()
@@ -54,7 +54,7 @@ export async function action({request}){
     let url = 'http://localhost:8000/supplier/account'
     if(method==='POST'){
         const response = await fetch(url,{
-            method: method,
+            method: "POST",
             headers: {
                 'Content-Type':'application/json',
                 'Authorization': "Bearer " + token,
@@ -65,6 +65,24 @@ export async function action({request}){
         if (!response.ok){
             window.alert("failed")
             throw json ({message: "Failed to save the account"}, {status: 500})
+        }
+
+        return redirect("/account/supplier")
+    }else{
+        const id = params.id
+        url = 'http://localhost:8000/supplier/account/'+id
+        const response = await fetch(url,{
+            method: "PATCH",
+            headers: {
+                'Content-Type':'application/json',
+                'Authorization': "Bearer " + token,
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify(accountData)
+        });
+        if (!response.ok){
+            window.alert("failed update")
+            throw json ({message: "Failed to update the account"}, {status: 500})
         }
 
         return redirect("/account/supplier")
