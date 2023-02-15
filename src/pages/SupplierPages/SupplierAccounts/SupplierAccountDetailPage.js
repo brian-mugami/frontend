@@ -27,10 +27,10 @@ async function loadSupplier(id){
         }
     })
     if (!response.ok)
-        {throw json (
+        throw json (
             {message: "Could not fetch supplier account"},
             {status: 500}
-        )}
+        )
     else{
         const resData = await response.json()
         return resData
