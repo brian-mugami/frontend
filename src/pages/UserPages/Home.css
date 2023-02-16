@@ -1,0 +1,78 @@
+
+/* Fonts */
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:700');
+
+/* Positioning */
+
+.container {
+	min-height: 100%;
+}
+
+.center {
+	top: 50%; left: 50%;
+	position: absolute;
+	transform: translate(-50%, -50%);
+}
+
+.apple {
+	
+	/* Text Background Effect */
+	
+	background: url('http://doodling.surge.sh/assets/images/bg-1.jpg');
+	-webkit-background-clip: text;
+	color: transparent;
+
+	/* Other */
+	
+	font-family: 'Roboto', sans-serif;
+	font-size: 100px;
+	font-weight: 900;
+	animation: slice 3s, dynamic 7s infinite alternate linear;
+	white-space: nowrap;
+	
+}
+
+
+* {
+	user-select: none;
+}
+
+@media screen and (max-width: 480px) {
+	.apple {
+		font-size: 70px;
+	}
+}
+
+/* Slice Animation */
+
+@keyframes slice {
+	
+	0% {	line-height: 0%; }
+	
+	100% {	line-height: 100%; }
+	
+}
+
+/* Dynamic Background Animation */
+
+@keyframes dynamic {
+	
+	0% {	background-position: 0% }
+	
+	100% {	background-position: 100%; }
+	
+}
+
+/* Watermark */
+
+.links {
+	position: absolute;
+	bottom: 5px; left: 10px;
+}
+
+a {
+	color: #313131;
+}
