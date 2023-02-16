@@ -1,0 +1,20 @@
+.nav{
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5rem;
+  padding-top: 1rem;
+  background-color: whitesmoke;
+  
+}
+.nav img{
+    
+    width: 10%;  
+    display: flex;
+    padding-left: 5%;
+}
+.list{
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+}

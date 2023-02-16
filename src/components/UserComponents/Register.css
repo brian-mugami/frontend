@@ -1,0 +1,62 @@
+h1{
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    position: relative;
+    
+}
+p{
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+}
+input :-ms-input-placeholder{
+    font-size: small;
+}
+label{
+    padding: 0.6rem;
+}
+
+.headerIcon{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+
+.screenBackground{
+    background: url(https://images.pexels.com/photos/4483773/pexels-photo-4483773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    display: flex;
+}
+.forms{
+    background-color: whitesmoke;
+    justify-content: space-around;    
+    width: 30rem;
+    display: flex;    
+    padding-bottom: 10px;
+    border-left: 30px;
+    align-items: center;
+    margin-left: 35%;
+    margin-top: 10%;
+    border-radius: 3%;
+        
+}
+
+
+.loginScreen_gradient{
+    width: 100%;
+    z-index: 1;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    background-image: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8) 0,
+        rgba(0, 0, 0, 0) 60%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+}
+.authButtons{
+    display: flex;
+    justify-content: space-around;
+    text-decoration: none;
+
+}
+
