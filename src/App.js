@@ -3,10 +3,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthentificationPage, {
   action as AuthAction,
 } from "./pages/UserPages/AuthentificationPage";
+
 import ErrorPage from "./pages/UserPages/Error";
 import HomePage from "./pages/UserPages/Home";
 import RootLayout from "./pages/UserPages/Root";
-import UsersPage, { loader as UsersLoader } from "./pages/UserPages/Users";
+import UsersPage, {loader as UsersLoader } from "./pages/UserPages/Users";
 import UserDetailPage, {
   loader as UserDetailLoader,
   action as DeleteAction,
@@ -41,14 +42,28 @@ import EditCustomerAccountPage from "./pages/CustomerPages/CustomerAccountPages/
 import CategoryAccountDetailPage , {loader as categoryAccountLoader}from "./pages/ItemPages/CategoryAccounts/CategoryAccountDetailPage";
 import EditCategoryAccountPage from "./pages/ItemPages/CategoryAccounts/EditCategoryAccountPage";
 import {action as deletecategoryaction} from "./pages/ItemPages/CategoryAccounts/CategoryAccountDetailPage"
+import LotRoot from "./pages/ItemPages/Lots/LotRoot";
+import LotPage, {loader as lotLoader} from "./pages/ItemPages/Lots/LotPage";
+import NewLotPage from "./pages/ItemPages/Lots/NewLotPage";
+import {action as LotManipulateAction} from "./components/ItemComponents/LotForm"
+import LotDetailPage, {action as LotDeleteAction} from "./pages/ItemPages/Lots/LotDetailPage";
+import LotEditPage from "./pages/ItemPages/Lots/LotEditPage";
+import {loader as LotDetailLoader} from "./pages/ItemPages/Lots/LotDetailPage"
+import CategoryRoot from "./pages/ItemPages/Categories/CategoryRoot";
+import CategoriesPage, {loader as CategoriesLoader} from "./pages/ItemPages/Categories/AllCategories";
+import CreateCategoryPage, {loader as AccountsCategoryLoader} from "./pages/ItemPages/Categories/NewCategoryPage";
+import {action as CategoryManipulateaction} from "./components/ItemComponents/CategoryForm"
+import CategoryDetailPage, {loader as CategoryLoader} from "./pages/ItemPages/Categories/CategoryDetailPage";
+import {action as DeleteCatItemAction} from "./pages/ItemPages/Categories/CategoryDetailPage"
+import CategoryEditPage, {loader as CategoryEditLoader} from "./pages/ItemPages/Categories/CategoryEditPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    loader: tokenLoader,
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     id: "root",
-    loader: tokenLoader,
     children: [
       {
         index: true,
@@ -112,7 +127,42 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "user",
+        path:"category",
+        element:<CategoryRoot/>,
+        loader:CategoriesLoader,
+        id:"category",
+        children:[
+          {index: true, element:<CategoriesPage/>},
+          {path:"new", element:<CreateCategoryPage/>,action:CategoryManipulateaction, loader:AccountsCategoryLoader},
+          {path:":id", id:"category-detail", loader:CategoryLoader, children:[
+            {index: true, element: <CategoryDetailPage/>, action:DeleteCatItemAction},
+            {path:"edit", element: <CategoryEditPage/>, action:CategoryManipulateaction,loader:AccountsCategoryLoader}
+          ]}
+        ]
+      },
+      {
+        path: "lot",
+        element: <LotRoot/>,
+        loader:lotLoader,
+        id:"lot",
+        children:[
+          {index: true, element: <LotPage/>},
+          {path:"new", element: <NewLotPage/>, action:LotManipulateAction},
+          {path:":id", id:"lot-detail", loader: LotDetailLoader, children:[
+            {index:true, element:<LotDetailPage/>, action:LotDeleteAction},
+            {path:"edit", element:<LotEditPage/>, action:LotManipulateAction}
+          ]}
+        ]
+      },{
+        path:"customer",
+        element:test,
+        loader:test,
+        id:test,
+        children:[
+          {index:true, element:test}
+        ]
+      },
+      {path: "user",
         children: [
           { index: true, element: <UsersPage />, loader: UsersLoader },
           {

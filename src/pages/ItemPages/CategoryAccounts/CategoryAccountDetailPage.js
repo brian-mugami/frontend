@@ -19,7 +19,7 @@ const {account} = useRouteLoaderData('item-detail')
 
 export default CategoryAccountDetailPage;
 
-async function loadCategory(id){
+async function loadAccount(id){
     const token = getAuthToken();
     const response = await fetch('http://localhost:8000/category/account/' + id,{
         headers : {
@@ -41,7 +41,7 @@ async function loadCategory(id){
 export async function loader ({request, params}){
     const id = params.id;
     return defer({
-        account: await loadCategory(id),
+        account: await loadAccount(id),
     })
 }
 

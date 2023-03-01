@@ -21,11 +21,11 @@ function CustomerAccountForm({method, title, account}){
         </p>
         <p>
             <label>account description</label>
-            <input placeholder="account description" type="text" rows="5" name="accdesc" defaultValue={account? account.account_name : ""} ></input>
+            <input placeholder="account description" type="text" rows="5" name="accdesc" defaultValue={account? account.account_description : ""} ></input>
         </p>
         <p>
             <label>account number</label>
-            <input placeholder="account number" type="text"  name="accnum" required defaultValue={account? account.account_name : ""}></input>
+            <input placeholder="account number" type="text"  name="accnum" required defaultValue={account? account.account_number : ""}></input>
         </p>
         <div>
         <button type="button" onClick={cancelHandler} disabled={isSubmitting}>

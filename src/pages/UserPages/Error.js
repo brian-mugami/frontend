@@ -1,27 +1,17 @@
 import React from "react";
-import { useRouteError } from "react-router-dom";
+import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 import MainNavigation from "../../components/UserComponents/Mainnavigation";
 import PageContent from "../../components/UserComponents/PageContent";
 
 function ErrorPage(){
     const error = useRouteError()
-    let title = "An error occured";
-    let message = "Something went wrong!!";
+    
+    let title = "I am done"
+    let message = "truly done"
 
     if (error.status === 500){
         message = error.message
     }
-
-    if (error.status === 404) {
-        message = error.data.message;
-      }
-    if (error.status === 409) {
-    message = error.data.message;;
-    }
-    if (error.status === 401){
-    message = error.data.message
-    }
-
     return(
         <React.Fragment>
             <MainNavigation/>
