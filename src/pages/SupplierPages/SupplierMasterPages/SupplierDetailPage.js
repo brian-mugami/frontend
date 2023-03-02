@@ -1,22 +1,22 @@
 import React from "react";
 import { json,useRouteLoaderData, redirect } from "react-router-dom";
-import CategoryItem from "../../../components/ItemComponents/CategoryComponents/CategoryItem";
+import SupplierItem from "../../../components/SupplierComponents/SupplierItem";
 import { getAuthToken } from "../../../util/Auth";
 
-function CategoryDetailPage(){
-    const category = useRouteLoaderData("category-detail")
+function SupplierDetailPage(){
+    const supplier = useRouteLoaderData("suppliers-detail")
     return(
         <React.Fragment>
-                    <CategoryItem category={category}/>
+                    <SupplierItem supplier={supplier}/>
         </React.Fragment>
     )
     
 }
 
-export default CategoryDetailPage;
+export default SupplierDetailPage;
 
 export async function loader({request, params}){
-    let url = 'http://localhost:8000/item/category/'
+    let url = 'http://localhost:8000/supplier/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -39,7 +39,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("http://localhost:8000/item/category/" + id, {
+    const response = await fetch("http://localhost:8000/supplier/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token
@@ -47,11 +47,11 @@ export async function action({request,params}){
     });
     if (!response.ok) {
         throw json(
-          { message: 'Could not delete category.' },
+          { message: 'Could not delete supplier.' },
           {
             status: 500,
           }
         );
       }
-      return redirect("/item/category")
+      return redirect("/supplier")
 }

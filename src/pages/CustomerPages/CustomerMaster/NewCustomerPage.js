@@ -1,24 +1,24 @@
-import React from "react";
-import CategoryForm from "../../../components/ItemComponents/CategoryComponents/CategoryForm";
-import { json, useLoaderData } from "react-router-dom";
+import React from "react"
+import { useLoaderData, json } from "react-router-dom";
+import CustomerForm from "../../../components/CustomerComponents/CustomerForm";
 import { getAuthToken } from "../../../util/Auth";
 
-function CreateCategoryPage(){
+function NewCustomerPage(){
+const accounts = useLoaderData()
 
-    const accounts = useLoaderData()
     return(
         <React.Fragment>
-            <CategoryForm method="post" title="Create" accounts={accounts}/>
+            <CustomerForm method="post" title="Creation" accounts={accounts}/>
         </React.Fragment>
     )
 }
 
-export default CreateCategoryPage;
+export default NewCustomerPage;
 
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('http://localhost:8000/category/account', {
+    const response = await fetch('http://localhost:8000/customer/account', {
         method: "get",
         headers: {
             "Authorization": 'Bearer '+ token
@@ -31,4 +31,3 @@ export async function loader(){
         return resData
     }
 };
-

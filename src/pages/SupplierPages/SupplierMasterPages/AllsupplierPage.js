@@ -1,34 +1,34 @@
 import React, { Suspense } from "react"
 import { Await,json, useRouteLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../../util/Auth";
-import CategoryList from "../../../components/ItemComponents/CategoryComponents/ItemCategoryList";
+import SupplierList from "../../../components/SupplierComponents/Supplierlist";
 import { defer } from "react-router-dom";
 
-function CategoriesPage(){
-    const {categories} = useRouteLoaderData("category")
+function SupplierPage(){
+    const {suppliers} = useRouteLoaderData("suppliers")
     return(
         <React.Fragment>
             <Suspense fallback={<p style={{textAlign: 'center'}}>Loading....</p>}>
-            <Await resolve={categories}>
-                    {(loadedCategories) => <CategoryList categories={loadedCategories}/>}
+            <Await resolve={suppliers}>
+                    {(lloadedSuppliers) => <SupplierList suppliers={lloadedSuppliers}/>}
                 </Await>
             </Suspense>
         </React.Fragment>
     )
 }
 
-export default CategoriesPage;
+export default SupplierPage;
 
- export async function catLoader(){
+async function suppliersLoader(){
     const token = getAuthToken()
-    const response = await fetch("http://localhost:8000/item/category", {
+    const response = await fetch("http://localhost:8000/supplier", {
         method:"get",
         headers:{
             "Authorization": "Bearer "+ token
         }
     })
     if(!response.ok){
-        throw json({message:"Cant get categories"}, {status:500})
+        throw json({message:"Cant get suppliers"}, {status:500})
     }else{
         const resData = await response.json()
         return resData
@@ -38,6 +38,6 @@ export default CategoriesPage;
 export function loader (){
     return(
         defer({
-            categories: catLoader()
+            suppliers: suppliersLoader()
         })
     )}

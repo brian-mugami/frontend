@@ -1,14 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import ItemLotNav from "../../../components/ItemComponents/LotComponents/ItemLotNav";
+import SupplierNav from "../../../components/SupplierComponents/SupplierNav";
 
-function LotRoot(){
+function SupplierRoot(){
     return(
         <React.Fragment>
-            <ItemLotNav/>
+            <SupplierNav/>
             <Outlet/>
         </React.Fragment>
     )
 }
 
-export default LotRoot;
+export default SupplierRoot;

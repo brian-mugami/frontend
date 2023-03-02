@@ -1,14 +1,14 @@
 import React from "react";
 import {json, useLoaderData, useRouteLoaderData} from "react-router-dom";
-import CategoryForm from "../../../components/ItemComponents/CategoryForm";
+import CategoryForm from "../../../components/ItemComponents/CategoryComponents/CategoryForm";
 import { getAuthToken } from "../../../util/Auth";
 
 function CategoryEditPage(){
         const accounts = useLoaderData()
-        const category = useRouteLoaderData("category-detail")
+        const categories = useRouteLoaderData("category-detail")
        return(
         <React.Fragment>
-            <CategoryForm method="patch" title="Edit" accounts={accounts} category={category}/>
+            <CategoryForm method="patch" title="Edit" accounts={accounts} categories={categories}/>
         </React.Fragment>
        ) 
 }

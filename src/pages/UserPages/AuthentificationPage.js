@@ -53,7 +53,7 @@ export async function action ({request}){
           localStorage.setItem('access_token', access_token)
           localStorage.setItem('refresh_token', refresh_token)
           const expiration = new Date()
-          expiration.setHours(expiration.getHours() + 1)
+          expiration.setHours(expiration.getHours() + 24)
           localStorage.setItem('expiration', expiration.toISOString())
         
           // manage tokens

@@ -31,12 +31,17 @@ function MainNavigation() {
           )}
           {token &&(
             <li>
-              <NavLink to="lot">Item Lots</NavLink>
+              <NavLink to="item">Item Details</NavLink>
             </li>
           )}
           {token &&(
             <li>
-              <NavLink to="category">Item Categories</NavLink>
+              <NavLink to="customer">Customers</NavLink>
+            </li>
+          )}
+          {token &&(
+            <li>
+              <NavLink to="supplier">Suppliers</NavLink>
             </li>
           )}
           {token && (

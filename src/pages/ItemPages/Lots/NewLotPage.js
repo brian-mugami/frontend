@@ -1,5 +1,5 @@
 import React from "react"
-import LotForm from "../../../components/ItemComponents/LotForm";
+import LotForm from "../../../components/ItemComponents/LotComponents/LotForm";
 
 function NewLotPage(){
     return(

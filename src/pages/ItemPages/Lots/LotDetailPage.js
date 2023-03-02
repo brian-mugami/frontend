@@ -2,7 +2,7 @@ import React from "react"
 import { getAuthToken } from "../../../util/Auth";
 import { Suspense } from "react";
 import { Await, json, defer, useRouteLoaderData, redirect } from "react-router-dom";
-import Lotitem from "../../../components/ItemComponents/Lotitem";
+import Lotitem from "../../../components/ItemComponents/LotComponents/Lotitem";
 
 function LotDetailPage(){
     const {lot} = useRouteLoaderData('lot-detail')
@@ -66,5 +66,5 @@ export async function action({request,params}){
           }
         );
       }
-      return redirect("/lot")
+      return redirect("/item/lot")
 }

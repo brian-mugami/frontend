@@ -1,29 +1,29 @@
-import React, { Suspense } from "react"
-import { Await, defer, useRouteLoaderData } from "react-router-dom";
-import ItemLotList from "../../../components/ItemComponents/LotComponents/ItemLotList";
+import React from "react";
+import { Suspense } from "react";
+import { json, Await, defer, useRouteLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../../util/Auth";
-import { json } from "react-router-dom";
+import ItemList from "../../../components/ItemComponents/ItemsComponents/ItemList";
 
-function LotPage(){
-    const {lots} = useRouteLoaderData("lot")
+function AllItemsPage(){
+    const {items} = useRouteLoaderData("items")
 
     return(
         <React.Fragment>
             <Suspense fallback={<p style={{textAlign: 'center'}}>Loading....</p>}>
-                <Await resolve={lots}>
-                    {(loadedLots) => <ItemLotList lots={loadedLots}/>}
+                <Await resolve={items}>
+                    {(loadedItems) => <ItemList items={loadedItems}/>}
                 </Await>
             </Suspense>
         </React.Fragment>
     )
 }
 
-export default LotPage;
+export default AllItemsPage;
 
-async function LotLoader(){
+async function ItemsLoader(){
     const token = getAuthToken()
 
-    const response = await fetch("http://localhost:8000/item/lot", {
+    const response = await fetch("http://localhost:8000/item", {
         method: "get",
         headers: {
             "Authorization": "Bearer "+ token
@@ -40,7 +40,7 @@ async function LotLoader(){
 export function loader (){
     return(
         defer({
-            lots: LotLoader()
+            items: ItemsLoader()
         })
     )
 }

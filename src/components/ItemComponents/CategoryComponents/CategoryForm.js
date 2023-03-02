@@ -1,8 +1,8 @@
 import React from "react";
-import { Form, useNavigate, useNavigation, json, redirect, useRouteLoaderData} from "react-router-dom";
-import { getAuthToken } from "../../util/Auth";
+import { Form, useNavigate, useNavigation, json, redirect} from "react-router-dom";
+import { getAuthToken } from "../../../util/Auth";
 
-function CategoryForm({method, title, accounts, category}){
+function CategoryForm({method, title, accounts, categories}){
 
     const navigate = useNavigate()
     const navigation = useNavigation()
@@ -17,11 +17,11 @@ function CategoryForm({method, title, accounts, category}){
             <Form method={method}>
                 <p>
                     <label>Category Name</label>
-                    <input placeholder="Category name" name="catname" type="text" required defaultValue={category? category.name:""}></input>
+                    <input placeholder="Category name" name="catname" type="text" required defaultValue={categories? categories.name:""}></input>
                 </p>
                 <p>
                 <label>Category Account</label> 
-                    <select name="account" required defaultValue={category? category.account.account_name: ""}>
+                    <select name="account" required defaultValue={categories? categories.account.account_name: ""}>
                     {accounts.map((account)=><option key={account.id} value={account.account_name}> {account.account_name}</option>)}
                     </select>
                 </p>
@@ -65,7 +65,7 @@ export async function action({request, params}){
             throw json ({message: "Failed to save the lot"}, {status: 500})
         }
 
-        return redirect("/category")
+        return redirect("/item/category")
     }else{
         const id = params.id
         url = 'http://localhost:8000/item/category/'+id
@@ -83,7 +83,7 @@ export async function action({request, params}){
             throw json ({message: "Failed to save the category"}, {status: 500})
         }
 
-        return redirect("/category")
+        return redirect("/item/category")
         
     }
 }

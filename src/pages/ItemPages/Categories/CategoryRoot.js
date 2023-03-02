@@ -1,4 +1,4 @@
-import ItemCatNav from "../../../components/ItemComponents/ItemCategoryNav";
+import ItemCatNav from "../../../components/ItemComponents/CategoryComponents/ItemCategoryNav";
 import React from "react";
 import { Outlet } from "react-router-dom";
 

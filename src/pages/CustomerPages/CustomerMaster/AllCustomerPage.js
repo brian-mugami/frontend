@@ -1,34 +1,34 @@
 import React, { Suspense } from "react"
 import { Await,json, useRouteLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../../util/Auth";
-import CategoryList from "../../../components/ItemComponents/CategoryComponents/ItemCategoryList";
+import CustomerList from "../../../components/CustomerComponents/Customerlist";
 import { defer } from "react-router-dom";
 
-function CategoriesPage(){
-    const {categories} = useRouteLoaderData("category")
+function CustomersPage(){
+    const {customers} = useRouteLoaderData("customers")
     return(
         <React.Fragment>
             <Suspense fallback={<p style={{textAlign: 'center'}}>Loading....</p>}>
-            <Await resolve={categories}>
-                    {(loadedCategories) => <CategoryList categories={loadedCategories}/>}
+            <Await resolve={customers}>
+                    {(loadedCustomer) => <CustomerList customers={loadedCustomer}/>}
                 </Await>
             </Suspense>
         </React.Fragment>
     )
 }
 
-export default CategoriesPage;
+export default CustomersPage;
 
- export async function catLoader(){
+async function customersLoader(){
     const token = getAuthToken()
-    const response = await fetch("http://localhost:8000/item/category", {
+    const response = await fetch("http://localhost:8000/customer", {
         method:"get",
         headers:{
             "Authorization": "Bearer "+ token
         }
     })
     if(!response.ok){
-        throw json({message:"Cant get categories"}, {status:500})
+        throw json({message:"Cant get customers"}, {status:500})
     }else{
         const resData = await response.json()
         return resData
@@ -38,6 +38,6 @@ export default CategoriesPage;
 export function loader (){
     return(
         defer({
-            categories: catLoader()
+            customers: customersLoader()
         })
     )}

@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouteLoaderData } from "react-router-dom";
-import LotForm from "../../../components/ItemComponents/LotForm";
+import LotForm from "../../../components/ItemComponents/LotComponents/LotForm";
 
 
 function LotEditPage(){

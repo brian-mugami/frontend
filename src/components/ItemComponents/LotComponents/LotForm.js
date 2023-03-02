@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, useNavigate, useNavigation, json, redirect } from "react-router-dom";
-import { getAuthToken } from "../../util/Auth";
+import { getAuthToken } from "../../../util/Auth";
 
 function LotForm({method, lotData, title}){
     const navigate = useNavigate()
@@ -69,7 +69,7 @@ export async function action({request, params}){
             throw json ({message: "Failed to save the lot"}, {status: 500})
         }
 
-        return redirect("/lot")
+        return redirect("/item/lot")
     }else{
         const id = params.id
         url = 'http://localhost:8000/item/lot/'+id
@@ -87,6 +87,6 @@ export async function action({request, params}){
             throw json ({message: "Failed to save the lot"}, {status: 500})
         }
 
-        return redirect("/lot")
+        return redirect("/item/lot")
     }
 }
