@@ -36,15 +36,14 @@ export async function action ({request}){
             method: "POST",
             headers: {
                 'Content-Type':'application/json',
-                "Access-Control-Allow-Origin" : "*"
             },
             body: JSON.stringify(loginData)
         })
-        if (!response.ok){
-            throw json ({message:"Could not authenticate user"}, {status: 500})
+        if (!response){
+            return json ({message:"Could not authenticate user"}, {status: 500})
           }
           if(response.status === 401){
-            return response
+            return json({message:"Unauthorized", status:401})
           }
 
           const resData = await response.json();
@@ -54,7 +53,7 @@ export async function action ({request}){
           localStorage.setItem('access_token', access_token)
           localStorage.setItem('refresh_token', refresh_token)
           const expiration = new Date()
-          expiration.setHours(expiration.getHours() + 1)
+          expiration.setHours(expiration.getHours() + 24)
           localStorage.setItem('expiration', expiration.toISOString())
         
           // manage tokens

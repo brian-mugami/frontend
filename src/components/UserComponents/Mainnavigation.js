@@ -29,6 +29,21 @@ function MainNavigation() {
               <NavLink to="account">Accounts</NavLink>
             </li>
           )}
+          {token &&(
+            <li>
+              <NavLink to="item">Item Details</NavLink>
+            </li>
+          )}
+          {token &&(
+            <li>
+              <NavLink to="customer">Customers</NavLink>
+            </li>
+          )}
+          {token &&(
+            <li>
+              <NavLink to="supplier">Suppliers</NavLink>
+            </li>
+          )}
           {token && (
               <Form action="logout" method="post">
                 <button className="btn btn-danger">Logout</button>
