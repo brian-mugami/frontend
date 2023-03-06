@@ -64,7 +64,6 @@ export async function action ({request}){
             method: "POST",
             headers: {
                 'Content-Type':'application/json',
-                "Access-Control-Allow-Origin" : "*"
             },
             body: JSON.stringify(regData)
         })
