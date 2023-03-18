@@ -57,7 +57,7 @@ export async function action ({request}){
           localStorage.setItem('expiration', expiration.toISOString())
         
           // manage tokens
-          return redirect("/")}
+          return redirect("/home")}
         
     if(mode==='register'){
         const response = await fetch('http://localhost:8000/register', {
@@ -79,7 +79,7 @@ export async function action ({request}){
             throw json ({message:"Could not register user"}, {status: 500})
           }
 
-          return redirect("/")
+          return redirect("/auth?mode=login")
     }
 }
 
