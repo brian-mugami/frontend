@@ -1,13 +1,21 @@
+import React from "react";
 import { NavLink, Form, useRouteLoaderData } from "react-router-dom";
-import "./Mainnavigation.css"
-import image from "../assets/intel.png"
+import image from "../components/assets/intel.png"
 
-function MainNavigation() {
+export default function Sidebar() {
   const token = useRouteLoaderData("root");
-  return (
-    <header className="nav">
-      <nav>
-        <ul className="list">
+
+
+    return (
+        <div className="flex">
+            <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
+                <div className="space-y-3">
+                    <div className="flex items-center">
+                        <h2 className="text-xl font-bold">Dashboard</h2>
+                    </div>
+                    <div className="flex-1">
+                    <nav>
+        <ul >
           <li>
             <NavLink to="/" end>
             <img  src={image}></img> 
@@ -31,22 +39,22 @@ function MainNavigation() {
           )}
           {token && (
             <li>
-              <NavLink to="account">Accounts</NavLink>
+              <NavLink to="/account">Accounts</NavLink>
             </li>
           )}
           {token &&(
             <li>
-              <NavLink to="item">Item Details</NavLink>
+              <NavLink to="/item">Item Details</NavLink>
             </li>
           )}
           {token &&(
             <li>
-              <NavLink to="customer">Customers</NavLink>
+              <NavLink to="/customer">Customers</NavLink>
             </li>
           )}
           {token &&(
             <li>
-              <NavLink to="supplier">Suppliers</NavLink>
+              <NavLink to="/supplier">Suppliers</NavLink>
             </li>
           )}
           {token && (
@@ -56,8 +64,11 @@ function MainNavigation() {
           )}
         </ul>
       </nav>
-    </header>
-  );
+                    </div>
+                </div>
+            </div>
+            
+              
+        </div>
+    );
 }
-
-export default MainNavigation;
