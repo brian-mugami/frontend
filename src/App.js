@@ -91,6 +91,7 @@ import SupplierEditPage,{loader as supAccountLoader} from "./pages/SupplierPages
 import SupplierDetailPage,{action as supDeleteAction, loader as supaccLoader} from "./pages/SupplierPages/SupplierMasterPages/SupplierDetailPage";
 import Dashboard from "./pages/UserPages/Dashboard";
 import { countLoader } from "./components/DashboardComps";
+import ConfirmationPage from "./pages/UserPages/ConfirmationPage";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +109,10 @@ const router = createBrowserRouter([
         path: "auth",
         element: <AuthentificationPage />,
         action: AuthAction,
+      },
+      {
+        path:"Confirmation",
+        element: <ConfirmationPage/>,        
       },
       {
         path: "logout",

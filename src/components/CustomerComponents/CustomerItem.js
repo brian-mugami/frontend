@@ -47,7 +47,7 @@ function CustomerItem({customer}){
             </dd>
           </div>
           <div className="bg-white px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Is Item Active</dt>
+            <dt className="text-sm font-medium text-gray-500">Customer Status</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
             {customer.is_active ? "Active":"Inactive"}
             </dd>
@@ -58,6 +58,15 @@ function CustomerItem({customer}){
             {customer.date_registered}
             </dd>
           </div>
+          {token && 
+                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      
+                        <dt className="text-sm font-medium text-gray-500"><button onClick={startDeleteHandler}>Delete</button></dt>
+                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <Link to="edit">Edit</Link>
+                        </dd>
+                        
+                      </div>}
         </dl>
       </div>
     </div>

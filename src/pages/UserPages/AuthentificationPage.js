@@ -79,7 +79,7 @@ export async function action ({request}){
             throw json ({message:"Could not register user"}, {status: 500})
           }
 
-          return redirect("/auth?mode=login")
+          return redirect("/Confirmation")
     }
 }
 

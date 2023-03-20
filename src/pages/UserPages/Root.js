@@ -3,19 +3,12 @@ import { Outlet } from "react-router-dom";
 import MainNavigation from "../../components/UserComponents/Mainnavigation";
 import Sidebar from "../../components/Sidenav";
 
-function RootLayout(){
-    return(
-        <React.Fragment>
-             <div class="flex">
-            <aside class="h-screen sticky top-0">
-                <Sidebar/>
-            </aside>
-            <main>
-                <Outlet/>
-            </main>
-            </div>
-        </React.Fragment>
-    )
+function RootLayout() {
+  return (
+    <React.Fragment>
+      <Outlet />
+    </React.Fragment>
+  );
 }
 
 export default RootLayout;
