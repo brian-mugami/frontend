@@ -21,7 +21,7 @@ export default CustomersPage;
 
 async function customersLoader(){
     const token = getAuthToken()
-    const response = await fetch("http://localhost:8000/customer", {
+    const response = await fetch("/customer", {
         method:"get",
         headers:{
             "Authorization": "Bearer "+ token

@@ -23,7 +23,7 @@ export default LotPage;
 async function LotLoader(){
     const token = getAuthToken()
 
-    const response = await fetch("http://localhost:8000/item/lot", {
+    const response = await fetch("/item/lot", {
         method: "get",
         headers: {
             "Authorization": "Bearer "+ token

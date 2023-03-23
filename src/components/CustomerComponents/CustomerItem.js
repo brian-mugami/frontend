@@ -1,6 +1,5 @@
 import React from "react";
 import { useSubmit, Link, useRouteLoaderData } from "react-router-dom";
-import { PaperClipIcon } from '@heroicons/react/20/solid'
 
 function CustomerItem({customer}){
     const token = useRouteLoaderData('root')

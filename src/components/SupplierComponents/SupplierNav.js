@@ -1,19 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Breadcrumbs } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
 
 function SupplierNav(){
     return(
         <React.Fragment>
-
-
-                
-
-
-
-
-
             <header>
                 <nav>
                     <ul>

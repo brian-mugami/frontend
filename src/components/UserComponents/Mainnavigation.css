@@ -18,3 +18,12 @@
     gap: 1rem;
     list-style: none;
 }
+.list a {
+  text-decoration: underline;
+  color: var(--color-primary-400);
+}
+
+.list a:hover,
+.list a.active {
+  color: var(--color-primary-800);
+}

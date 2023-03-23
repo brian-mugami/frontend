@@ -32,7 +32,7 @@ export async function action ({request}){
     }
 
     if (mode==='login'){
-        const response = await fetch('http://localhost:8000/login', {
+        const response = await fetch('/login', {
             method: "POST",
             headers: {
                 'Content-Type':'application/json',
@@ -60,7 +60,7 @@ export async function action ({request}){
           return redirect("/home")}
         
     if(mode==='register'){
-        const response = await fetch('http://localhost:8000/register', {
+        const response = await fetch('/register', {
             method: "POST",
             headers: {
                 'Content-Type':'application/json',

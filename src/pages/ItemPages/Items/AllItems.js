@@ -23,7 +23,7 @@ export default AllItemsPage;
 async function ItemsLoader(){
     const token = getAuthToken()
 
-    const response = await fetch("http://localhost:8000/item", {
+    const response = await fetch("/item", {
         method: "get",
         headers: {
             "Authorization": "Bearer "+ token

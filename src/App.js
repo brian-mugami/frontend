@@ -72,26 +72,71 @@ import { action as DeleteCatItemAction } from "./pages/ItemPages/Categories/Cate
 import CategoryEditPage from "./pages/ItemPages/Categories/CategoryEditPage";
 import ItemsRoot from "./pages/ItemPages/ItemSAllRootNav";
 import ItemRoot from "./pages/ItemPages/Items/ItemRoot";
-import AllItemsPage,{loader as AllItemsLoader} from "./pages/ItemPages/Items/AllItems";
-import NewItemPage, {loader as ItemCategoryLoader} from "./pages/ItemPages/Items/NewItemPage";
-import {action as ItemManipulateAction} from "./components/ItemComponents/ItemsComponents/ItemsForm"
-import ItemDetailPage, {loader as ItemDetaiLoader, action as ItemDeleteAction} from "./pages/ItemPages/Items/ItemDetailPage";
-import ItemEditPage, {loader as ItemCategoryDetailLodaer} from "./pages/ItemPages/Items/ItemEditPage";
+import AllItemsPage, {
+  loader as AllItemsLoader,
+} from "./pages/ItemPages/Items/AllItems";
+import NewItemPage, {
+  loader as ItemCategoryLoader,
+} from "./pages/ItemPages/Items/NewItemPage";
+import { action as ItemManipulateAction } from "./components/ItemComponents/ItemsComponents/ItemsForm";
+import ItemDetailPage, {
+  loader as ItemDetaiLoader,
+  action as ItemDeleteAction,
+} from "./pages/ItemPages/Items/ItemDetailPage";
+import ItemEditPage, {
+  loader as ItemCategoryDetailLodaer,
+} from "./pages/ItemPages/Items/ItemEditPage";
 import CustomerRoot from "./pages/CustomerPages/CustomerMaster/CustomerRoot";
-import CustomersPage,{loader as CustomersAllLoader} from "./pages/CustomerPages/CustomerMaster/AllCustomerPage";
-import NewCustomerPage, {loader as CustomerAccountsAllLoader} from "./pages/CustomerPages/CustomerMaster/NewCustomerPage";
-import {action as CustomerManipulateAction} from "./components/CustomerComponents/CustomerForm"
-import CustomerDetailPage,{loader as CusAccountsLoader, action as CusDeleteAction} from "./pages/CustomerPages/CustomerMaster/CustomerDetails";
-import CustomerEditPage, {loader as CusAccountMiniLoader} from "./pages/CustomerPages/CustomerMaster/CustomerEditPage";
+import CustomersPage, {
+  loader as CustomersAllLoader,
+} from "./pages/CustomerPages/CustomerMaster/AllCustomerPage";
+import NewCustomerPage, {
+  loader as CustomerAccountsAllLoader,
+} from "./pages/CustomerPages/CustomerMaster/NewCustomerPage";
+import { action as CustomerManipulateAction } from "./components/CustomerComponents/CustomerForm";
+import CustomerDetailPage, {
+  loader as CusAccountsLoader,
+  action as CusDeleteAction,
+} from "./pages/CustomerPages/CustomerMaster/CustomerDetails";
+import CustomerEditPage, {
+  loader as CusAccountMiniLoader,
+} from "./pages/CustomerPages/CustomerMaster/CustomerEditPage";
 import SupplierRoot from "./pages/SupplierPages/SupplierMasterPages/SupplierRoot";
-import SupplierPage,{loader as allSuppliersLoader} from "./pages/SupplierPages/SupplierMasterPages/AllsupplierPage";
-import NewSupplierPage,{loader as allSupplierAccountsLoader} from "./pages/SupplierPages/SupplierMasterPages/NewSupplierPage";
-import {action as SupplierManipulateAction} from "./components/SupplierComponents/SupplierForm"
-import SupplierEditPage,{loader as supAccountLoader} from "./pages/SupplierPages/SupplierMasterPages/SupplierEditPage";
-import SupplierDetailPage,{action as supDeleteAction, loader as supaccLoader} from "./pages/SupplierPages/SupplierMasterPages/SupplierDetailPage";
+import SupplierPage, {
+  loader as allSuppliersLoader,
+} from "./pages/SupplierPages/SupplierMasterPages/AllsupplierPage";
+import NewSupplierPage, {
+  loader as allSupplierAccountsLoader,
+} from "./pages/SupplierPages/SupplierMasterPages/NewSupplierPage";
+import { action as SupplierManipulateAction } from "./components/SupplierComponents/SupplierForm";
+import SupplierEditPage, {
+  loader as supAccountLoader,
+} from "./pages/SupplierPages/SupplierMasterPages/SupplierEditPage";
+import SupplierDetailPage, {
+  action as supDeleteAction,
+  loader as supaccLoader,
+} from "./pages/SupplierPages/SupplierMasterPages/SupplierDetailPage";
 import Dashboard from "./pages/UserPages/Dashboard";
 import { countLoader } from "./components/DashboardComps";
 import ConfirmationPage from "./pages/UserPages/ConfirmationPage";
+import PasswordPage, {
+  action as PasswordChangeAction,
+} from "./pages/UserPages/PasswordResetPage";
+import PaymentAccountsPage, {
+  loader as PaymentsAccountsLoader,
+} from "./pages/PaymentAccountPages/AllPayAccountsPage";
+import NewPaymentAccountPage from "./pages/PaymentAccountPages/NewPaymentAccountPage";
+import { action as PaymentAccountAction } from "./components/Accountcomponents/PaymentAccountForm";
+import PaymentAccountDetailPage, {
+  action as PaymentAccountDeleteAction,
+  loader as PaymentAccountdetailLoader,
+} from "./pages/PaymentAccountPages/PayAccountdetailPage";
+import EditPaymentAccountPage from "./pages/PaymentAccountPages/EditPayAccountPage";
+import PurchaseAccountsPage, {loader as PurchaseAccountsLoader} from "./pages/PurchaseAccountPages/AllPurchaseAccountsPage";
+import NewPurchaseAccountPage from "./pages/PurchaseAccountPages/NewPurchaseAccountPage";
+import {action as PurchaseAccountAction} from "./components/Accountcomponents/PurchaseAccountform"
+import PurchaseAccountDetailPage, {action as PurchaseAccountDeleteAction, loader as PurchaseAccountdetailLoader} from "./pages/PurchaseAccountPages/PurchaseAccountdetailPage";
+import EditPurchaseAccountPage from "./pages/PurchaseAccountPages/EditPurchaseAccountPage";
 
 const router = createBrowserRouter([
   {
@@ -111,16 +156,21 @@ const router = createBrowserRouter([
         action: AuthAction,
       },
       {
-        path:"Confirmation",
-        element: <ConfirmationPage/>,        
+        path: "Confirmation",
+        element: <ConfirmationPage />,
       },
       {
         path: "logout",
         action: LogoutAction,
       },
       {
+        path: "reset",
+        element: <PasswordPage />,
+        action: PasswordChangeAction,
+      },
+      {
         path: "/home",
-        element:<Dashboard/>,
+        element: <Dashboard />,
         loader: countLoader,
       },
       {
@@ -153,6 +203,57 @@ const router = createBrowserRouter([
                     path: "edit",
                     element: <EditSupplierAccountPage />,
                     action: SupplierAccountAction,
+                  },
+                ],
+              },
+            ],
+          },{
+            path: "purchase",
+            element: <AllAccountRoot />,
+            loader: PurchaseAccountsLoader,
+            id: "purchase-accounts",
+            children: [
+              { index: true, element: <PurchaseAccountsPage/>},
+              {
+                path: "new",
+                element: <NewPurchaseAccountPage/>,
+                action: PurchaseAccountAction,
+              },{
+                path: ":id",
+                id: "purchase-account-detail",
+                loader: PurchaseAccountdetailLoader,
+                children: [
+                  {index: true, element: <PurchaseAccountDetailPage/>, action: PurchaseAccountDeleteAction},
+                  {path: "edit", element: <EditPurchaseAccountPage/>, action: PurchaseAccountAction}
+                ]}
+            ],
+          },
+          {
+            path: "payment",
+            element: <AllAccountRoot />,
+            loader: PaymentsAccountsLoader,
+            id: "payment-accounts",
+            children: [
+              { index: true, element: <PaymentAccountsPage /> },
+              {
+                path: "new",
+                element: <NewPaymentAccountPage />,
+                action: PaymentAccountAction,
+              },
+              {
+                path: ":id",
+                id: "payment-account-detail",
+                loader: PaymentAccountdetailLoader,
+                children: [
+                  {
+                    index: true,
+                    element: <PaymentAccountDetailPage />,
+                    action: PaymentAccountDeleteAction,
+                  },
+                  {
+                    path: "edit",
+                    element: <EditPaymentAccountPage />,
+                    action: PaymentAccountAction,
                   },
                 ],
               },
@@ -221,10 +322,11 @@ const router = createBrowserRouter([
             ],
           },
         ],
-      },{
-        path:"item",
-        element: <ItemsRoot/>,
-        children:[
+      },
+      {
+        path: "item",
+        element: <ItemsRoot />,
+        children: [
           {
             path: "category",
             element: <CategoryRoot />,
@@ -265,7 +367,11 @@ const router = createBrowserRouter([
             id: "lot",
             children: [
               { index: true, element: <LotPage /> },
-              { path: "new", element: <NewLotPage />, action: LotManipulateAction },
+              {
+                path: "new",
+                element: <NewLotPage />,
+                action: LotManipulateAction,
+              },
               {
                 path: ":id",
                 id: "lot-detail",
@@ -286,49 +392,107 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path:"main",
-            element:<ItemRoot/>,
+            path: "main",
+            element: <ItemRoot />,
             loader: AllItemsLoader,
             id: "items",
-            children:[
-              {index: true, element:<AllItemsPage/>},
-              {path:"new", element:<NewItemPage/>, loader: ItemCategoryLoader, action:ItemManipulateAction},
-              {path:":id",loader:ItemDetaiLoader,id:"item-main",children:[
-                {index:true, element:<ItemDetailPage/>, action:ItemDeleteAction},
-                {path:"edit", element:<ItemEditPage/>, action:ItemManipulateAction, loader: ItemCategoryDetailLodaer}
-              ] }
-            ]
-          }
-        ]
+            children: [
+              { index: true, element: <AllItemsPage /> },
+              {
+                path: "new",
+                element: <NewItemPage />,
+                loader: ItemCategoryLoader,
+                action: ItemManipulateAction,
+              },
+              {
+                path: ":id",
+                loader: ItemDetaiLoader,
+                id: "item-main",
+                children: [
+                  {
+                    index: true,
+                    element: <ItemDetailPage />,
+                    action: ItemDeleteAction,
+                  },
+                  {
+                    path: "edit",
+                    element: <ItemEditPage />,
+                    action: ItemManipulateAction,
+                    loader: ItemCategoryDetailLodaer,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
         path: "customer",
-        element: <CustomerRoot/>,
+        element: <CustomerRoot />,
         loader: CustomersAllLoader,
         id: "customers",
         children: [
-          { index: true, element: <CustomersPage/> },
-          {path:"new", element:<NewCustomerPage/>, loader:CustomerAccountsAllLoader, action:CustomerManipulateAction},
-          {path:":id", id:"customers-detail", loader: CusAccountsLoader, children:[
-            {index:true, element:<CustomerDetailPage/>, action:CusDeleteAction},
-            {path:"edit", element:<CustomerEditPage/>, action:CustomerManipulateAction, loader: CusAccountMiniLoader}
-          ]}
+          { index: true, element: <CustomersPage /> },
+          {
+            path: "new",
+            element: <NewCustomerPage />,
+            loader: CustomerAccountsAllLoader,
+            action: CustomerManipulateAction,
+          },
+          {
+            path: ":id",
+            id: "customers-detail",
+            loader: CusAccountsLoader,
+            children: [
+              {
+                index: true,
+                element: <CustomerDetailPage />,
+                action: CusDeleteAction,
+              },
+              {
+                path: "edit",
+                element: <CustomerEditPage />,
+                action: CustomerManipulateAction,
+                loader: CusAccountMiniLoader,
+              },
+            ],
+          },
         ],
       },
       {
         path: "supplier",
-        element: <SupplierRoot/>,
+        element: <SupplierRoot />,
         loader: allSuppliersLoader,
         id: "suppliers",
         children: [
-          { index: true, element: <SupplierPage/> },
-          {path:"new", element:<NewSupplierPage/>, loader:allSupplierAccountsLoader, action:SupplierManipulateAction},
-          {path:":id", id:"suppliers-detail", loader: supaccLoader, children:[
-            {index:true, element:<SupplierDetailPage/>, action:supDeleteAction},
-            {path:"edit", element:<SupplierEditPage/>, action:SupplierManipulateAction, loader: supAccountLoader}
-          ]}
+          { index: true, element: <SupplierPage /> },
+          {
+            path: "new",
+            element: <NewSupplierPage />,
+            loader: allSupplierAccountsLoader,
+            action: SupplierManipulateAction,
+          },
+          {
+            path: ":id",
+            id: "suppliers-detail",
+            loader: supaccLoader,
+            children: [
+              {
+                index: true,
+                element: <SupplierDetailPage />,
+                action: supDeleteAction,
+              },
+              {
+                path: "edit",
+                element: <SupplierEditPage />,
+                action: SupplierManipulateAction,
+                loader: supAccountLoader,
+              },
+            ],
+          },
         ],
-      },,
+      },
+      ,
       {
         path: "user",
         children: [

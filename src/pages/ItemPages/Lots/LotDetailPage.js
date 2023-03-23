@@ -21,7 +21,7 @@ export default LotDetailPage;
 
 async function loadLot(id){
     const token = getAuthToken()
-    const response = await fetch('http://localhost:8000/item/lot/' + id, {
+    const response = await fetch('/item/lot/' + id, {
         method:"get",
         headers:{
             "Authorization": "Bearer " + token
@@ -52,7 +52,7 @@ export async function loader ({request, params}){
 export async function action({request,params}){
     const token = getAuthToken();
     const id = params.id;
-    const response = await fetch("http://localhost:8000/item/lot/" + id, {
+    const response = await fetch("/item/lot/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token

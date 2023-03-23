@@ -21,7 +21,7 @@ export default CustomerAccountDetailPage;
 
 async function loadcustomer(id){
     const token = getAuthToken();
-    const response = await fetch('http://localhost:8000/customer/account/' + id,{
+    const response = await fetch('/customer/account/' + id,{
         headers : {
             'Authorization': 'Bearer ' + token
         }
@@ -48,7 +48,7 @@ export async function loader ({request, params}){
 export async function action({request,params}){
     const token = getAuthToken();
     const id = params.id;
-    const response = await fetch("http://localhost:8000/customer/account/" + id, {
+    const response = await fetch("/customer/account/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token

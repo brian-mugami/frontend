@@ -269,7 +269,7 @@ export default DashboardComps;
 
 export async function countLoader(){
   const token = getAuthToken()
-  const response = await fetch("http://localhost:8000/supplier/count", {
+  const response = await fetch("/supplier/count", {
       method:"get",
       headers:{
           "Authorization": "Bearer "+ token
@@ -279,7 +279,6 @@ export async function countLoader(){
       throw json({message:"Cant get number of suppliers"}, {status:500})
   }else{
       const resData = await response.json()
-      console.log(resData)
       return resData
       
   };

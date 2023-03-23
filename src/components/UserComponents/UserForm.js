@@ -57,7 +57,7 @@ export async function action({request, params}){
 
     const id = params.userId
 
-    const response = await fetch('http://localhost:8000/user/'+id, 
+    const response = await fetch('/user/'+id, 
     {method: "Patch",
     headers: {
         'Content-Type': 'application/json',

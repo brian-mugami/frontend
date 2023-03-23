@@ -15,6 +15,12 @@ function AccountNavigation(){
                         <li>
                             <NavLink to="/account/customer">Customer Accounts</NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/account/payment">Payment Accounts</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/account/purchase">Purchase Accounts</NavLink>
+                        </li>
                     </ul>
                 </nav>
             </header>

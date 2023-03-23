@@ -18,7 +18,7 @@ export default NewItemPage;
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('http://localhost:8000/item/category', {
+    const response = await fetch('/item/category', {
         method: "get",
         headers: {
             "Authorization": 'Bearer '+ token

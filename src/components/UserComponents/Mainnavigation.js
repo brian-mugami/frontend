@@ -1,6 +1,8 @@
 import { NavLink, Form, useRouteLoaderData } from "react-router-dom";
-import "./Mainnavigation.css"
-import image from "../assets/intel.png"
+import "./MainNavigation.css";
+import image from "../assets/intel.png";
+import classes from "./MainNavigation.css";
+
 
 function MainNavigation() {
   const token = useRouteLoaderData("root");
@@ -8,12 +10,20 @@ function MainNavigation() {
     <header className="nav">
       <nav>
         <ul className="list">
-          <li>
-            <NavLink to="/" end>
-            <img  src={image}></img> 
-            </NavLink>
-            
-          </li>
+          {!token && (
+            <li>
+              <NavLink to="/" end>
+                <img src={image}></img>
+              </NavLink>
+            </li>
+          )}
+          {token && (
+            <li>
+              <NavLink to="/home" end>
+                <img src={image}></img>
+              </NavLink>
+            </li>
+          )}
           {!token && (
             <li>
               <NavLink to="/auth?mode=login">Sign In</NavLink>
@@ -21,7 +31,8 @@ function MainNavigation() {
           )}
           {token && (
             <li>
-              <NavLink to="/user">Users</NavLink>
+              <NavLink to="/user"className={({ isActive }) =>
+                isActive ? classes.active : undefined}>Users</NavLink>
             </li>
           )}
           {token && (
@@ -34,30 +45,29 @@ function MainNavigation() {
               <NavLink to="account">Accounts</NavLink>
             </li>
           )}
-          {token &&(
+          {token && (
             <li>
               <NavLink to="item">Item Details</NavLink>
             </li>
           )}
-          {token &&(
+          {token && (
             <li>
               <NavLink to="customer">Customers</NavLink>
             </li>
           )}
-          {token &&(
+          {token && (
             <li>
               <NavLink to="supplier">Suppliers</NavLink>
             </li>
           )}
           {token && (
-              <Form action="logout" method="post">
-                <button className="btn btn-danger">Logout</button>
-              </Form>
+            <Form action="logout" method="post">
+              <button className="btn btn-danger">Logout</button>
+            </Form>
           )}
         </ul>
       </nav>
     </header>
   );
 }
-
 export default MainNavigation;
