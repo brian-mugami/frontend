@@ -65,9 +65,7 @@ import CreateCategoryPage, {
   loader as AccountsCategoryLoader,
 } from "./pages/ItemPages/Categories/NewCategoryPage";
 import { action as CategoryManipulateaction } from "./components/ItemComponents/CategoryComponents/CategoryForm";
-import CategoryDetailPage, {
-  loader as CategoryLoader,
-} from "./pages/ItemPages/Categories/CategoryDetailPage";
+import CategoryDetailPage, {  loader as CategoryLoader,} from "./pages/ItemPages/Categories/CategoryDetailPage";
 import { action as DeleteCatItemAction } from "./pages/ItemPages/Categories/CategoryDetailPage";
 import CategoryEditPage from "./pages/ItemPages/Categories/CategoryEditPage";
 import ItemsRoot from "./pages/ItemPages/ItemSAllRootNav";
