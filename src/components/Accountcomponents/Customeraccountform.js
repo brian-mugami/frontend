@@ -51,7 +51,7 @@ export async function action({request, params}){
         account_number:data.get("accnum"),
     }
 
-    let url = 'http://localhost:8000/customer/account'
+    let url = '/customer/account'
     if(method==='POST'){
         const response = await fetch(url,{
             method: method,
@@ -70,7 +70,7 @@ export async function action({request, params}){
         return redirect("/account/customer")
     }else{
       const id = params.id 
-      url = 'http://localhost:8000/customer/account/'+id
+      url = '/customer/account/'+id
       const response = await fetch(url,{
         method: method,
         headers: {

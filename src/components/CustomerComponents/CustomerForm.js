@@ -151,7 +151,7 @@ export async function action({ request, params }) {
     is_active: data.get("active"),
   };
 
-  let url = "http://localhost:8000/customer";
+  let url = "/customer";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -170,7 +170,7 @@ export async function action({ request, params }) {
     return redirect("/customer");
   } else {
     const id = params.id;
-    url = "http://localhost:8000/customer/" + id;
+    url = "/customer/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

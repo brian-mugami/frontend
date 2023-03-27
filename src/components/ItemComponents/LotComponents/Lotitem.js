@@ -12,7 +12,6 @@ function Lotitem({lot}){
           submit(null, { method: 'delete'});
         }
       }
-
     return(
         <React.Fragment>
             <h3>Lot Details</h3>

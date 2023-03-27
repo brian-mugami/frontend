@@ -16,7 +16,7 @@ function SupplierDetailPage(){
 export default SupplierDetailPage;
 
 export async function loader({request, params}){
-    let url = 'http://localhost:8000/supplier/'
+    let url = '/supplier/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -39,7 +39,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("http://localhost:8000/supplier/" + id, {
+    const response = await fetch("/supplier/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token

@@ -16,7 +16,7 @@ function CategoryDetailPage(){
 export default CategoryDetailPage;
 
 export async function loader({request, params}){
-    let url = 'http://localhost:8000/item/category/'
+    let url = '/item/category/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -39,7 +39,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("http://localhost:8000/item/category/" + id, {
+    const response = await fetch("/item/category/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token

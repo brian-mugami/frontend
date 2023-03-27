@@ -4,7 +4,7 @@ function AccountsList({ accounts, title }) {
   return (
         <React.Fragment>
             <div>
-                <h1>{title} Accounts</h1>
+                <h1><strong>{title} Accounts</strong></h1>
                 <ul>
                     {accounts.map((account)=><li key={account.id}><Link to={`./${account.id}`}>{account.account_name}-{account.account_description}</Link> </li>)}
                 </ul>

@@ -19,7 +19,7 @@ export default ItemAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('http://localhost:8000/category/account', {
+    const response = await fetch('/category/account', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token

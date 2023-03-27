@@ -7,6 +7,7 @@ import {
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
+import { paymenttypes } from "../../data/paymenttypes";
 
 function SupplierForm({ method, supData, title, accounts }) {
   const navigate = useNavigate();
@@ -89,6 +90,28 @@ function SupplierForm({ method, supData, title, accounts }) {
                       </select>
                     </div>
 
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
+                        Supplier Payment Type
+                      </label>
+                      <select
+                        name="paytype"
+                        autoComplete="country-name"
+                        required
+                        defaultValue={
+                          supData ? supData.payment_type : ""
+                        }
+                        className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      >
+                        {paymenttypes.map((type) => (
+                          <option key={type.id} value={type.payment_type}>
+                            {" "}
+                            {type.payment_type}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
                     <div className="col-span-6">
                       <label
                         htmlFor="street-address"
@@ -154,9 +177,10 @@ export async function action({ request, params }) {
     account_name: data.get("account"),
     supplier_site: data.get("supsite"),
     is_active: data.get("active"),
+    payment_type: data.get("paytype"),
   };
 
-  let url = "http://localhost:8000/supplier";
+  let url = "/supplier";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -175,7 +199,7 @@ export async function action({ request, params }) {
     return redirect("/supplier");
   } else {
     const id = params.id;
-    url = "http://localhost:8000/supplier/" + id;
+    url = "/supplier/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

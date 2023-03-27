@@ -21,7 +21,7 @@ export default SupplierPage;
 
 async function suppliersLoader(){
     const token = getAuthToken()
-    const response = await fetch("http://localhost:8000/supplier", {
+    const response = await fetch("/supplier", {
         method:"get",
         headers:{
             "Authorization": "Bearer "+ token

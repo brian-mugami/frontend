@@ -19,7 +19,7 @@ export default SupplierAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('http://localhost:8000/supplier/account', {
+    const response = await fetch('/supplier/account', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token

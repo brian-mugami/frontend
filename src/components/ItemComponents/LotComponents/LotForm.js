@@ -53,7 +53,7 @@ export async function action({request, params}){
         expiry_date: data.get("expiry")
     }
 
-    let url = 'http://localhost:8000/item/lot'
+    let url = '/item/lot'
     if(method==="POST"){
         const response = await fetch(url,{
             method: method,
@@ -72,7 +72,7 @@ export async function action({request, params}){
         return redirect("/item/lot")
     }else{
         const id = params.id
-        url = 'http://localhost:8000/item/lot/'+id
+        url = '/item/lot/'+id
         const response = await fetch(url,{
             method: method,
             headers: {

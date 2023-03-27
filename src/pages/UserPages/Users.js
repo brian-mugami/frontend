@@ -16,20 +16,34 @@ const {users}= useLoaderData()
 export default UsersPage
 
 async function loadUsers(){
-    const response = await fetch('http://localhost:8000/users')
+    const response = await fetch('/users')
+    if (!response.ok) {
+        throw json(
+          {
+            message: "Could not fetch users.",
+          },
+          { status: 500 }
+        );
+      }
 
-    if (!response.ok){
-        throw json({message: "Could not get users"}, {status: 500})
-    } else{
-        const resdata = await response.json();
-        return resdata
+    if (response.status === 401){
+        throw json(
+            {
+              message: "You are not logged in.",
+            },
+            { status: 401 }
+          );
     }
-}
+        const data = await response.json()
+        return data
+        
+    }
 
-export function loader(){
+
+export async function loader(){
     return defer(
         {
-            users: loadUsers()
+            users: await loadUsers()
         }
     )
 }
