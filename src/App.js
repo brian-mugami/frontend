@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthentificationPage, {
   action as AuthAction,
 } from "./pages/UserPages/AuthentificationPage";
-
 import ErrorPage from "./pages/UserPages/Error";
 import HomePage from "./pages/UserPages/Home";
 import RootLayout from "./pages/UserPages/Root";
@@ -132,11 +131,24 @@ import PaymentAccountDetailPage, {
   loader as PaymentAccountdetailLoader,
 } from "./pages/PaymentAccountPages/PayAccountdetailPage";
 import EditPaymentAccountPage from "./pages/PaymentAccountPages/EditPayAccountPage";
-import PurchaseAccountsPage, {loader as PurchaseAccountsLoader} from "./pages/PurchaseAccountPages/AllPurchaseAccountsPage";
+import PurchaseAccountsPage, {
+  loader as PurchaseAccountsLoader,
+} from "./pages/PurchaseAccountPages/AllPurchaseAccountsPage";
 import NewPurchaseAccountPage from "./pages/PurchaseAccountPages/NewPurchaseAccountPage";
-import {action as PurchaseAccountAction} from "./components/Accountcomponents/PurchaseAccountform"
-import PurchaseAccountDetailPage, {action as PurchaseAccountDeleteAction, loader as PurchaseAccountdetailLoader} from "./pages/PurchaseAccountPages/PurchaseAccountdetailPage";
+import { action as PurchaseAccountAction } from "./components/Accountcomponents/PurchaseAccountform";
+import PurchaseAccountDetailPage, {
+  action as PurchaseAccountDeleteAction,
+  loader as PurchaseAccountdetailLoader,
+} from "./pages/PurchaseAccountPages/PurchaseAccountdetailPage";
 import EditPurchaseAccountPage from "./pages/PurchaseAccountPages/EditPurchaseAccountPage";
+import PurchaseRootPage from "./pages/PurchasingPages/PurchasingRoot";
+import SalesRootNav from "./pages/SalesPages/SalesRoot";
+import SalesAccountsPage, {loader as AllSalesAccountLoader} from "./pages/SaleAccountPages/AllSalesaccountPage";
+import NewSalesAccountPage from "./pages/SaleAccountPages/NewSaleAccountPage";
+import SalesAccountDetailPage, {loader as SaleAccountLoader, action as DeleteSaleAccountAction} from "./pages/SaleAccountPages/SalesAccountDetailPage";
+import EditSalesAccountPage from "./pages/SaleAccountPages/EditSaleaccountPage";
+import {action as SalesAccountAction} from "./components/Accountcomponents/SaleAccountForm"
+
 
 const router = createBrowserRouter([
   {
@@ -207,25 +219,36 @@ const router = createBrowserRouter([
                 ],
               },
             ],
-          },{
+          },
+          {
             path: "purchase",
             element: <AllAccountRoot />,
             loader: PurchaseAccountsLoader,
             id: "purchase-accounts",
             children: [
-              { index: true, element: <PurchaseAccountsPage/>},
+              { index: true, element: <PurchaseAccountsPage /> },
               {
                 path: "new",
-                element: <NewPurchaseAccountPage/>,
+                element: <NewPurchaseAccountPage />,
                 action: PurchaseAccountAction,
-              },{
+              },
+              {
                 path: ":id",
                 id: "purchase-account-detail",
                 loader: PurchaseAccountdetailLoader,
                 children: [
-                  {index: true, element: <PurchaseAccountDetailPage/>, action: PurchaseAccountDeleteAction},
-                  {path: "edit", element: <EditPurchaseAccountPage/>, action: PurchaseAccountAction}
-                ]}
+                  {
+                    index: true,
+                    element: <PurchaseAccountDetailPage />,
+                    action: PurchaseAccountDeleteAction,
+                  },
+                  {
+                    path: "edit",
+                    element: <EditPurchaseAccountPage />,
+                    action: PurchaseAccountAction,
+                  },
+                ],
+              },
             ],
           },
           {
@@ -258,7 +281,37 @@ const router = createBrowserRouter([
                 ],
               },
             ],
-          },
+          },{
+            path: "sales",
+            element: <AllAccountRoot />,
+            loader: AllSalesAccountLoader,
+            id: "sales-accounts",
+            children: [
+              { index: true, element: <SalesAccountsPage/> },
+              {
+                path: "new",
+                element: <NewSalesAccountPage/>,
+                action: SalesAccountAction,
+              },
+              {
+                path: ":id",
+                id: "sales-account-detail",
+                loader: SaleAccountLoader,
+                children: [
+                  {
+                    index: true,
+                    element: <SalesAccountDetailPage/>,
+                    action: DeleteSaleAccountAction,
+                  },
+                  {
+                    path: "edit",
+                    element: <EditSalesAccountPage/>,
+                    action: SalesAccountAction,
+                  },
+                ],
+              },
+            ],
+          },,
           {
             path: "customer",
             element: <AllAccountRoot />,
@@ -458,6 +511,12 @@ const router = createBrowserRouter([
             ],
           },
         ],
+      },{
+        path: "purchase",
+        element: <PurchaseRootPage/>
+      },{
+        path: "sales",
+        element:<SalesRootNav/>
       },
       {
         path: "supplier",

@@ -57,13 +57,26 @@ function SupplierForm({ method, supData, title, accounts }) {
 
                     <div className="col-span-6 sm:col-span-4">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Supplier Contact
+                        Supplier Email
+                      </label>
+                      <input
+                        type="email"
+                        name="supemail"
+                        id="email-address"
+                        defaultValue={supData ? supData.supplier_email : ""}
+                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      />
+                    </div>
+
+                    <div className="col-span-6 sm:col-span-4">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
+                        Supplier Phone Number
                       </label>
                       <input
                         type="text"
                         name="supcon"
                         id="email-address"
-                        defaultValue={supData ? supData.supplier_contact : ""}
+                        defaultValue={supData ? supData.supplier_phone_no : ""}
                         className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -173,7 +186,8 @@ export async function action({ request, params }) {
 
   const supData = {
     supplier_name: data.get("supname"),
-    supplier_contact: data.get("supcon"),
+    supplier_phone_no: data.get("supcon"),
+    supplier_email:data.get("supemail"),
     account_name: data.get("account"),
     supplier_site: data.get("supsite"),
     is_active: data.get("active"),
