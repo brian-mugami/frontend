@@ -148,7 +148,11 @@ import NewSalesAccountPage from "./pages/SaleAccountPages/NewSaleAccountPage";
 import SalesAccountDetailPage, {loader as SaleAccountLoader, action as DeleteSaleAccountAction} from "./pages/SaleAccountPages/SalesAccountDetailPage";
 import EditSalesAccountPage from "./pages/SaleAccountPages/EditSaleaccountPage";
 import {action as SalesAccountAction} from "./components/Accountcomponents/SaleAccountForm"
-
+import ExpenseAccountsPage, {loader as AllExpenseAccountLoader} from "./pages/ExpenseAccountPages/AllExpenseAccountPages";
+import NewExpenseAccountPage from "./pages/ExpenseAccountPages/NewExpenseAccountPage";
+import ExpenseAccountDetailPage, {action as ExpenseaccountdeleteAction, loader as ExpenseAccountLoader} from "./pages/ExpenseAccountPages/ExpenseAccountdetailPage";
+import EditExpenseAccountPage from "./pages/ExpenseAccountPages/EditExpenseaccountPage";
+import {action as ExpenseAccountManipulateaction} from "./components/Accountcomponents/ExpenseAccountForm"
 
 const router = createBrowserRouter([
   {
@@ -311,7 +315,38 @@ const router = createBrowserRouter([
                 ],
               },
             ],
-          },,
+          },{
+            path: "expense",
+            element: <AllAccountRoot />,
+            loader: AllExpenseAccountLoader,
+            id: "expense-accounts",
+            children: [
+              { index: true, element: <ExpenseAccountsPage/> },
+              {
+                path: "new",
+                element: <NewExpenseAccountPage/>,
+                action: ExpenseAccountManipulateaction,
+              },
+              {
+                path: ":id",
+                id: "expense-account-detail",
+                loader: ExpenseAccountLoader,
+                children: [
+                  {
+                    index: true,
+                    element: <ExpenseAccountDetailPage/>,
+                    action: ExpenseaccountdeleteAction,
+                  },
+                  {
+                    path: "edit",
+                    element: <EditExpenseAccountPage/>,
+                    action: ExpenseAccountManipulateaction,
+                  },
+                ],
+              },
+            ],
+
+          },
           {
             path: "customer",
             element: <AllAccountRoot />,

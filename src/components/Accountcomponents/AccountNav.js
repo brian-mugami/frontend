@@ -24,6 +24,9 @@ function AccountNavigation(){
                         <li>
                             <NavLink to="/account/sales">Sales Accounts</NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/account/expense">Expense Accounts</NavLink>
+                        </li>
                     </ul>
                 </nav>
             </header>
