@@ -3,7 +3,7 @@ import { getAuthToken } from "../../util/Auth";
 import { accountTypes } from "../../data/paymenttypes";
 
 
-function PaymentAccountForm({method, title, account}){
+function ExpenseAccountForm({method, title, account}){
     const navigate = useNavigate()  
     const navigation = useNavigation()
 
@@ -29,7 +29,7 @@ function PaymentAccountForm({method, title, account}){
         </p>
         <div className="col-span-6 sm:col-span-3">
         <label className="block text-sm font-medium leading-6 text-gray-900">
-          Payment Type
+          Expense Payment Type
         </label>
         <select
           name="paytype"
@@ -58,7 +58,7 @@ function PaymentAccountForm({method, title, account}){
     </Form>)
 }
 
-export default PaymentAccountForm;
+export default ExpenseAccountForm;
 
 export async function action({request, params}){
     const method = request.method
@@ -72,7 +72,7 @@ export async function action({request, params}){
         account_type: data.get("paytype")
     }
 
-    let url = '/payment/account'
+    let url = '/expense/account'
     if(method==='POST'){
         const response = await fetch(url,{
             method: method,
@@ -88,10 +88,10 @@ export async function action({request, params}){
             throw json ({message: "Failed to save the account"}, {status: 500})
         }
 
-        return redirect("/account/payment")
+        return redirect("/account/expense")
     }else{
       const id = params.id 
-      url = '/payment/account/'+id
+      url = '/expense/account/'+id
       const response = await fetch(url,{
         method: method,
         headers: {
@@ -106,6 +106,6 @@ export async function action({request, params}){
         throw json ({message: "Failed to update the account"}, {status: 500})
     }
 
-    return redirect("/account/payment")
+    return redirect("/account/expense")
     }
 }

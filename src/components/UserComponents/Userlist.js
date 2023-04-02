@@ -13,7 +13,6 @@ function UserList({users}){
                     <li key= {user.id}>
                         <Link to={`${user.id}`}>
                         <h2>{user.email}</h2>
-                        <p>{user.first_name} {user.last_name}</p>
                         </Link>
                         </li>
                 ))}

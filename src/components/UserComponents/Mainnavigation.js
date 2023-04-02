@@ -3,7 +3,6 @@ import "./MainNavigation.css";
 import image from "../assets/intel.png";
 import classes from "./MainNavigation.css";
 
-
 function MainNavigation() {
   const token = useRouteLoaderData("root");
   return (
@@ -53,6 +52,16 @@ function MainNavigation() {
           {token && (
             <li>
               <NavLink to="customer">Customers</NavLink>
+            </li>
+          )}
+          {token && (
+            <li>
+              <NavLink to="purchase">Purchases</NavLink>
+            </li>
+          )}
+            {token && (
+            <li>
+              <NavLink to="sales">Sales</NavLink>
             </li>
           )}
           {token && (

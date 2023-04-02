@@ -19,6 +19,7 @@ function Accountitem({account, title}){
             <p>name-{account.account_name}</p>
             <p>description-{account.account_description}</p>
             <p>number-{account.account_number}</p>
+            <p>type-{account.account_type}</p>
             {token && <menu>
                 <Link to="edit">Edit</Link>
                 <button onClick={startDeleteHandler}>Delete</button>
