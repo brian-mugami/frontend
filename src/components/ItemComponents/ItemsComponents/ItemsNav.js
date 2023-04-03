@@ -1,25 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 function ItemNav(){
     return(
         <React.Fragment>
-            <header>
-                <nav>
-                    <ul>
-                        <li>
-                            <NavLink to=".">
-                                All Items
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="./new">
-                                New Item
-                            </NavLink>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
+      <Breadcrumbs>
+        <div className="flex justify">
+          <PlusCircleIcon strokeWidth={3} className="h-6 w-6" />
+          <NavLink to="./new">Add Item</NavLink>
+        </div>
+      </Breadcrumbs>
+      
         </React.Fragment>
     )
 }

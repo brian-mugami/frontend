@@ -6,8 +6,8 @@ function ItemsRoot(){
     return(
         <React.Fragment>
             <ItemNavigation/>
-            <br></br>
-            <Outlet/>
+            
+                        
         </React.Fragment>
     )
 }

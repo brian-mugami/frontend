@@ -1,25 +1,51 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React from "react";
-function ItemNavigation(){
-    return(
-        <React.Fragment>
-            <header>
-                <nav>
-                    <ul>
-                        <li>
-                            <NavLink to="./lot">Item Lots</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="./category">Item Categories</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="./main">Items</NavLink>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-        </React.Fragment>
-    )
+import { Outlet } from "react-router-dom";
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import { useState } from "react";
+
+function ItemNavigation() {
+  const data = [
+    {
+      label: "ITEMS",
+      value: "ITEMS",
+      desc: "./main",
+    },
+    {
+      label: "ITEM CATEGORIES",
+      value: "ITEM CATEGORIES",
+      desc: "./category",
+    },
+
+    {
+      label: "ITEM LOTS",
+      value: "ITEM LOTS",
+      desc: "./lot",
+    },
+  ];
+
+  return (
+    <React.Fragment>
+      <Tabs id="custom-animation" value="html" className="py-5">
+        <TabsHeader>
+          {data.map(({ label, value, desc }) => (
+            
+            <Tab key={label} value={value}>
+              <NavLink to={desc}>{label}</NavLink>
+            </Tab>
+          ))}
+        </TabsHeader>
+      </Tabs>
+      <br></br>
+      <Outlet />
+    </React.Fragment>
+  );
 }
 
 export default ItemNavigation;

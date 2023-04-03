@@ -35,9 +35,9 @@ async function customersLoader(){
     };
 }
 
-export function loader (){
+export async function loader (){
     return(
         defer({
-            customers: customersLoader()
+            customers: await customersLoader()
         })
     )}

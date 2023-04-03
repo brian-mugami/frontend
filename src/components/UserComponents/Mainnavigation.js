@@ -28,12 +28,7 @@ function MainNavigation() {
               <NavLink to="/auth?mode=login">Sign In</NavLink>
             </li>
           )}
-          {token && (
-            <li>
-              <NavLink to="/user"className={({ isActive }) =>
-                isActive ? classes.active : undefined}>Users</NavLink>
-            </li>
-          )}
+          
           {token && (
             <li>
               <NavLink to="/home">Dashboard</NavLink>

@@ -35,9 +35,9 @@ async function suppliersLoader(){
     };
 }
 
-export function loader (){
+export async function loader (){
     return(
         defer({
-            suppliers: suppliersLoader()
+            suppliers: await suppliersLoader()
         })
     )}
