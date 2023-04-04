@@ -48,5 +48,5 @@
   "devDependencies": {
     "tailwindcss": "^3.2.7"
   },
-  "proxy": "https://flask-inventory.onrender.com"
+  "proxy": "http://127.0.0.1:8000"
 }

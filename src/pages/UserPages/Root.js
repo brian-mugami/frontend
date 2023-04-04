@@ -1,6 +1,10 @@
 import React from "react";
+<<<<<<< HEAD
 import { Outlet, useRouteLoaderData } from "react-router-dom";
 import MainNavigation from "../../components/UserComponents/MainNavigation";
+=======
+import { Outlet } from "react-router-dom";
+>>>>>>> origin/Mugamidb
 import Sidebar from "../../components/Sidenav";
 
 function RootLayout() {

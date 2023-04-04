@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
-import MainNavigation from "../../components/UserComponents/MainNavigation";
+import Sidebar from "../../components/Sidenav";
 import PageContent from "../../components/UserComponents/PageContent";
 
 function ErrorPage(){
@@ -16,14 +16,14 @@ function ErrorPage(){
         title = "Not found"
         message = "Could not find page!!"
     }
-    if (error.status===401){
+    if (isRouteErrorResponse(error) && error.status===401){
         title = "Unauthorized"
         message = error.data.message
     }
     
     return(
         <React.Fragment>
-            <MainNavigation/>
+            <Sidebar/>
             <PageContent title={title}>
                 <p>{message}</p>
             </PageContent>
