@@ -139,7 +139,7 @@ import PurchaseAccountDetailPage, {
   loader as PurchaseAccountdetailLoader,
 } from "./pages/PurchaseAccountPages/PurchaseAccountdetailPage";
 import EditPurchaseAccountPage from "./pages/PurchaseAccountPages/EditPurchaseAccountPage";
-import PurchaseRootPage from "./pages/PurchasingPages/PurchasingRoot";
+import PurchaseRootPage from "./pages/InvoicePages/PurchasingRoot";
 import SalesRootNav from "./pages/SalesPages/SalesRoot";
 import SalesAccountsPage, {loader as AllSalesAccountLoader} from "./pages/SaleAccountPages/AllSalesaccountPage";
 import NewSalesAccountPage from "./pages/SaleAccountPages/NewSaleAccountPage";
@@ -151,6 +151,12 @@ import NewExpenseAccountPage from "./pages/ExpenseAccountPages/NewExpenseAccount
 import ExpenseAccountDetailPage, {action as ExpenseaccountdeleteAction, loader as ExpenseAccountLoader} from "./pages/ExpenseAccountPages/ExpenseAccountdetailPage";
 import EditExpenseAccountPage from "./pages/ExpenseAccountPages/EditExpenseaccountPage";
 import {action as ExpenseAccountManipulateaction} from "./components/Accountcomponents/ExpenseAccountForm"
+import AllInvoicePage, {loader as invoicesLoader} from "./pages/InvoicePages/AllInvoicePage";
+import NewInvoicePage from "./pages/InvoicePages/NewInvoicePage";
+import {action as InvoiceManipulateAction} from "./components/PurchasingComponents/InvoiceForm"
+import InvoiceDetailPage, {loader as invoiceLoader, action as deleteInvoiceAction} from "./pages/InvoicePages/InvoiceDetailPage";
+import InvoiceEditPage from "./pages/InvoicePages/EditInvoicePage";
+
 
 const router = createBrowserRouter([
   {
@@ -544,9 +550,20 @@ const router = createBrowserRouter([
             ],
           },
         ],
-      },{
-        path: "purchase",
-        element: <PurchaseRootPage/>
+      },
+      {
+        path: "invoice",
+        element: <PurchaseRootPage/>,
+        loader: invoicesLoader,
+        id: "invoices",
+        children:[
+          {index: true, element: <AllInvoicePage/>},
+          {path: "new", element: <NewInvoicePage/>,action: InvoiceManipulateAction},
+          {path: ":id", id: "invoice-detail", loader: invoiceLoader, children: [
+            {index: true, element: <InvoiceDetailPage/>, action: deleteInvoiceAction},
+            {path: "edit", element: <InvoiceEditPage/>, action:InvoiceManipulateAction}
+          ]}
+        ]
       },{
         path: "sales",
         element:<SalesRootNav/>

@@ -14,7 +14,7 @@ function PurchasingNav(){
                         </li>
                         <li>
                             <NavLink to="./new">
-                                Make a new purchase
+                                Make a purchase
                             </NavLink>
                         </li>
                     </ul>

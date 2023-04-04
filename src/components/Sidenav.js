@@ -1,7 +1,6 @@
 import { NavLink, Form, useRouteLoaderData } from "react-router-dom";
 import React from "react";
 import "../components/Sidenav.css";
-import classes from "../components/Sidenav.css";
 
 function Sidebar() {
   const token = useRouteLoaderData("root");
@@ -40,8 +39,8 @@ function Sidebar() {
           </NavLink>
         )}
         {token && (
-          <NavLink className="sidebar-nav-link" to="purchase">
-            Purchases
+          <NavLink className="sidebar-nav-link" to="invoice">
+            Invoices
           </NavLink>
         )}
         {token && ( <NavLink className="sidebar-nav-link" to="sales">Sales</NavLink>)}
