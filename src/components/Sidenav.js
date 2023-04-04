@@ -36,7 +36,6 @@ function Sidebar() {
               Users
             </NavLink>
 
-<<<<<<< HEAD
             <NavLink className="sidebar-nav-link" to="account">
               Accounts
             </NavLink>
@@ -65,36 +64,6 @@ function Sidebar() {
             </Form>
           </nav>
         </div>
-=======
-        {token && (
-          <NavLink className="sidebar-nav-link" to="account">
-            Accounts
-          </NavLink>
-        )}
-        {token && (
-          <NavLink className="sidebar-nav-link" to="item">
-            Item Details
-          </NavLink>
-        )}
-        {token && (
-          <NavLink className="sidebar-nav-link" to="customer">
-            Customers
-          </NavLink>
-        )}
-        {token && (
-          <NavLink className="sidebar-nav-link" to="invoice">
-            Invoices
-          </NavLink>
-        )}
-        {token && ( <NavLink className="sidebar-nav-link" to="sales">Sales</NavLink>)}
-        {token &&(  <NavLink  className="sidebar-nav-link" to="supplier">Suppliers</NavLink>)}
-        {token && (
-          <Form action="logout" method="post">
-            <button className="btn btn-danger">Logout</button>
-          </Form>
-        )}
-      </nav>
->>>>>>> origin/Mugamidb
     </div>
   );
 }
