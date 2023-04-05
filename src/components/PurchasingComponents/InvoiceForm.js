@@ -1,20 +1,21 @@
 import React from "react";
-import { useState } from "react";
+
 import {
   Form,
   useNavigate,
   useNavigation,
+  useActionData,
   redirect,
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import { destinationTypes, purchaseTypes } from "../../data/paymenttypes";
 
-
-function InvoiceForm({invoiceData, title}) {
+function InvoiceForm({ invoiceData, title, suppliers }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const date = new Date().toISOString().slice(0, 10);
+  const data = useActionData();
 
   const isSubmitting = navigation.state === "submitting";
   function cancelHandler() {
@@ -22,7 +23,14 @@ function InvoiceForm({invoiceData, title}) {
   }
   return (
     <React.Fragment>
-        <h1>Invoice {title}</h1>
+      <h1>Invoice {title}</h1>
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
       <Form>
         <p>
           <label>Invoice Number</label>
@@ -79,6 +87,22 @@ function InvoiceForm({invoiceData, title}) {
           </select>
         </p>
         <p>
+          <label>Supplier</label>
+          <select
+            name="supplier"
+            type="text"
+            required
+            defaultValue={invoiceData ? invoiceData.supplier.supplier_name : ""}
+          >
+            {suppliers.map((supplier) => (
+              <option key={supplier.id} value={supplier.supplier_name}>
+                {" "}
+                {supplier.supplier_name}
+              </option>
+            ))}
+          </select>
+        </p>
+        <p>
           <label>Purchase Type</label>
           <select
             name="purchase_type"
@@ -95,35 +119,18 @@ function InvoiceForm({invoiceData, title}) {
           </select>
         </p>
         <p>
-          <label>Accounted</label>
-          <input
-            name="accounted"
-            type="text"
-            defaultValue={invoiceData ? invoiceData.accounted : "false"}
-          ></input>
-        </p>
-        <p>
-          <label>Matched</label>
-          <input
-            name="matched"
-            type="text"
-            defaultValue={invoiceData ? invoiceData.matched_to_lines : "unmatched"}
-          ></input>
-        </p>
-        <p>
           <label>Date</label>
           <input
             name="inv_date"
             type="date"
-            value={date}
-            defaultValue={invoiceData ? invoiceData.date : {date}}
+            defaultValue={invoiceData ? invoiceData.date : date}
           ></input>
         </p>
         <div>
           <button type="button" onClick={cancelHandler} disabled={isSubmitting}>
             Cancel
           </button>
-          <button disabled={isSubmitting}>
+          <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Submitting..." : "Save"}
           </button>
         </div>
@@ -134,55 +141,56 @@ function InvoiceForm({invoiceData, title}) {
 
 export default InvoiceForm;
 
-export async function action({request, params}){
-    const method = request.method;
-    const data = await request.formData();
-    const token = getAuthToken()
+export async function action({ request, params }) {
+  const method = request.method;
+  const data = await request.formData();
+  const token = getAuthToken();
 
-    const ItemData = {
-        invoice_number: data.get("inv_number"),
-        amount: data.get("inv_amount"),
-        currency: data.get("currency"),
-        description: data.get("description"),
-        destination_type: data.get("destinationType"),
-        date: data.get("inv_date"),
-        purchase_type: data.get("purchase_type"),
+  const InvoiceData = {
+    invoice_number: data.get("inv_number"),
+    amount: data.get("inv_amount"),
+    currency: data.get("currency"),
+    description: data.get("description"),
+    destination_type: data.get("destinationType"),
+    date: data.get("inv_date"),
+    purchase_type: data.get("purchase_type"),
+    supplier_name: data.get("supplier"),
+  };
+
+  let url = "/invoices";
+  if (method === "POST") {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(InvoiceData),
+    });
+    if (!response.ok) {
+      window.alert("failed");
+      throw json({ message: "Failed to save the invoice" }, { status: 500 });
     }
 
-    let url = '/invoices'
-    if(method==="POST"){
-        const response = await fetch(url,{
-            method: method,
-            headers: {
-                'Content-Type':'application/json',
-                'Authorization': "Bearer " + token,
-                'Access-Control-Allow-Origin': '*'
-            },
-            body:JSON.stringify(ItemData)
-        });
-        if (!response.ok){
-            window.alert("failed")
-            throw json ({message: "Failed to save the invoice"}, {status: 500})
-        }
-
-        return redirect("/invoice")
-    }else{
-        const id = params.id
-        url = '/invoices/'+id
-        const response = await fetch(url,{
-            method: method,
-            headers: {
-                'Content-Type':'application/json',
-                'Authorization': "Bearer " + token,
-                'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify(ItemData)
-        });
-        if (!response.ok){
-            window.alert("failed update")
-            throw json ({message: "Failed to update"}, {status: 500})
-        }
-
-        return redirect("/invoice")
+    return redirect("/invoice");
+  } else {
+    const id = params.id;
+    url = "/invoices/" + id;
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(InvoiceData),
+    });
+    if (!response.ok) {
+      window.alert("failed update");
+      throw json({ message: "Failed to update" }, { status: 500 });
     }
+
+    return redirect("/invoice");
+  }
 }

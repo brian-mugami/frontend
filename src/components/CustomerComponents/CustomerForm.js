@@ -70,6 +70,32 @@ function CustomerForm({ method, cusData, title, accounts }) {
                         placeholder=""
                       />
                     </div>
+                    
+                    <div className="col-span-6 sm:col-span-4">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
+                        Customer Bill To Site
+                      </label>
+                      <input
+                        name="billto"
+                        type="text"
+                        defaultValue={cusData ? cusData.customer_bill_to_site : "main"}
+                        className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder=""
+                      />
+                    </div>
+
+                    <div className="col-span-6 sm:col-span-4">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
+                        Customer Site
+                      </label>
+                      <input
+                        name="site"
+                        type="text"
+                        defaultValue={cusData ? cusData.customer_site : "main"}
+                        className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder=""
+                      />
+                    </div>
 
                     <div className="col-span-6 sm:col-span-4">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -187,6 +213,8 @@ export async function action({ request, params }) {
     account_name: data.get("account"),
     payment_type: data.get("paytype"),
     is_active: data.get("active"),
+    customer_site: data.get("site"),
+    customer_bill_to_site: data.get("billto"),
   };
 
   let url = "/customer";
