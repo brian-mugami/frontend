@@ -5,8 +5,10 @@ import SupplierNav from "../../../components/SupplierComponents/SupplierNav";
 function SupplierRoot(){
     return(
         <React.Fragment>
-            <SupplierNav/>
-            <Outlet/>
+            <div><SupplierNav/></div>
+            <div className="px-5"><Outlet/></div>
+            
+            
         </React.Fragment>
     )
 }

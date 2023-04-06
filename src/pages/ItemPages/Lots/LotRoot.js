@@ -5,8 +5,11 @@ import ItemLotNav from "../../../components/ItemComponents/LotComponents/ItemLot
 function LotRoot(){
     return(
         <React.Fragment>
+            <div className="px-5">
             <ItemLotNav/>
-            <Outlet/>
+            </div>
+            <div className="px-5"><Outlet/></div>
+            
         </React.Fragment>
     )
 }

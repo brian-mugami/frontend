@@ -5,8 +5,10 @@ import CustomerNav from "../../../components/CustomerComponents/CustomerNav";
 function CustomerRoot(){
     return(
         <React.Fragment>
-            <CustomerNav/>
-            <Outlet/>
+            <div className=""><CustomerNav/></div>
+            <div className="px-5"><Outlet/></div>
+            
+            
         </React.Fragment>
     )
 }

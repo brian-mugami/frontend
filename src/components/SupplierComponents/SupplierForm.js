@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import { paymenttypes } from "../../data/paymenttypes";
+import { Radio } from "@material-tailwind/react";
 
 function SupplierForm({ method, supData, title, accounts }) {
   const navigate = useNavigate();
@@ -20,7 +21,15 @@ function SupplierForm({ method, supData, title, accounts }) {
 
   return (
     <React.Fragment>
-      <div className="mt-10 sm:mt-0 bg-whitesmoke">
+
+<div className="hidden sm:block" aria-hidden="true">
+        <div className="pb-2">
+          <div className="border-t border-gray-200" />
+        </div>
+      </div>
+
+
+      <div className="mt-10  sm:mt-0  bg-whitesmoke">
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
@@ -32,14 +41,14 @@ function SupplierForm({ method, supData, title, accounts }) {
               </p>
             </div>
           </div>
-          <div className="mt-5 md:col-span-2 md:mt-0">
+          <div className="mt-2 bg-white rounded-lg mr-10 md:col-span-2 md:mt-0">
             <Form method={method}>
               <div className="overflow-hidden shadow sm:rounded-md">
-                <div className="bg-white px-4 py-5 sm:p-6">
+                <div className="px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label
-                        htmlFor="first-name"
+                        
                         className="block text-sm font-medium leading-6 text-gray-900"
                       >
                         Supplier Name
@@ -51,7 +60,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                         autoComplete="given-name"
                         required
                         defaultValue={supData ? supData.supplier_name : ""}
-                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="mt-2 block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
 
@@ -64,7 +73,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                         name="supemail"
                         id="email-address"
                         defaultValue={supData ? supData.supplier_email : ""}
-                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
 
@@ -77,7 +86,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                         name="supcon"
                         id="email-address"
                         defaultValue={supData ? supData.supplier_phone_no : ""}
-                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
 
@@ -92,7 +101,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                         defaultValue={
                           supData ? supData.account.account_name : ""
                         }
-                        className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       >
                         {accounts.map((account) => (
                           <option key={account.id} value={account.name}>
@@ -114,7 +123,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                         defaultValue={
                           supData ? supData.payment_type : ""
                         }
-                        className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       >
                         {paymenttypes.map((type) => (
                           <option key={type.id} value={type.payment_type}>
@@ -137,33 +146,37 @@ function SupplierForm({ method, supData, title, accounts }) {
                         name="supsite"
                         id="street-address"
                         defaultValue={supData ? supData.supplier_site : ""}
-                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
 
-                    <div>
+                    <div > 
                       <label>Status</label>
-                      <div>
+                      <div className="flex space-x-5">
+                        <div className="flex">
                         <label>Active</label>
                         <input type="radio" name="active" value="True" />
+                        </div>
                         <label>Inactive</label>
                         <input type="radio" name="active" value="False" />
+
                       </div>
+
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <div className="bg-gray-50 px-4 py-3 pb-10 text-right sm:px-6">
                   <button
                     type="button"
                     onClick={cancelHandler}
                     disabled={isSubmitting}
-                    className="inline-flex justify-center rounded-md bg-indigo-600 mr-5 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                    className="inline-flex justify-center rounded-md bg-indigo-600 mr-5 py-2 px-3 text-sm font-semibold text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                   >
                     Cancel
                   </button>
                   <button
                     disabled={isSubmitting}
-                    className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                    className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                   >
                     {isSubmitting ? "Submitting..." : "Save"}
                   </button>
@@ -173,6 +186,18 @@ function SupplierForm({ method, supData, title, accounts }) {
           </div>
         </div>
       </div>
+
+      <div className="hidden sm:block" aria-hidden="true">
+        <div className="py-5">
+          <div className="border-t border-gray-200" />
+        </div>
+      </div>
+
+
+
+
+
+
     </React.Fragment>
   );
 }

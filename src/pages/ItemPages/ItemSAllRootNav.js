@@ -5,7 +5,9 @@ import ItemNavigation from "../../components/ItemComponents/ItemsComponents/Main
 function ItemsRoot(){
     return(
         <React.Fragment>
+            <div className="px-5">
             <ItemNavigation/>
+            </div>
             
                         
         </React.Fragment>
