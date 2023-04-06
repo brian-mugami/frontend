@@ -6,12 +6,14 @@ import { Breadcrumbs } from "@material-tailwind/react";
 function ItemNav(){
     return(
         <React.Fragment>
-      <Breadcrumbs>
+          <div >
+      <Breadcrumbs >
         <div className="flex justify">
           <PlusCircleIcon strokeWidth={3} className="h-6 w-6" />
           <NavLink to="./new">Add Item</NavLink>
         </div>
       </Breadcrumbs>
+      </div>
       
         </React.Fragment>
     )
