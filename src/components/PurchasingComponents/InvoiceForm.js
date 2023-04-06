@@ -11,7 +11,7 @@ import {
 import { getAuthToken } from "../../util/Auth";
 import { destinationTypes, purchaseTypes } from "../../data/paymenttypes";
 
-function InvoiceForm({ invoiceData, title, suppliers }) {
+function InvoiceForm({ invoiceData, title, suppliers, method }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const date = new Date().toISOString().slice(0, 10);
@@ -23,7 +23,7 @@ function InvoiceForm({ invoiceData, title, suppliers }) {
   }
   return (
     <React.Fragment>
-      <h1>Invoice {title}</h1>
+      <h1> {title}</h1>
       {data && data.errors && (
         <ul>
           {Object.values(data.errors).map((err) => (
@@ -31,7 +31,7 @@ function InvoiceForm({ invoiceData, title, suppliers }) {
           ))}
         </ul>
       )}
-      <Form>
+      <Form method={method}>
         <p>
           <label>Invoice Number</label>
           <input
@@ -157,13 +157,13 @@ export async function action({ request, params }) {
     supplier_name: data.get("supplier"),
   };
 
-  let url = "/invoices";
+  let url = "/invoice";
   if (method === "POST") {
     const response = await fetch(url, {
-      method: method,
+      method: request.method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        "Authorization": "Bearer " + token,
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(InvoiceData),
@@ -172,16 +172,15 @@ export async function action({ request, params }) {
       window.alert("failed");
       throw json({ message: "Failed to save the invoice" }, { status: 500 });
     }
-
     return redirect("/invoice");
   } else {
     const id = params.id;
-    url = "/invoices/" + id;
+    url = "/invoice/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
+        "Authorization": "Bearer " + token,
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(InvoiceData),

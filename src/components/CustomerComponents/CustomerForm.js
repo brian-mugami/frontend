@@ -5,6 +5,7 @@ import {
   useNavigation,
   redirect,
   json,
+  useActionData,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import { paymenttypes } from "../../data/paymenttypes";
@@ -13,6 +14,7 @@ import { paymenttypes } from "../../data/paymenttypes";
 function CustomerForm({ method, cusData, title, accounts }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const data = useActionData()
 
   const isSubmitting = navigation.state === "submitting";
   function cancelHandler() {
@@ -38,6 +40,15 @@ function CustomerForm({ method, cusData, title, accounts }) {
                 Input Customer details here
               </p>
             </div>
+            <p>
+            {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
+            </p>
           </div>
           <div className="mt-5 bg-white mr-10 md:col-span-2 md:mt-0">
             <Form  method={method}>

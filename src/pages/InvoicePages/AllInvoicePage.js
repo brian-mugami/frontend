@@ -22,20 +22,19 @@ export default AllInvoicesPage;
 async function InvoiceLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/invoices", {
+  const response = await fetch("/invoice", {
     method: "get",
     headers: {
-      Authorization: "Bearer " + token,
+      "Authorization": "Bearer " + token,
     },
   });
   if (!response.ok) {
-    throw json({ message: "Could not fetch users" }, { status: 500 });
+    throw json({ message: "Could not fetch invoices" }, { status: 500 });
   } else {
     const resData = await response.json();
     if (resData.status === 401) {
       throw json({ message: "You are not authorized" }, { status: 401 });
     }
-    console.log(resData);
     return resData;
   }
 }
