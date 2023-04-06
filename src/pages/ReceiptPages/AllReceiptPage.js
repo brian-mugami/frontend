@@ -2,34 +2,34 @@ import React from "react";
 import { Suspense } from "react";
 import { Await, json, defer, useRouteLoaderData } from "react-router";
 import { getAuthToken } from "../../util/Auth";
-import InvoiceList from "../../components/InvoiceComponents/InvoiceList";
+import ReceiptList from "../../components/ReceiptComponents/ReceiptList";
 
-function AllInvoicesPage() {
-  const { invoices } = useRouteLoaderData("invoices");
+function AllReceiptsPage() {
+  const { receipts } = useRouteLoaderData("receipts");
   return (
     <Suspense fallback={<p style={{ textAlign: "center" }}>Loading....</p>}>
-      <Await resolve={invoices}>
-        {(loadedInvoices) => (
-          <InvoiceList invoices={loadedInvoices} title="Invoices" />
+      <Await resolve={receipts}>
+        {(loadedReceipts) => (
+          <ReceiptList receipts={loadedReceipts} title="Receipts" />
         )}
       </Await>
     </Suspense>
   );
 }
 
-export default AllInvoicesPage;
+export default AllReceiptsPage;
 
-async function InvoiceLoader() {
+async function ReceiptLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/invoice", {
+  const response = await fetch("/receipt", {
     method: "get",
     headers: {
       "Authorization": "Bearer " + token,
     },
   });
   if (!response.ok) {
-    throw json({ message: "Could not fetch invoices" }, { status: 500 });
+    throw json({ message: "Could not fetch receipts" }, { status: 500 });
   } else {
     const resData = await response.json();
     if (resData.status === 401) {
@@ -41,6 +41,6 @@ async function InvoiceLoader() {
 
 export async function loader() {
   return defer({
-    invoices: await InvoiceLoader(),
+    receipts: await ReceiptLoader(),
   });
 }

@@ -9,12 +9,12 @@ function SalesNav(){
                     <ul>
                         <li>
                             <NavLink to=".">
-                                All Items
+                                All Receipts
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="./new">
-                                New Item
+                                New Receipt
                             </NavLink>
                         </li>
                     </ul>

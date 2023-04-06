@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouteLoaderData } from "react-router-dom";
-import InvoiceForm from "../../components/PurchasingComponents/InvoiceForm";
+import InvoiceForm from "../../components/InvoiceComponents/InvoiceForm";
 
 function InvoiceEditPage() {
   const invoiceData = useRouteLoaderData("invoice-detail");

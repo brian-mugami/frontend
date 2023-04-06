@@ -1,20 +1,20 @@
 import React from "react";
 import { json,useRouteLoaderData, redirect } from "react-router-dom";
-import InvoiceItem from "../../components/InvoiceComponents/InvoiceItem";
+import ReceiptItem from "../../components/ReceiptComponents/ReceiptItem";
 import { getAuthToken } from "../../util/Auth";
 
-function InvoiceDetailPage(){
-    const invoice = useRouteLoaderData("invoice-detail")
+function ReceiptDetailPage(){
+    const receipt = useRouteLoaderData("receipt-detail")
     return(
         <React.Fragment>
-                    <InvoiceItem invoice={invoice}/>
+                    <ReceiptItem receipt={receipt}/>
         </React.Fragment>
     )   
 }
-export default InvoiceDetailPage;
+export default ReceiptDetailPage;
 
 export async function loader({request, params}){
-    let url = '/invoice/'
+    let url = '/receipt/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -37,7 +37,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("/invoice/" + id, {
+    const response = await fetch("/receipt/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token
@@ -45,11 +45,11 @@ export async function action({request,params}){
     });
     if (!response.ok) {
         throw json(
-          { message: 'Could not delete invoice.' },
+          { message: 'Could not delete receipt.' },
           {
             status: 500,
           }
         );
       }
-      return redirect("/invoice")
+      return redirect("/receipt")
 }

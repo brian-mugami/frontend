@@ -152,11 +152,15 @@ import ExpenseAccountDetailPage, {action as ExpenseaccountdeleteAction, loader a
 import EditExpenseAccountPage from "./pages/ExpenseAccountPages/EditExpenseaccountPage";
 import {action as ExpenseAccountManipulateaction} from "./components/Accountcomponents/ExpenseAccountForm"
 import AllInvoicePage, {loader as invoicesLoader} from "./pages/InvoicePages/AllInvoicePage";
-import NewInvoicePage, {Loader as invoiceSupplierLoader} from "./pages/InvoicePages/NewInvoicePage";
-import {action as InvoiceManipulateAction} from "./components/PurchasingComponents/InvoiceForm"
+import NewInvoicePage from "./pages/InvoicePages/NewInvoicePage";
+import {action as InvoiceManipulateAction,Loader as invoiceSupplierLoader} from "./components/InvoiceComponents/InvoiceForm"
 import InvoiceDetailPage, {loader as invoiceLoader, action as deleteInvoiceAction} from "./pages/InvoicePages/InvoiceDetailPage";
 import InvoiceEditPage from "./pages/InvoicePages/EditInvoicePage";
-
+import ReceiptEditPage from "./pages/ReceiptPages/EditReceiptPage";
+import AllReceiptsPage, {loader as ReceiptsLoader} from "./pages/ReceiptPages/AllReceiptPage";
+import NewReceiptPage from "./pages/ReceiptPages/NewReceiptPage";
+import ReceiptDetailPage, {loader as ReceiptLoader, action as ReceiptDeleteAction} from "./pages/ReceiptPages/ReceiptDetailPage";
+import {action as ReceiptManipulateAction, Loader as ReceiptCustomerLoader} from "./components/ReceiptComponents/ReceiptForm"
 
 const router = createBrowserRouter([
   {
@@ -561,12 +565,22 @@ const router = createBrowserRouter([
           {path: "new", element: <NewInvoicePage/>, loader: invoiceSupplierLoader, action: InvoiceManipulateAction},
           {path: ":id", id: "invoice-detail", loader: invoiceLoader, children: [
             {index: true, element: <InvoiceDetailPage/>, action: deleteInvoiceAction},
-            {path: "edit", element: <InvoiceEditPage/>, action:InvoiceManipulateAction}
+            {path: "edit", element: <InvoiceEditPage/>, action:InvoiceManipulateAction, loader: invoiceSupplierLoader}
           ]}
         ]
       },{
         path: "receipt",
-        element:<SalesRootNav/>
+        element:<SalesRootNav/>,
+        loader: ReceiptsLoader,
+        id: "receipts",
+        children:[
+          {index: true, element: <AllReceiptsPage/>},
+          {path: "new", element: <NewReceiptPage/>, loader: ReceiptCustomerLoader, action: ReceiptManipulateAction},
+          {path: ":id", id: "receipt-detail", loader: ReceiptLoader, children: [
+            {index: true, element: <ReceiptDetailPage/>, action: ReceiptDeleteAction},
+            {path: "edit", element: <ReceiptEditPage/>, loader: ReceiptCustomerLoader,action: ReceiptManipulateAction}
+          ]}
+        ]
       },
       {
         path: "supplier",

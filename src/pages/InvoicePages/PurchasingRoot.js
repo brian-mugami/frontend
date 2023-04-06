@@ -1,4 +1,4 @@
-import PurchasingNav from "../../components/PurchasingComponents/PurchasingNav";
+import PurchasingNav from "../../components/InvoiceComponents/PurchasingNav";
 import React from "react";
 import { Outlet } from "react-router";
 

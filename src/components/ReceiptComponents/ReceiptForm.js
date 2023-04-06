@@ -7,11 +7,13 @@ import {
   useActionData,
   redirect,
   json,
+  useLoaderData,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { destinationTypes, purchaseTypes } from "../../data/paymenttypes";
+import { purchaseTypes } from "../../data/paymenttypes";
 
-function InvoiceForm({ invoiceData, title, suppliers, method }) {
+function ReceiptForm({ receiptData, title, method }) {
+  const customers = useLoaderData()
   const navigate = useNavigate();
   const navigation = useNavigation();
   const date = new Date().toISOString().slice(0, 10);
@@ -33,23 +35,23 @@ function InvoiceForm({ invoiceData, title, suppliers, method }) {
       )}
       <Form method={method}>
         <p>
-          <label>Invoice Number</label>
+          <label>Receipt Number</label>
           <input
-            placeholder="Invoice Number"
-            name="inv_number"
+            placeholder="Receipt Number"
+            name="receipt_number"
             type="text"
-            required
-            defaultValue={invoiceData ? invoiceData.invoice_number : ""}
+            disabled
+            defaultValue={receiptData ? receiptData.receipt_number : ""}
           ></input>
         </p>
         <p>
           <label>Amount</label>
           <input
-            placeholder="Invoice Amount"
-            name="inv_amount"
+            placeholder="Receipt Amount"
+            name="receipt_amount"
             type="number"
             step="0.0001"
-            defaultValue={invoiceData ? invoiceData.amount : ""}
+            defaultValue={receiptData ? receiptData.amount : 0}
           ></input>
         </p>
         <p>
@@ -58,7 +60,7 @@ function InvoiceForm({ invoiceData, title, suppliers, method }) {
             placeholder="Currency"
             name="currency"
             type="text"
-            defaultValue={invoiceData ? invoiceData.currency : "KES"}
+            defaultValue={receiptData ? receiptData.currency : "KES"}
           ></input>
         </p>
         <p>
@@ -67,48 +69,32 @@ function InvoiceForm({ invoiceData, title, suppliers, method }) {
             placeholder="Description"
             name="description"
             type="text"
-            defaultValue={invoiceData ? invoiceData.description : ""}
+            defaultValue={receiptData ? receiptData.description : ""}
           ></input>
         </p>
         <p>
-          <label>Destination Type</label>
+          <label>Customer</label>
           <select
-            name="destinationType"
+            name="customer"
             type="text"
             required
-            defaultValue={invoiceData ? invoiceData.destination_type : "stores"}
+            defaultValue={receiptData ? receiptData.customer.customer_name : ""}
           >
-            {destinationTypes.map((type) => (
-              <option key={type.id} value={type.destination_type}>
+            {customers.map((customer) => (
+              <option key={customer.id} value={customer.customer_name}>
                 {" "}
-                {type.destination_type}
+                {customer.customer_name}
               </option>
             ))}
           </select>
         </p>
         <p>
-          <label>Supplier</label>
+          <label>Sale Type</label>
           <select
-            name="supplier"
+            name="sale_type"
             type="text"
             required
-            defaultValue={invoiceData ? invoiceData.supplier.supplier_name : ""}
-          >
-            {suppliers.map((supplier) => (
-              <option key={supplier.id} value={supplier.supplier_name}>
-                {" "}
-                {supplier.supplier_name}
-              </option>
-            ))}
-          </select>
-        </p>
-        <p>
-          <label>Purchase Type</label>
-          <select
-            name="purchase_type"
-            type="text"
-            required
-            defaultValue={invoiceData ? invoiceData.purchase_type : "cash"}
+            defaultValue={receiptData ? receiptData.purchase_type : "cash"}
           >
             {purchaseTypes.map((type) => (
               <option key={type.id} value={type.purchase_type}>
@@ -121,9 +107,10 @@ function InvoiceForm({ invoiceData, title, suppliers, method }) {
         <p>
           <label>Date</label>
           <input
-            name="inv_date"
+            name="date"
             type="date"
-            defaultValue={invoiceData ? invoiceData.date : date}
+            required
+            defaultValue={receiptData ? receiptData.date : date}
           ></input>
         </p>
         <div>
@@ -139,25 +126,22 @@ function InvoiceForm({ invoiceData, title, suppliers, method }) {
   );
 }
 
-export default InvoiceForm;
+export default ReceiptForm;
 
 export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
   const token = getAuthToken();
 
-  const InvoiceData = {
-    invoice_number: data.get("inv_number"),
-    amount: data.get("inv_amount"),
+  const ReceiptData = {
     currency: data.get("currency"),
     description: data.get("description"),
-    destination_type: data.get("destinationType"),
-    date: data.get("inv_date"),
-    purchase_type: data.get("purchase_type"),
-    supplier_name: data.get("supplier"),
+    date: data.get("date"),
+    sale_type: data.get("sale_type"),
+    customer_name: data.get("customer"),
   };
 
-  let url = "/invoice";
+  let url = "/receipt";
   if (method === "POST") {
     const response = await fetch(url, {
       method: request.method,
@@ -166,16 +150,16 @@ export async function action({ request, params }) {
         "Authorization": "Bearer " + token,
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(InvoiceData),
+      body: JSON.stringify(ReceiptData),
     });
     if (!response.ok) {
       window.alert("failed");
       throw json({ message: "Failed to save the invoice" }, { status: 500 });
     }
-    return redirect("/invoice");
+    return redirect("/receipt");
   } else {
     const id = params.id;
-    url = "/invoice/" + id;
+    url = "/receipt/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {
@@ -183,13 +167,29 @@ export async function action({ request, params }) {
         "Authorization": "Bearer " + token,
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(InvoiceData),
+      body: JSON.stringify(ReceiptData),
     });
     if (!response.ok) {
       window.alert("failed update");
       throw json({ message: "Failed to update" }, { status: 500 });
     }
 
-    return redirect("/invoice");
+    return redirect("/receipt");
   }
+}
+
+export async function Loader(){
+  const token = getAuthToken()
+  const response = await fetch("/customer", {
+      method:"get",
+      headers:{
+          "Authorization": "Bearer "+ token
+      }
+  })
+  if(!response.ok){
+      throw json({message:"Cant get customers"}, {status:500})
+  }else{
+      const resData = await response.json()
+      return resData
+  };
 }

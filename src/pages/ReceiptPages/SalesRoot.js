@@ -1,4 +1,4 @@
-import SalesNav from "../../components/SalesComponents/SalesNav";
+import SalesNav from "../../components/ReceiptComponents/SalesNav";
 import React from "react";
 import { Outlet } from "react-router";
 
