@@ -140,7 +140,7 @@ import PurchaseAccountDetailPage, {
 } from "./pages/PurchaseAccountPages/PurchaseAccountdetailPage";
 import EditPurchaseAccountPage from "./pages/PurchaseAccountPages/EditPurchaseAccountPage";
 import PurchaseRootPage from "./pages/InvoicePages/PurchasingRoot";
-import SalesRootNav from "./pages/SalesPages/SalesRoot";
+import SalesRootNav from "./pages/ReceiptPages/SalesRoot";
 import SalesAccountsPage, {loader as AllSalesAccountLoader} from "./pages/SaleAccountPages/AllSalesaccountPage";
 import NewSalesAccountPage from "./pages/SaleAccountPages/NewSaleAccountPage";
 import SalesAccountDetailPage, {loader as SaleAccountLoader, action as DeleteSaleAccountAction} from "./pages/SaleAccountPages/SalesAccountDetailPage";
@@ -565,7 +565,7 @@ const router = createBrowserRouter([
           ]}
         ]
       },{
-        path: "sales",
+        path: "receipt",
         element:<SalesRootNav/>
       },
       {

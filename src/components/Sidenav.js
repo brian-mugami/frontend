@@ -43,8 +43,16 @@ function Sidebar() {
             Invoices
           </NavLink>
         )}
-        {token && ( <NavLink className="sidebar-nav-link" to="sales">Sales</NavLink>)}
-        {token &&(  <NavLink  className="sidebar-nav-link" to="supplier">Suppliers</NavLink>)}
+        {token && (
+          <NavLink className="sidebar-nav-link" to="receipt">
+            Receipt
+          </NavLink>
+        )}
+        {token && (
+          <NavLink className="sidebar-nav-link" to="supplier">
+            Suppliers
+          </NavLink>
+        )}
         {token && (
           <Form action="logout" method="post">
             <button className="btn btn-danger">Logout</button>
