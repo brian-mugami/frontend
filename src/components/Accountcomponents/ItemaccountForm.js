@@ -99,7 +99,7 @@ function ItemAccountForm({ method, title, account }) {
 
             <div className="sm:col-span-1">
               <label
-                htmlFor="country"
+               
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 Payment Type
