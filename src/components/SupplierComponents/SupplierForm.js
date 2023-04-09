@@ -8,11 +8,12 @@ import {
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import { paymenttypes } from "../../data/paymenttypes";
-import { Radio } from "@material-tailwind/react";
+import { useActionData } from "react-router-dom";
 
 function SupplierForm({ method, supData, title, accounts }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const data = useActionData();
 
   const isSubmitting = navigation.state === "submitting";
   function cancelHandler() {
@@ -21,13 +22,11 @@ function SupplierForm({ method, supData, title, accounts }) {
 
   return (
     <React.Fragment>
-
-<div className="hidden sm:block" aria-hidden="true">
+      <div className="hidden sm:block" aria-hidden="true">
         <div className="pb-2">
           <div className="border-t border-gray-200" />
         </div>
       </div>
-
 
       <div className="mt-10  sm:mt-0  bg-whitesmoke">
         <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -42,15 +41,19 @@ function SupplierForm({ method, supData, title, accounts }) {
             </div>
           </div>
           <div className="mt-2 bg-white rounded-lg mr-10 md:col-span-2 md:mt-0">
+            {data && data.errors && (
+              <ul>
+                {Object.values(data.errors).map((err) => (
+                  <li key={err}>{err}</li>
+                ))}
+              </ul>
+            )}
             <Form method={method}>
               <div className="overflow-hidden shadow sm:rounded-md">
                 <div className="px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
-                      <label
-                        
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
                         Supplier Name
                       </label>
                       <input
@@ -120,9 +123,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                         name="paytype"
                         autoComplete="country-name"
                         required
-                        defaultValue={
-                          supData ? supData.payment_type : ""
-                        }
+                        defaultValue={supData ? supData.payment_type : ""}
                         className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       >
                         {paymenttypes.map((type) => (
@@ -150,18 +151,16 @@ function SupplierForm({ method, supData, title, accounts }) {
                       />
                     </div>
 
-                    <div > 
+                    <div>
                       <label>Status</label>
                       <div className="flex space-x-5">
                         <div className="flex">
-                        <label>Active</label>
-                        <input type="radio" name="active" value="True" />
+                          <label>Active</label>
+                          <input type="radio" name="active" value="True" />
                         </div>
                         <label>Inactive</label>
                         <input type="radio" name="active" value="False" />
-
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -192,12 +191,6 @@ function SupplierForm({ method, supData, title, accounts }) {
           <div className="border-t border-gray-200" />
         </div>
       </div>
-
-
-
-
-
-
     </React.Fragment>
   );
 }
@@ -212,7 +205,7 @@ export async function action({ request, params }) {
   const supData = {
     supplier_name: data.get("supname"),
     supplier_phone_no: data.get("supcon"),
-    supplier_email:data.get("supemail"),
+    supplier_email: data.get("supemail"),
     account_name: data.get("account"),
     supplier_site: data.get("supsite"),
     is_active: data.get("active"),

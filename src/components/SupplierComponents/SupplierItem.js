@@ -1,7 +1,6 @@
 import React from "react";
 import { useSubmit, Link, useRouteLoaderData } from "react-router-dom";
-import { PaperClipIcon } from '@heroicons/react/20/solid'
-import card from "@material-tailwind/react/theme/components/card";
+
 
 function SupplierItem({supplier}){
     const token = useRouteLoaderData('root')
@@ -16,65 +15,118 @@ function SupplierItem({supplier}){
       }
 
       return(
-                <div>             
-                <div className="overflow-hidden w-full bg-white shadow sm:rounded-lg ml-5">
-                  <div className=" py-5 sm:px-3">
-                    <h3 className="text-base font-semibold leading-6 text-gray-900">Supplier Details</h3>
-                    <p className="mt-1 max-w-2xl text-sm text-gray-500">Suppliers' information.</p>
-                  </div>
-                  <div className="border-t border-gray-200">
-                    <dl>
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Supplier name</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{supplier.supplier_name}</dd>
-                      </div>
-                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Supplier number</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{supplier.supplier_number}</dd>
-                      </div>
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Supplier contact</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{supplier.supplier_phone_no}</dd>
-                      </div>
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Supplier email</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{supplier.supplier_email}</dd>
-                      </div>
-                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Supplier account</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{supplier.account.account_name}</dd>
-                      </div>
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Supplier site</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        {supplier.supplier_site}
-                        </dd>
-                      </div>
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Supplier payment type</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        {supplier.payment_type}
-                        </dd>
-                      </div>
-                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                        <dt className="text-sm font-medium text-gray-500">Is Item Active</dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        {supplier.is_active ? "Active":"Inactive"}
-                        </dd>
-                      </div>
-                      {token && 
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      
-                        <dt className="text-sm font-medium text-gray-500"><button onClick={startDeleteHandler}>Delete</button></dt>
-                        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        <Link to="edit">Edit</Link>
-                        </dd>
-                        
-                      </div>}
-                    </dl>
-                  </div>
-                </div>
-                </div> 
+
+
+
+
+<div className="max-w-screen-lg mx-auto">
+    <h2 className="text-lg font-semibold mb-4">suppliers</h2>
+    <div className="shadow border rounded-md">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Suppliers' information.
+            </th>
+
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+         
+            <>
+            
+              <tr className="hover:bg-gray-100 transition-colors duration-200"   >                      
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> Supplier name </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">        {supplier.supplier_name}          </td>
+              </tr>
+              <tr className="hover:bg-gray-100 transition-colors duration-200" >
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">    Supplier number        </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">    {supplier.supplier_number}      </td>
+              </tr>
+              <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">         Supplier contact       </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">           {supplier.supplier_phone_no}     </td>
+              </tr>
+              <tr>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              Supplier email
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {supplier.supplier_email}
+              </td> </tr>
+              <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">        Supplier account      </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">        {supplier.account.account_name}     </td>
+              </tr>
+              <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">        Supplier site      </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">           {supplier.supplier_site}     </td>
+              </tr>
+              <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">         Supplier payment type    </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">         {supplier.payment_type}    </td>
+              </tr>
+              <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">        Supplier status      </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">        {supplier.is_active ? "Active":"Inactive"}    </td>
+              </tr>
+
+              <tr>
+              {token && <menu>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"> <button onClick={startDeleteHandler}>Delete</button>  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"> <Link to="edit">Edit</Link></td>
+                  </menu>}
+              </tr>
+
+
+
+              </>
+         
+        </tbody>
+      </table>
+    </div>
+  
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 
         )
 

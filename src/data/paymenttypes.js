@@ -19,3 +19,8 @@ export const purchaseTypes = [
     {id: 1,purchase_type:"cash"},
     {id: 2,purchase_type:"credit"},
 ]
+
+export const currencyTypes = [
+    { id: 1,currency_type: "KES"},
+    { id: 2,currency_type: "USD"},
+]

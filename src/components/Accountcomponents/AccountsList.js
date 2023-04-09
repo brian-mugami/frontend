@@ -3,6 +3,28 @@ import { Link } from "react-router-dom";
 function AccountsList({ accounts, title }) {
   return (
     <React.Fragment>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
       <div className="shadow-lg rounded-lg overflow-hidden border border-gray-200 ">
         <div className="relative">
           <div className="absolute top-0 left-0 bg-purple-700 py-1 px-4 text-white shadow-lg text-2xl font-bold tracking-wide z-10 filter drop-shadow-lg">
