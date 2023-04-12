@@ -1,20 +1,20 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import Sidebar from "../../components/Sidenav";
 
 function RootLayout() {
+  const token = useLoaderData();
 
-  
   return (
     <React.Fragment>
-      <div className="flex ">
-      
-      <Sidebar/>
-      </div>
+      {token && (
+        <div className="flex ">
+          <Sidebar />
+        </div>
+      )}
       <main className="flex-1 ml-60">
-      <Outlet />
+        <Outlet />
       </main>
-      
     </React.Fragment>
   );
 }

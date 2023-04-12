@@ -11,53 +11,53 @@ function Sidebar() {
         <h2>Sidebar</h2>
       </div>
       <nav className="sidebar-nav">
-        {token && (
+       
           <NavLink className="sidebar-nav-link" to="/home">
             Dashboard
           </NavLink>
-        )}
+       
 
-        {token && (
+       
           <NavLink className="sidebar-nav-link" to="/user">
             Users
           </NavLink>
-        )}
+       
 
-        {token && (
+       
           <NavLink className="sidebar-nav-link" to="account">
             Accounts
           </NavLink>
-        )}
-        {token && (
+       
+       
           <NavLink className="sidebar-nav-link" to="item">
             Item Details
           </NavLink>
-        )}
-        {token && (
+       
+       
           <NavLink className="sidebar-nav-link" to="customer">
             Customers
           </NavLink>
-        )}
-        {token && (
+       
+       
           <NavLink className="sidebar-nav-link" to="invoice">
             Invoices
           </NavLink>
-        )}
-        {token && (
+       
+       
           <NavLink className="sidebar-nav-link" to="receipt">
             Receipt
           </NavLink>
-        )}
-        {token && (
+       
+       
           <NavLink className="sidebar-nav-link" to="supplier">
             Suppliers
           </NavLink>
-        )}
-        {token && (
+       
+       
           <Form action="logout" method="post">
             <button className="btn btn-danger">Logout</button>
           </Form>
-        )}
+       
       </nav>
     </div>
   );
