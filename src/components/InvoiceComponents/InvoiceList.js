@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-
-
 const PAGE_SIZE = 10;
-
-
-
-
-
 
 function InvoiceList({ invoices, title }) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,16 +15,6 @@ function InvoiceList({ invoices, title }) {
     const goToPage = (pageNumber) => {
       setCurrentPage(pageNumber);
     };
-
-
-
-
-
-
-
-
-
-
 
   return (
 
@@ -89,6 +72,12 @@ function InvoiceList({ invoices, title }) {
             >
               Update Date
             </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Matched Status
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -120,6 +109,9 @@ function InvoiceList({ invoices, title }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.update_date}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {invoice.matched_to_lines}
               </td>
             </tr>
           ))}
