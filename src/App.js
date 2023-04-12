@@ -161,6 +161,7 @@ import AllReceiptsPage, {loader as ReceiptsLoader} from "./pages/ReceiptPages/Al
 import NewReceiptPage from "./pages/ReceiptPages/NewReceiptPage";
 import ReceiptDetailPage, {loader as ReceiptLoader, action as ReceiptDeleteAction} from "./pages/ReceiptPages/ReceiptDetailPage";
 import {action as ReceiptManipulateAction, Loader as ReceiptCustomerLoader} from "./components/ReceiptComponents/ReceiptForm"
+import InvoiceLineForm from "./components/InvoiceComponents/InvoiceLineForm";
 
 const router = createBrowserRouter([
   {
@@ -170,6 +171,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     id: "root",
     children: [
+      {
+        path:"inv-line",
+        element:<InvoiceLineForm/>
+      },
       {
         index: true,
         element: <HomePage />,
@@ -638,7 +643,7 @@ const router = createBrowserRouter([
             ],
           },
         ],
-      },
+      }
     ],
   },
 ]);
