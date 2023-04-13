@@ -25,7 +25,6 @@ function ReceiptForm({ receiptData, title, method }) {
   }
   return (
     <React.Fragment>
-      
       {data && data.errors && (
         <ul>
           {Object.values(data.errors).map((err) => (
@@ -33,6 +32,7 @@ function ReceiptForm({ receiptData, title, method }) {
           ))}
         </ul>
       )}
+      {data && data.message && <p>{data.message}</p>}
 
       <Form method={method}>
         <div className="border-b border-gray-900/10 pb-12">
@@ -112,15 +112,12 @@ function ReceiptForm({ receiptData, title, method }) {
                   defaultValue={receiptData ? receiptData.currency : "KES"}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
-                 {currencyTypes.map((type) => (
+                  {currencyTypes.map((type) => (
                     <option key={type.id} value={type.currency_type}>
                       {" "}
                       {type.currency_type}
                     </option>
                   ))}
-
-
-
                 </select>
               </div>
             </div>

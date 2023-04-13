@@ -78,6 +78,12 @@ function InvoiceList({ invoices, title }) {
             >
               Matched Status
             </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Options
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -112,6 +118,10 @@ function InvoiceList({ invoices, title }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.matched_to_lines}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <button className="btn btn-success"><Link to={`./${invoice.id}/account`}> Account</Link></button>
+              <button className="btn btn-warning">Pay</button>
               </td>
             </tr>
           ))}

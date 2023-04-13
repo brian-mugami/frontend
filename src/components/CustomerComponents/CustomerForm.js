@@ -10,11 +10,10 @@ import {
 import { getAuthToken } from "../../util/Auth";
 import { paymenttypes } from "../../data/paymenttypes";
 
-
 function CustomerForm({ method, cusData, title, accounts }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
-  const data = useActionData()
+  const data = useActionData();
 
   const isSubmitting = navigation.state === "submitting";
   function cancelHandler() {
@@ -41,17 +40,18 @@ function CustomerForm({ method, cusData, title, accounts }) {
               </p>
             </div>
             <p>
-            {data && data.errors && (
-        <ul>
-          {Object.values(data.errors).map((err) => (
-            <li key={err}>{err}</li>
-          ))}
-        </ul>
-      )}
+              {data && data.errors && (
+                <ul>
+                  {Object.values(data.errors).map((err) => (
+                    <li key={err}>{err}</li>
+                  ))}
+                </ul>
+              )}
+              {data && data.message && <p>{data.message}</p>}
             </p>
           </div>
           <div className="mt-5 bg-white mr-10 md:col-span-2 md:mt-0">
-            <Form  method={method}>
+            <Form method={method}>
               <div className="overflow-hidden  shadow sm:rounded-md">
                 <div className=" px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
@@ -81,7 +81,7 @@ function CustomerForm({ method, cusData, title, accounts }) {
                         placeholder=""
                       />
                     </div>
-                    
+
                     <div className="col-span-6 sm:col-span-4">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
                         Customer Bill To Site
@@ -89,7 +89,9 @@ function CustomerForm({ method, cusData, title, accounts }) {
                       <input
                         name="billto"
                         type="text"
-                        defaultValue={cusData ? cusData.customer_bill_to_site : "main"}
+                        defaultValue={
+                          cusData ? cusData.customer_bill_to_site : "main"
+                        }
                         className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder=""
                       />
@@ -153,9 +155,7 @@ function CustomerForm({ method, cusData, title, accounts }) {
                         name="paytype"
                         autoComplete="country-name"
                         required
-                        defaultValue={
-                          cusData ? cusData.payment_type : ""
-                        }
+                        defaultValue={cusData ? cusData.payment_type : ""}
                         className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       >
                         {paymenttypes.map((type) => (
@@ -220,7 +220,7 @@ export async function action({ request, params }) {
   const ItemData = {
     customer_name: data.get("cussname"),
     customer_phone_no: data.get("cuscon"),
-    customer_email:data.get("email"),
+    customer_email: data.get("email"),
     account_name: data.get("account"),
     payment_type: data.get("paytype"),
     is_active: data.get("active"),

@@ -103,6 +103,7 @@ function InvoiceForm({ invoiceData, title, method }) {
           ))}
         </ul>
       )}
+      {data && data.message && <p>{data.message}</p>}
 
       <Form method={method}>
         <div className="border-b border-gray-900/10 pb-12">
@@ -304,7 +305,9 @@ function InvoiceForm({ invoiceData, title, method }) {
         </div>
         {numberIsValid && nameIsValid && (
           <div>
-            <button className="btn btn-secondary" onClick={handleAddRow}>Add Row</button>
+            <button className="btn btn-secondary" onClick={handleAddRow}>
+              Add Row
+            </button>
             <table className="table table-striped">
               <thead>
                 <tr>
@@ -364,7 +367,10 @@ function InvoiceForm({ invoiceData, title, method }) {
                     </td>
                     <td name="total_cost">{row.item_cost}</td>
                     <td>
-                      <button className="btn btn-danger" onClick={() => handleRemoveRow(index)}>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleRemoveRow(index)}
+                      >
                         Remove
                       </button>
                     </td>

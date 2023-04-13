@@ -48,6 +48,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                 ))}
               </ul>
             )}
+            {data && data.message && <p>{data.message}</p>}
             <Form method={method}>
               <div className="overflow-hidden shadow sm:rounded-md">
                 <div className="px-4 py-5 sm:p-6">
