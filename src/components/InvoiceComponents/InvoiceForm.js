@@ -188,6 +188,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                 >
                   {currencyTypes.map((type) => (
                     <option key={type.id} value={type.currency_type}>
+                      {" "}
                       {type.currency_type}
                     </option>
                   ))}
@@ -211,6 +212,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                 >
                   {destinationTypes.map((type) => (
                     <option key={type.id} value={type.destination_type}>
+                      {" "}
                       {type.destination_type}
                     </option>
                   ))}
@@ -333,6 +335,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                       >
                         {items.map((item) => (
                           <option key={item.id} value={item.item_name}>
+                            {" "}
                             {item.item_name}
                           </option>
                         ))}
@@ -452,8 +455,8 @@ export async function action({ request, params }) {
       body: JSON.stringify(InvoiceData),
     });
     if (!response.ok) {
-      window.alert("failed");
-      throw json({ message: "Failed to save the invoice" }, { status: 500 });
+      window.alert("Please enter a valid invoice")
+      return redirect("./")    
     }
     const invoiceId = (await response.json()).id;
     const lines = {
@@ -476,6 +479,7 @@ export async function action({ request, params }) {
     if (!invoiceLines.ok) {
       console.log(itemList);
       window.alert("error in invoice lines");
+      return redirect("./")
     }
     if (invoiceBalanced === false) {
       window.alert("Invoice lines amount does not match header amount!");
