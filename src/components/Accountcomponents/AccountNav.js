@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { NavLink, useRouteLoaderData } from "react-router-dom";
-=======
 import { NavLink } from "react-router-dom";
->>>>>>> origin/mugami_frontend
 import React from "react";
 import "../Accountcomponents/AccountNav.css";
 

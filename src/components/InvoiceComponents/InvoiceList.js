@@ -26,61 +26,61 @@ function InvoiceList({ invoices, title }) {
           <tr>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               invoice Number
             </th>
           <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Creation Date
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Supplier Name
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               invoice Amount
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Currency
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Payement Status
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Accounted Status
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Update Date
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Matched Status
             </th>
             <th
               scope="col"
-              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
               Options
             </th>
@@ -92,34 +92,34 @@ function InvoiceList({ invoices, title }) {
               key={invoice.id}
               className="hover:bg-gray-100 transition-colors duration-200"
             >
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <td className="px-2 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 <Link to={`./${invoice.id}`}>{invoice.invoice_number}</Link>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.date}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.supplier.supplier_name}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.amount}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.currency}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.status}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.accounted}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.update_date}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               {invoice.matched_to_lines}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
               <button className="btn btn-success"><Link to={`./${invoice.id}/account`}> Account</Link></button>
               <button className="btn btn-warning"><Link to={`./${invoice.id}/payment`}> Pay</Link></button>
               </td>

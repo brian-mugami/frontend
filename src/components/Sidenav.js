@@ -1,9 +1,9 @@
-import { NavLink, Form, useRouteLoaderData } from "react-router-dom";
+import { NavLink, Form} from "react-router-dom";
 import React from "react";
 import "../components/Sidenav.css";
 
 function Sidebar() {
-  const token = useRouteLoaderData("root");
+  
 
   return (
     <div className="sidebar">
