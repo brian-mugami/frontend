@@ -10,7 +10,7 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { currencyTypes, purchaseTypes } from "../../data/paymenttypes";
+import { currencyTypes, purchaseTypes } from "../../data/paymentTypes";
 
 function ReceiptForm({ receiptData, title, method }) {
   const customers = useLoaderData();

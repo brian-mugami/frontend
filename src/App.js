@@ -163,6 +163,8 @@ import ReceiptDetailPage, {loader as ReceiptLoader, action as ReceiptDeleteActio
 import {action as ReceiptManipulateAction, Loader as ReceiptCustomerLoader} from "./components/ReceiptComponents/ReceiptForm"
 import InvoiceAccountingPage from "./pages/InvoicePages/InvoiceAccountingPage";
 import {action as InvoiceAccountingAction} from "./components/InvoiceComponents/InvoiceAccountingForm"
+import InvoicePaymentPage from "./pages/InvoicePages/InvoicePaymentPage";
+import {action as InvoicePaymentAction, loader as InvoicePaymentLoader} from "./components/InvoiceComponents/InvoicePaymentForm"
 
 const router = createBrowserRouter([
   {
@@ -568,7 +570,8 @@ const router = createBrowserRouter([
           {path: ":id", id: "invoice-detail", loader: invoiceLoader, children: [
             {index: true, element: <InvoiceDetailPage/>, action: deleteInvoiceAction},
             {path: "edit", element: <InvoiceEditPage/>, action:InvoiceManipulateAction, loader: invoiceSupplierLoader},
-            {path: "account", element: <InvoiceAccountingPage/>, action: InvoiceAccountingAction}
+            {path: "account", element: <InvoiceAccountingPage/>, action: InvoiceAccountingAction},
+            {path: "payment", element: <InvoicePaymentPage/>, action: InvoicePaymentAction, loader: InvoicePaymentLoader}
           ]}
         ]
       },{

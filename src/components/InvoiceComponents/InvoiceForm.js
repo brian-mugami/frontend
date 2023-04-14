@@ -15,7 +15,7 @@ import {
   currencyTypes,
   destinationTypes,
   purchaseTypes,
-} from "../../data/paymenttypes";
+} from "../../data/paymentTypes";
 
 let itemList = [];
 let invoiceBalanced = false;
@@ -188,7 +188,6 @@ function InvoiceForm({ invoiceData, title, method }) {
                 >
                   {currencyTypes.map((type) => (
                     <option key={type.id} value={type.currency_type}>
-                      {" "}
                       {type.currency_type}
                     </option>
                   ))}
@@ -212,7 +211,6 @@ function InvoiceForm({ invoiceData, title, method }) {
                 >
                   {destinationTypes.map((type) => (
                     <option key={type.id} value={type.destination_type}>
-                      {" "}
                       {type.destination_type}
                     </option>
                   ))}
@@ -335,7 +333,6 @@ function InvoiceForm({ invoiceData, title, method }) {
                       >
                         {items.map((item) => (
                           <option key={item.id} value={item.item_name}>
-                            {" "}
                             {item.item_name}
                           </option>
                         ))}

@@ -121,7 +121,7 @@ function InvoiceList({ invoices, title }) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               <button className="btn btn-success"><Link to={`./${invoice.id}/account`}> Account</Link></button>
-              <button className="btn btn-warning">Pay</button>
+              <button className="btn btn-warning"><Link to={`./${invoice.id}/payment`}> Pay</Link></button>
               </td>
             </tr>
           ))}

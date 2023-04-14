@@ -6,7 +6,7 @@ import {
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { accountTypes } from "../../data/paymenttypes";
+import { accountTypes } from "../../data/paymentTypes";
 import { useActionData } from "react-router-dom";
 import React from "react";
 
