@@ -6,7 +6,7 @@ import {
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { accountTypes } from "../../data/paymenttypes";
+import { accountTypes } from "../../data/paymentTypes";
 import { useActionData } from "react-router-dom";
 import React from "react";
 
@@ -29,6 +29,7 @@ function SalesAccountForm({ method, title, account }) {
           ))}
         </ul>
       )}
+      {data && data.message && <p>{data.message}</p>}
       <Form method={method}>
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -97,10 +98,7 @@ function SalesAccountForm({ method, title, account }) {
             </div>
 
             <div className="sm:col-span-1">
-              <label
-                
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
+              <label className="block text-sm font-medium leading-6 text-gray-900">
                 Payment Type
               </label>
               <div className="mt-2">

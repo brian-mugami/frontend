@@ -10,7 +10,7 @@ import { accountTypes } from "../../data/paymentTypes";
 import { useActionData } from "react-router-dom";
 import React from "react";
 
-function ItemAccountForm({ method, title, account }) {
+function PaymentAccountForm({ method, title, account }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const data = useActionData();
@@ -30,7 +30,6 @@ function ItemAccountForm({ method, title, account }) {
         </ul>
       )}
       {data && data.message && <p>{data.message}</p>}
-
       <Form method={method}>
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -142,7 +141,7 @@ function ItemAccountForm({ method, title, account }) {
   );
 }
 
-export default ItemAccountForm;
+export default PaymentAccountForm;
 
 export async function action({ request, params }) {
   const method = request.method;
@@ -156,7 +155,7 @@ export async function action({ request, params }) {
     account_type: data.get("paytype"),
   };
 
-  let url = "/category/account";
+  let url = "/bank/account";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -172,10 +171,10 @@ export async function action({ request, params }) {
       throw json({ message: "Failed to save the account" }, { status: 500 });
     }
 
-    return redirect("/account/item");
+    return redirect("/account/payment");
   } else {
     const id = params.id;
-    url = "/category/account/" + id;
+    url = "/bank/account/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {
@@ -187,9 +186,9 @@ export async function action({ request, params }) {
     });
     if (!response.ok) {
       window.alert("failed update");
-      throw json({ message: "Failed to save the account" }, { status: 500 });
+      throw json({ message: "Failed to update the account" }, { status: 500 });
     }
 
-    return redirect("/account/item");
+    return redirect("/account/payment");
   }
 }

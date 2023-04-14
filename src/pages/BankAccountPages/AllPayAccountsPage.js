@@ -8,7 +8,7 @@ function PaymentAccountsPage(){
     return(
         <Suspense fallback={<p style={{textAlign: 'center'}}>Loading....</p>}>
             <Await resolve={accounts}>
-                {(loadedAccounts) => <AccountsList accounts={loadedAccounts} title="Payment"/>}
+                {(loadedAccounts) => <AccountsList accounts={loadedAccounts} title="Bank"/>}
             </Await>
         </Suspense>
     )
@@ -18,7 +18,7 @@ export default PaymentAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('/payment/account', {
+    const response = await fetch('/bank/account', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token
@@ -32,8 +32,8 @@ async function AccountLoader(){
     }
 };
 
-export function loader(){
+export async function loader(){
     return (defer({
-        accounts: AccountLoader()
+        accounts: await AccountLoader()
     }))
 }

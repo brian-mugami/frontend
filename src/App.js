@@ -121,14 +121,14 @@ import PasswordPage, {
 } from "./pages/UserPages/PasswordResetPage";
 import PaymentAccountsPage, {
   loader as PaymentsAccountsLoader,
-} from "./pages/PaymentAccountPages/AllPayAccountsPage";
-import NewPaymentAccountPage from "./pages/PaymentAccountPages/NewPaymentAccountPage";
-import { action as PaymentAccountAction } from "./components/Accountcomponents/PaymentAccountForm";
+} from "./pages/BankAccountPages/AllPayAccountsPage";
+import NewPaymentAccountPage from "./pages/BankAccountPages/NewPaymentAccountPage";
+import { action as PaymentAccountAction } from "./components/Accountcomponents/BankAccountForm";
 import PaymentAccountDetailPage, {
   action as PaymentAccountDeleteAction,
   loader as PaymentAccountdetailLoader,
-} from "./pages/PaymentAccountPages/PayAccountdetailPage";
-import EditPaymentAccountPage from "./pages/PaymentAccountPages/EditPayAccountPage";
+} from "./pages/BankAccountPages/PayAccountdetailPage";
+import EditPaymentAccountPage from "./pages/BankAccountPages/EditPayAccountPage";
 import PurchaseAccountsPage, {
   loader as PurchaseAccountsLoader,
 } from "./pages/PurchaseAccountPages/AllPurchaseAccountsPage";
@@ -161,7 +161,10 @@ import AllReceiptsPage, {loader as ReceiptsLoader} from "./pages/ReceiptPages/Al
 import NewReceiptPage from "./pages/ReceiptPages/NewReceiptPage";
 import ReceiptDetailPage, {loader as ReceiptLoader, action as ReceiptDeleteAction} from "./pages/ReceiptPages/ReceiptDetailPage";
 import {action as ReceiptManipulateAction, Loader as ReceiptCustomerLoader} from "./components/ReceiptComponents/ReceiptForm"
-import InvoiceLineForm from "./components/InvoiceComponents/InvoiceLineForm";
+import InvoiceAccountingPage from "./pages/InvoicePages/InvoiceAccountingPage";
+import {action as InvoiceAccountingAction} from "./components/InvoiceComponents/InvoiceAccountingForm"
+import InvoicePaymentPage from "./pages/InvoicePages/InvoicePaymentPage";
+import {action as InvoicePaymentAction, loader as InvoicePaymentLoader} from "./components/InvoiceComponents/InvoicePaymentForm"
 
 const router = createBrowserRouter([
   {
@@ -171,10 +174,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     id: "root",
     children: [
-      {
-        path:"inv-line",
-        element:<InvoiceLineForm/>
-      },
       {
         index: true,
         element: <HomePage />,
@@ -570,7 +569,9 @@ const router = createBrowserRouter([
           {path: "new", element: <NewInvoicePage/>, loader: invoiceSupplierLoader, action: InvoiceManipulateAction},
           {path: ":id", id: "invoice-detail", loader: invoiceLoader, children: [
             {index: true, element: <InvoiceDetailPage/>, action: deleteInvoiceAction},
-            {path: "edit", element: <InvoiceEditPage/>, action:InvoiceManipulateAction, loader: invoiceSupplierLoader}
+            {path: "edit", element: <InvoiceEditPage/>, action:InvoiceManipulateAction, loader: invoiceSupplierLoader},
+            {path: "account", element: <InvoiceAccountingPage/>, action: InvoiceAccountingAction},
+            {path: "payment", element: <InvoicePaymentPage/>, action: InvoicePaymentAction, loader: InvoicePaymentLoader}
           ]}
         ]
       },{

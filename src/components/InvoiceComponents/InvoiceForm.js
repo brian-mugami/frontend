@@ -15,7 +15,7 @@ import {
   currencyTypes,
   destinationTypes,
   purchaseTypes,
-} from "../../data/paymenttypes";
+} from "../../data/paymentTypes";
 
 let itemList = [];
 let invoiceBalanced = false;
@@ -103,6 +103,7 @@ function InvoiceForm({ invoiceData, title, method }) {
           ))}
         </ul>
       )}
+      {data && data.message && <p>{data.message}</p>}
 
       <Form method={method}>
         <div className="border-b border-gray-900/10 pb-12">
@@ -304,7 +305,9 @@ function InvoiceForm({ invoiceData, title, method }) {
         </div>
         {numberIsValid && nameIsValid && (
           <div>
-            <button className="btn btn-secondary" onClick={handleAddRow}>Add Row</button>
+            <button className="btn btn-secondary" onClick={handleAddRow}>
+              Add Row
+            </button>
             <table className="table table-striped">
               <thead>
                 <tr>
@@ -364,7 +367,10 @@ function InvoiceForm({ invoiceData, title, method }) {
                     </td>
                     <td name="total_cost">{row.item_cost}</td>
                     <td>
-                      <button className="btn btn-danger" onClick={() => handleRemoveRow(index)}>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleRemoveRow(index)}
+                      >
                         Remove
                       </button>
                     </td>
@@ -449,8 +455,8 @@ export async function action({ request, params }) {
       body: JSON.stringify(InvoiceData),
     });
     if (!response.ok) {
-      window.alert("failed");
-      throw json({ message: "Failed to save the invoice" }, { status: 500 });
+      window.alert("Please enter a valid invoice")
+      return redirect("./")    
     }
     const invoiceId = (await response.json()).id;
     const lines = {
@@ -473,6 +479,7 @@ export async function action({ request, params }) {
     if (!invoiceLines.ok) {
       console.log(itemList);
       window.alert("error in invoice lines");
+      return redirect("./")
     }
     if (invoiceBalanced === false) {
       window.alert("Invoice lines amount does not match header amount!");
