@@ -26,7 +26,7 @@ function InvoiceForm({ invoiceData, title, method }) {
   const [nameIsValid, setNameIsValid] = useState(false);
   const [tableRows, setTableRows] = useState([
     {
-      item_name: " ",
+      item_name: "",
       item_quantity: 0,
       buying_price: 0,
       item_cost: 0,
@@ -323,23 +323,20 @@ function InvoiceForm({ invoiceData, title, method }) {
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
                     <td>
-                      <select
+                      <input
                         name="item_name"
                         type="text"
                         value={row.item_name}
+                        list="options"
                         onChange={(e) =>
                           handleInputChange(e, index, "item_name")
                         }
                         required
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                      >
-                        {items.map((item) => (
-                          <option key={item.id} value={item.item_name}>
-                            {" "}
-                            {item.item_name}
-                          </option>
-                        ))}
-                      </select>
+                      ></input>
+                      <datalist id="options">
+                        {items.filter(option => option.includes(row.item_name).map(option => <option key={option.id} value={option.item_name}>{option.item_name}</option>))}
+                      </datalist>
                     </td>
                     <td>
                       <input
@@ -455,8 +452,8 @@ export async function action({ request, params }) {
       body: JSON.stringify(InvoiceData),
     });
     if (!response.ok) {
-      window.alert("Please enter a valid invoice")
-      return redirect("./")    
+      window.alert("Please enter a valid invoice");
+      return redirect("./");
     }
     const invoiceId = (await response.json()).id;
     const lines = {
@@ -479,7 +476,7 @@ export async function action({ request, params }) {
     if (!invoiceLines.ok) {
       console.log(itemList);
       window.alert("error in invoice lines");
-      return redirect("./")
+      return redirect("./");
     }
     if (invoiceBalanced === false) {
       window.alert("Invoice lines amount does not match header amount!");

@@ -62,11 +62,11 @@ function InvoicePaymentForm() {
             ))}
           </select>
         </p>
-        <button type="submit" disabled={isSubmitting}>
+        <button type="submit" disabled={isSubmitting} className="btn btn-primary">
           Yes
         </button>
-        <button type="button" onClick={cancelHandler}>
-          No
+        <button type="button" className="btn btn-primary" onClick={cancelHandler}>
+          Return To Invoice
         </button>
       </Form>
     </Modal>

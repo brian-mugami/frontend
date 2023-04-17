@@ -54,6 +54,11 @@ function Sidebar() {
           </NavLink>
         )}
         {token && (
+          <NavLink className="sidebar-nav-link" to="payment">
+            Payments
+          </NavLink>
+        )}
+        {token && (
           <Form action="logout" method="post">
             <button className="btn btn-danger">Logout</button>
           </Form>

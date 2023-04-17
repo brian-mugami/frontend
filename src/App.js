@@ -165,6 +165,12 @@ import InvoiceAccountingPage from "./pages/InvoicePages/InvoiceAccountingPage";
 import {action as InvoiceAccountingAction} from "./components/InvoiceComponents/InvoiceAccountingForm"
 import InvoicePaymentPage from "./pages/InvoicePages/InvoicePaymentPage";
 import {action as InvoicePaymentAction, loader as InvoicePaymentLoader} from "./components/InvoiceComponents/InvoicePaymentForm"
+import SupplierPaymentRoot from "./pages/SupplierPaymentPages/SupplierPaymentRoot";
+import AllSupplierPaymentPage, {loader as SupplierPaymentsLoader} from "./pages/SupplierPaymentPages/AllSupplierPaymentPage";
+import NewPaymentsPage from "./pages/SupplierPaymentPages/NewPaymentsPage";
+import SupplierPaymentDetailPage, {action as SupplierPaymentDeleteAction, loader as SupplierPaymentDetailLoader} from "./pages/SupplierPaymentPages/SupplierPaymentDetailPage";
+import SupplierPaymentApprovePage from "./pages/SupplierPaymentPages/SupplierPaymentApprovePage";
+import {action as SupplierPaymentApproveAction} from "./components/SupplierPaymentComponents/SupplierPaymentApproveForm"
 
 const router = createBrowserRouter([
   {
@@ -177,6 +183,20 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "payment",
+        element: <SupplierPaymentRoot/>,
+        id: "payments",
+        loader: SupplierPaymentsLoader,
+        children: [
+          {index: true, element: <AllSupplierPaymentPage/>},
+          {path: "new", element: <NewPaymentsPage/>},
+          {path: ":id", id: "payment", loader: SupplierPaymentDetailLoader, children:[
+            {index:true, element:<SupplierPaymentDetailPage/>, action: SupplierPaymentDeleteAction},
+            {path:"approve", element: <SupplierPaymentApprovePage/>, action: SupplierPaymentApproveAction}
+          ]}
+        ]
       },
       {
         path: "auth",
