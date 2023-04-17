@@ -303,7 +303,6 @@ function InvoiceForm({ invoiceData, title, method }) {
             </button>
           </div>
         </div>
-        {numberIsValid && nameIsValid && (
           <div>
             <button className="btn btn-secondary" onClick={handleAddRow}>
               Add Row
@@ -335,7 +334,9 @@ function InvoiceForm({ invoiceData, title, method }) {
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       ></input>
                       <datalist id="options">
-                        {items.filter(option => option.includes(row.item_name).map(option => <option key={option.id} value={option.item_name}>{option.item_name}</option>))}
+                        {items.map((item) => (
+                          <option key={item.id} value={item.item_name} />
+                        ))}
                       </datalist>
                     </td>
                     <td>
@@ -376,7 +377,6 @@ function InvoiceForm({ invoiceData, title, method }) {
               </tbody>
             </table>
           </div>
-        )}
       </Form>
     </React.Fragment>
   );
