@@ -194,7 +194,8 @@ const router = createBrowserRouter([
           {path: "new", element: <NewPaymentsPage/>},
           {path: ":id", id: "payment", loader: SupplierPaymentDetailLoader, children:[
             {index:true, element:<SupplierPaymentDetailPage/>, action: SupplierPaymentDeleteAction},
-            {path:"approve", element: <SupplierPaymentApprovePage/>, action: SupplierPaymentApproveAction}
+            {path:"approve", element: <SupplierPaymentApprovePage/>, action: SupplierPaymentApproveAction},
+            
           ]}
         ]
       },

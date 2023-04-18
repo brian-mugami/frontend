@@ -77,7 +77,7 @@ const SupplierPaymentList = ({ payments }) => {
                   {payment.invoice.invoice_number}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {payment.approved}
+                  {payment.approved === true ? "approved" : "Not Approved"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {payment.date}
