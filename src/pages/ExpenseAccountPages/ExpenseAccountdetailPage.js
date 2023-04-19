@@ -6,7 +6,7 @@ import {
     useRouteLoaderData,
   } from "react-router-dom";
   import React, { Suspense } from "react";
-  import Accountitem from "../../components/Accountcomponents/AccountItem";
+  import Accountitem from "../../components/AccountComponents/AccountItem";
   import { getAuthToken } from "../../util/Auth";
   
   function ExpenseAccountDetailPage() {
@@ -16,8 +16,8 @@ import {
       <React.Fragment>
         <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
           <Await resolve={account}>
-            {(loadedaccount) => (
-              <Accountitem account={loadedaccount} title="Expense" />
+            {(loadedAccount) => (
+              <Accountitem account={loadedAccount} title="Expense" />
             )}
           </Await>
         </Suspense>
@@ -27,7 +27,7 @@ import {
   
   export default ExpenseAccountDetailPage;
   
-  async function loadaccount(id) {
+  async function loadAccount(id) {
     const token = getAuthToken();
     const response = await fetch("/expense/account/" + id, {
       headers: {
@@ -48,7 +48,7 @@ import {
   export async function loader({ request, params }) {
     const id = params.id;
     return defer({
-      account: await loadaccount(id),
+      account: await loadAccount(id),
     });
   }
   

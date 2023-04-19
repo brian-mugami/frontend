@@ -49,7 +49,7 @@ function InvoicePaymentForm() {
             type="number"
             min="0"
             name="amount"
-            defaultValue={invoice.amount}
+            defaultValue={invoice.supplier_balance[0].balance}
           ></input>
         </p>
         <p>
@@ -62,11 +62,16 @@ function InvoicePaymentForm() {
             ))}
           </select>
         </p>
-        <button type="submit" disabled={isSubmitting}>
+        <p>
+          <label>Transaction Number</label>
+          <input type="text" name="transaction-number" placeholder="transaction code" required>
+          </input>
+        </p>
+        <button type="submit" disabled={isSubmitting} className="btn btn-primary">
           Yes
         </button>
-        <button type="button" onClick={cancelHandler}>
-          No
+        <button type="button" className="btn btn-primary" onClick={cancelHandler}>
+          Return To Invoice
         </button>
       </Form>
     </Modal>
@@ -84,6 +89,7 @@ export async function action({ request, params }) {
     amount: data.get("amount"),
     currency: data.get("currency"),
     bank_account: data.get("account"),
+    payment_description: data.get("transaction-number")
   };
   const response = await fetch(url, {
     method: "POST",

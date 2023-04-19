@@ -1,6 +1,6 @@
 import { Await, defer, json, redirect, useRouteLoaderData } from "react-router-dom";
 import React, { Suspense } from "react";
-import Accountitem from "../../../components/Accountcomponents/AccountItem";
+import Accountitem from "../../../components/AccountComponents/AccountItem";
 import { getAuthToken } from "../../../util/Auth";
 
 function CategoryAccountDetailPage(){

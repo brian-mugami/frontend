@@ -1,4 +1,4 @@
-import CustomerAccountForm from "../../../components/Accountcomponents/Customeraccountform";
+import CustomerAccountForm from "../../../components/AccountComponents/CustomerAccountForm";
 
 function NewCustomerAccountPage(){
     return(<CustomerAccountForm method="post"  title="Customer"/>)

@@ -1,16 +1,11 @@
 import { Breadcrumbs } from "@material-tailwind/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { ShoppingCartIcon} from "@heroicons/react/24/outline";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
-function PurchasingNav(){
-    return(
-       
-
-
-
-
-<React.Fragment>
+function PurchasingNav() {
+  return (
+    <React.Fragment>
       <div className="flex space-x-11 py-5 px-5">
         <Breadcrumbs>
           <NavLink to="." className="opacity-60">
@@ -37,17 +32,7 @@ function PurchasingNav(){
         </Breadcrumbs>
       </div>
     </React.Fragment>
-
-
-
-
-
-
-
-
-
-
-    )
+  );
 }
 
 export default PurchasingNav;

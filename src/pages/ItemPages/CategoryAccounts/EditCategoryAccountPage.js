@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from "react-router-dom";
-import ItemAccountForm from "../../../components/Accountcomponents/ItemaccountForm";
+import ItemAccountForm from "../../../components/AccountComponents/ItemAccountForm";
 
 function EditCategoryAccountPage(){
     const {account} = useRouteLoaderData("item-detail")

@@ -26,7 +26,7 @@ function InvoiceForm({ invoiceData, title, method }) {
   const [nameIsValid, setNameIsValid] = useState(false);
   const [tableRows, setTableRows] = useState([
     {
-      item_name: " ",
+      item_name: "",
       item_quantity: 0,
       buying_price: 0,
       item_cost: 0,
@@ -93,6 +93,11 @@ function InvoiceForm({ invoiceData, title, method }) {
   };
 
   itemList = tableRows;
+
+  let itemsAvailable = false;
+  if (invoiceData) {
+    itemsAvailable = (invoiceData.purchase_items.length > 0) === true;
+  }
 
   return (
     <React.Fragment>
@@ -303,83 +308,137 @@ function InvoiceForm({ invoiceData, title, method }) {
             </button>
           </div>
         </div>
-        {numberIsValid && nameIsValid && (
-          <div>
-            <button className="btn btn-secondary" onClick={handleAddRow}>
-              Add Row
-            </button>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Line Number</th>
-                  <th scope="col">Item Name</th>
-                  <th scope="col">Item Quantity</th>
-                  <th scope="col">Buying Price</th>
-                  <th scope="col">Total Cost</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableRows.map((row, index) => (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>
-                      <select
-                        name="item_name"
-                        type="text"
-                        value={row.item_name}
-                        onChange={(e) =>
-                          handleInputChange(e, index, "item_name")
-                        }
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                      >
-                        {items.map((item) => (
-                          <option key={item.id} value={item.item_name}>
-                            {" "}
-                            {item.item_name}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td>
-                      <input
-                        required
-                        type="number"
-                        name="item_quantity"
-                        min="1"
-                        value={row.item_quantity}
-                        onChange={(e) =>
-                          handleInputChange(e, index, "item_quantity")
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        required
-                        type="number"
-                        min="1"
-                        price="buying_price"
-                        value={row.buying_price}
-                        onChange={(e) =>
-                          handleInputChange(e, index, "buying_price")
-                        }
-                      />
-                    </td>
-                    <td name="total_cost">{row.item_cost}</td>
-                    <td>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleRemoveRow(index)}
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <div>
+          <button className="btn btn-secondary" onClick={handleAddRow}>
+            Add Row
+          </button>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Line Number</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Item Quantity</th>
+                <th scope="col">Buying Price</th>
+                <th scope="col">Total Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {itemsAvailable
+                ? invoiceData.purchase_items.map((item, index) => (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>
+                        <input
+                          name="item_name"
+                          type="text"
+                          defaultValue={item.item.item_name}
+                          list="options"
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_name")
+                          }
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        />
+                        <datalist id="options">
+                          {items.map((item) => (
+                            <option key={item.id} value={item.item_name} />
+                          ))}
+                        </datalist>
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          name="item_quantity"
+                          min="1"
+                          defaultValue={item.item_quantity}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_quantity")
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          min="1"
+                          step="0.01"
+                          defaultValue={item.buying_price}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "buying_price")
+                          }
+                        />
+                      </td>
+                      <td>{item.item_cost}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleRemoveRow(index)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                : tableRows.map((row, index) => (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>
+                        <input
+                          name="item_name"
+                          type="text"
+                          value={row.item_name}
+                          list="options"
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_name")
+                          }
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        />
+                        <datalist id="options">
+                          {items.map((item) => (
+                            <option key={item.id} value={item.item_name} />
+                          ))}
+                        </datalist>
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          name="item_quantity"
+                          min="1"
+                          value={row.item_quantity}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_quantity")
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          min="1"
+                          step="0.01"
+                          value={row.buying_price}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "buying_price")
+                          }
+                        />
+                      </td>
+                      <td>{row.item_cost}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleRemoveRow(index)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
       </Form>
     </React.Fragment>
   );
@@ -454,9 +513,18 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceData),
     });
+    if (response.status === 400) {
+      return response;
+    }
+    if (response.status === 404) {
+      return response;
+    }
+    if (response.status === 500) {
+      return response;
+    }
     if (!response.ok) {
-      window.alert("Please enter a valid invoice")
-      return redirect("./")    
+      window.alert("Please enter a valid invoice");
+      return redirect("./");
     }
     const invoiceId = (await response.json()).id;
     const lines = {
@@ -476,10 +544,18 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(lines),
     });
+    if (invoiceLines.status === 400){
+      return invoiceLines
+    }
+    if (invoiceLines.status === 500){
+      return invoiceLines
+    }
+    if (invoiceLines.status === 404){
+      return invoiceLines
+    }
     if (!invoiceLines.ok) {
-      console.log(itemList);
       window.alert("error in invoice lines");
-      return redirect("./")
+      return redirect("./");
     }
     if (invoiceBalanced === false) {
       window.alert("Invoice lines amount does not match header amount!");
@@ -489,7 +565,7 @@ export async function action({ request, params }) {
     const id = params.id;
     url = "/invoice/" + id;
     const response = await fetch(url, {
-      method: method,
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,

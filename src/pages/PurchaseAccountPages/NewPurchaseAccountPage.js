@@ -1,4 +1,4 @@
-import PurchaseAccountForm from "../../components/Accountcomponents/PurchaseAccountform";
+import PurchaseAccountForm from "../../components/AccountComponents/PurchaseAccountForm";
 
 function NewPurchaseAccountPage() {
   return <PurchaseAccountForm method="post" title="Purchase" />;

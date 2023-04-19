@@ -224,8 +224,16 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(supData),
     });
+    if (response.status === 404) {
+      return response;
+    }
+    if (response.status === 500) {
+      return response;
+    }
+    if (response.status === 409) {
+      return response;
+    }
     if (!response.ok) {
-      window.alert("failed");
       throw json({ message: "Failed to save the supplier" }, { status: 500 });
     }
 

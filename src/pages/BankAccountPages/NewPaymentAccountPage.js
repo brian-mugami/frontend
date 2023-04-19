@@ -1,4 +1,4 @@
-import PaymentAccountForm from "../../components/Accountcomponents/BankAccountForm";
+import PaymentAccountForm from "../../components/AccountComponents/BankAccountForm";
 
 function NewPaymentAccountPage(){
     return(<PaymentAccountForm method="post"  title="Bank"/>)

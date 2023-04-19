@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from "react-router-dom";
-import CustomerAccountForm from "../../../components/Accountcomponents/Customeraccountform";
+import CustomerAccountForm from "../../../components/AccountComponents/CustomerAccountForm";
 
 function EditCustomerAccountPage(){
     const {account} = useRouteLoaderData("customer-detail")
