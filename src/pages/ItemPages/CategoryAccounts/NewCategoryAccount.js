@@ -1,4 +1,4 @@
-import ItemAccountForm from "../../../components/Accountcomponents/ItemaccountForm";
+import ItemAccountForm from "../../../components/AccountComponents/ItemAccountForm";
 
 function NewItemAccountPage(){
     return(<ItemAccountForm method="post"  title="Category"/>)

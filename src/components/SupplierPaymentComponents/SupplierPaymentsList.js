@@ -86,7 +86,8 @@ const SupplierPaymentList = ({ payments }) => {
                   {payment.invoice.date}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <button className="btn btn-primary"><Link to={`./${payment.id}/approve`}>Approve</Link></button>
+                <button className="btn btn-danger"><Link to={`./${payment.id}/approve`}>Approve</Link></button>
+                <button className="btn btn-primary"><Link to={`./${payment.id}/accounting`}>Accounting</Link></button>
                 </td>
               </tr>
             ))}

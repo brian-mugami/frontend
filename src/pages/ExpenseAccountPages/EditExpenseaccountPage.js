@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from "react-router-dom";
-import ExpenseAccountForm from "../../components/Accountcomponents/ExpenseAccountForm";
+import ExpenseAccountForm from "../../components/AccountComponents/ExpenseAccountForm";
 
 function EditExpenseAccountPage() {
   const { account } = useRouteLoaderData("expense-account-detail");

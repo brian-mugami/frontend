@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { defer, json,Await, useRouteLoaderData,  } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import AccountsList from "../../components/Accountcomponents/AccountsList";
+import AccountsList from "../../components/AccountComponents/AccountsList";
 
 function PaymentAccountsPage(){
     const {accounts} = useRouteLoaderData('payment-accounts');

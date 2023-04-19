@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import AccountNav from "../../components/Accountcomponents/SubAccountNav";
+import AccountNav from "../../components/AccountComponents/SubAccountNav";
 function AllAccountRoot(){
     return(
         <div>

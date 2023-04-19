@@ -49,7 +49,7 @@ function InvoicePaymentForm() {
             type="number"
             min="0"
             name="amount"
-            defaultValue={invoice.amount}
+            defaultValue={invoice.supplier_balance[0].balance}
           ></input>
         </p>
         <p>

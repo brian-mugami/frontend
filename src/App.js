@@ -1,8 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AuthentificationPage, {
+import AuthenticationPage, {
   action as AuthAction,
-} from "./pages/UserPages/AuthentificationPage";
+} from "./pages/UserPages/AuthenticationPage";
 import ErrorPage from "./pages/UserPages/Error";
 import HomePage from "./pages/UserPages/Home";
 import RootLayout from "./pages/UserPages/Root";
@@ -17,27 +17,27 @@ import { action as UserManipulateAction } from "./components/UserComponents/User
 import { action as LogoutAction } from "./pages/UserPages/Logout";
 import AccountRoot from "./pages/AccountPages/AccountsRoot";
 import SupplierAccountsPage, {
-  loader as supplieraccountsLoader,
+  loader as SupplierAccountsLoader,
 } from "./pages/SupplierPages/SupplierAccounts/SupplierAccountPage";
 import CustomerAccountsPage, {
-  loader as customeraccountsloader,
-} from "./pages/CustomerPages/CustomerAccountPages/CustomeraccountPage";
+  loader as CustomerAccountsLoader,
+} from "./pages/CustomerPages/CustomerAccountPages/CustomerAccountPage";
 import ItemAccountsPage, {
-  loader as itemaccountsloader,
+  loader as ItemAccountsLoader,
 } from "./pages/ItemPages/CategoryAccounts/CategoryAccountPage";
 import AllAccountRoot from "./pages/AccountPages/SubAccountRoot";
 import NewSupplierAccountPage from "./pages/SupplierPages/SupplierAccounts/NewSupplierAccount";
 import NewCustomerAccountPage from "./pages/CustomerPages/CustomerAccountPages/NewCustomerAccount";
 import NewItemAccountPage from "./pages/ItemPages/CategoryAccounts/NewCategoryAccount";
-import { action as SupplierAccountAction } from "./components/Accountcomponents/SupplierAccountsForm";
-import { action as CreateItemAccountAction } from "./components/Accountcomponents/ItemaccountForm";
-import { action as CreateCustomerAccountAction } from "./components/Accountcomponents/Customeraccountform";
+import { action as SupplierAccountAction } from "./components/AccountComponents/SupplierAccountsForm";
+import { action as CreateItemAccountAction } from "./components/AccountComponents/ItemAccountForm";
+import { action as CreateCustomerAccountAction } from "./components/AccountComponents/CustomerAccountForm";
 import SupplierAccountDetailPage, {
   loader as supplierAccountLoader,
 } from "./pages/SupplierPages/SupplierAccounts/SupplierAccountDetailPage";
 import EditSupplierAccountPage from "./pages/SupplierPages/SupplierAccounts/EditSupplierAccountPage";
-import { action as deleteaccountaction } from "./pages/SupplierPages/SupplierAccounts/SupplierAccountDetailPage";
-import { action as deletecustomeraccount } from "./pages/CustomerPages/CustomerAccountPages/CustomerAccountDetailPage";
+import { action as DeleteAccountAction } from "./pages/SupplierPages/SupplierAccounts/SupplierAccountDetailPage";
+import { action as DeleteCustomerAccount } from "./pages/CustomerPages/CustomerAccountPages/CustomerAccountDetailPage";
 import CustomerAccountDetailPage, {
   loader as customerAccountLoader,
 } from "./pages/CustomerPages/CustomerAccountPages/CustomerAccountDetailPage";
@@ -46,7 +46,7 @@ import CategoryAccountDetailPage, {
   loader as categoryAccountLoader,
 } from "./pages/ItemPages/CategoryAccounts/CategoryAccountDetailPage";
 import EditCategoryAccountPage from "./pages/ItemPages/CategoryAccounts/EditCategoryAccountPage";
-import { action as deletecategoryaction } from "./pages/ItemPages/CategoryAccounts/CategoryAccountDetailPage";
+import { action as DeleteCategoryAction } from "./pages/ItemPages/CategoryAccounts/CategoryAccountDetailPage";
 import LotRoot from "./pages/ItemPages/Lots/LotRoot";
 import LotPage, { loader as lotLoader } from "./pages/ItemPages/Lots/LotPage";
 import NewLotPage from "./pages/ItemPages/Lots/NewLotPage";
@@ -63,8 +63,10 @@ import CategoriesPage, {
 import CreateCategoryPage, {
   loader as AccountsCategoryLoader,
 } from "./pages/ItemPages/Categories/NewCategoryPage";
-import { action as CategoryManipulateaction } from "./components/ItemComponents/CategoryComponents/CategoryForm";
-import CategoryDetailPage, {  loader as CategoryLoader,} from "./pages/ItemPages/Categories/CategoryDetailPage";
+import { action as CategoryManipulateAction } from "./components/ItemComponents/CategoryComponents/CategoryForm";
+import CategoryDetailPage, {
+  loader as CategoryLoader,
+} from "./pages/ItemPages/Categories/CategoryDetailPage";
 import { action as DeleteCatItemAction } from "./pages/ItemPages/Categories/CategoryDetailPage";
 import CategoryEditPage from "./pages/ItemPages/Categories/CategoryEditPage";
 import ItemsRoot from "./pages/ItemPages/ItemSAllRootNav";
@@ -77,11 +79,11 @@ import NewItemPage, {
 } from "./pages/ItemPages/Items/NewItemPage";
 import { action as ItemManipulateAction } from "./components/ItemComponents/ItemsComponents/ItemsForm";
 import ItemDetailPage, {
-  loader as ItemDetaiLoader,
+  loader as ItemDetailLoader,
   action as ItemDeleteAction,
 } from "./pages/ItemPages/Items/ItemDetailPage";
 import ItemEditPage, {
-  loader as ItemCategoryDetailLodaer,
+  loader as ItemCategoryDetailLoader,
 } from "./pages/ItemPages/Items/ItemEditPage";
 import CustomerRoot from "./pages/CustomerPages/CustomerMaster/CustomerRoot";
 import CustomersPage, {
@@ -101,7 +103,7 @@ import CustomerEditPage, {
 import SupplierRoot from "./pages/SupplierPages/SupplierMasterPages/SupplierRoot";
 import SupplierPage, {
   loader as allSuppliersLoader,
-} from "./pages/SupplierPages/SupplierMasterPages/AllsupplierPage";
+} from "./pages/SupplierPages/SupplierMasterPages/AllSupplierPage";
 import NewSupplierPage, {
   loader as allSupplierAccountsLoader,
 } from "./pages/SupplierPages/SupplierMasterPages/NewSupplierPage";
@@ -111,7 +113,7 @@ import SupplierEditPage, {
 } from "./pages/SupplierPages/SupplierMasterPages/SupplierEditPage";
 import SupplierDetailPage, {
   action as supDeleteAction,
-  loader as supaccLoader,
+  loader as SupAccLoader,
 } from "./pages/SupplierPages/SupplierMasterPages/SupplierDetailPage";
 import Dashboard from "./pages/UserPages/Dashboard";
 import { countLoader } from "./components/DashboardComps";
@@ -123,54 +125,99 @@ import PaymentAccountsPage, {
   loader as PaymentsAccountsLoader,
 } from "./pages/BankAccountPages/AllPayAccountsPage";
 import NewPaymentAccountPage from "./pages/BankAccountPages/NewPaymentAccountPage";
-import { action as PaymentAccountAction } from "./components/Accountcomponents/BankAccountForm";
+import { action as PaymentAccountAction } from "./components/AccountComponents/BankAccountForm";
 import PaymentAccountDetailPage, {
   action as PaymentAccountDeleteAction,
-  loader as PaymentAccountdetailLoader,
-} from "./pages/BankAccountPages/PayAccountdetailPage";
+  loader as PaymentAccountDetailLoader,
+} from "./pages/BankAccountPages/PayAccountDetailPage";
 import EditPaymentAccountPage from "./pages/BankAccountPages/EditPayAccountPage";
 import PurchaseAccountsPage, {
   loader as PurchaseAccountsLoader,
 } from "./pages/PurchaseAccountPages/AllPurchaseAccountsPage";
 import NewPurchaseAccountPage from "./pages/PurchaseAccountPages/NewPurchaseAccountPage";
-import { action as PurchaseAccountAction } from "./components/Accountcomponents/PurchaseAccountform";
+import { action as PurchaseAccountAction } from "./components/AccountComponents/PurchaseAccountForm";
 import PurchaseAccountDetailPage, {
   action as PurchaseAccountDeleteAction,
-  loader as PurchaseAccountdetailLoader,
-} from "./pages/PurchaseAccountPages/PurchaseAccountdetailPage";
+  loader as PurchaseAccountDetailLoader,
+} from "./pages/PurchaseAccountPages/PurchaseAccountDetailPage";
 import EditPurchaseAccountPage from "./pages/PurchaseAccountPages/EditPurchaseAccountPage";
 import PurchaseRootPage from "./pages/InvoicePages/PurchasingRoot";
 import SalesRootNav from "./pages/ReceiptPages/SalesRoot";
-import SalesAccountsPage, {loader as AllSalesAccountLoader} from "./pages/SaleAccountPages/AllSalesaccountPage";
+import SalesAccountsPage, {
+  loader as AllSalesAccountLoader,
+} from "./pages/SaleAccountPages/AllSalesAccountPage";
 import NewSalesAccountPage from "./pages/SaleAccountPages/NewSaleAccountPage";
-import SalesAccountDetailPage, {loader as SaleAccountLoader, action as DeleteSaleAccountAction} from "./pages/SaleAccountPages/SalesAccountDetailPage";
-import EditSalesAccountPage from "./pages/SaleAccountPages/EditSaleaccountPage";
-import {action as SalesAccountAction} from "./components/Accountcomponents/SaleAccountForm"
-import ExpenseAccountsPage, {loader as AllExpenseAccountLoader} from "./pages/ExpenseAccountPages/AllExpenseAccountPages";
+import SalesAccountDetailPage, {
+  loader as SaleAccountLoader,
+  action as DeleteSaleAccountAction,
+} from "./pages/SaleAccountPages/SalesAccountDetailPage";
+import EditSalesAccountPage from "./pages/SaleAccountPages/EditSaleAccountPage";
+import { action as SalesAccountAction } from "./components/AccountComponents/SaleAccountForm";
+import ExpenseAccountsPage, {
+  loader as AllExpenseAccountLoader,
+} from "./pages/ExpenseAccountPages/AllExpenseAccountPages";
 import NewExpenseAccountPage from "./pages/ExpenseAccountPages/NewExpenseAccountPage";
-import ExpenseAccountDetailPage, {action as ExpenseaccountdeleteAction, loader as ExpenseAccountLoader} from "./pages/ExpenseAccountPages/ExpenseAccountdetailPage";
-import EditExpenseAccountPage from "./pages/ExpenseAccountPages/EditExpenseaccountPage";
-import {action as ExpenseAccountManipulateaction} from "./components/Accountcomponents/ExpenseAccountForm"
-import AllInvoicePage, {loader as invoicesLoader} from "./pages/InvoicePages/AllInvoicePage";
+import ExpenseAccountDetailPage, {
+  action as ExpensesAccountDeleteAction,
+  loader as ExpenseAccountLoader,
+} from "./pages/ExpenseAccountPages/ExpenseAccountDetailPage";
+import EditExpenseAccountPage from "./pages/ExpenseAccountPages/EditExpenseAccountPage";
+import { action as ExpenseAccountManipulateAction } from "./components/AccountComponents/ExpenseAccountForm";
+import AllInvoicePage, {
+  loader as invoicesLoader,
+} from "./pages/InvoicePages/AllInvoicePage";
 import NewInvoicePage from "./pages/InvoicePages/NewInvoicePage";
-import {action as InvoiceManipulateAction,Loader as invoiceSupplierLoader} from "./components/InvoiceComponents/InvoiceForm"
-import InvoiceDetailPage, {loader as invoiceLoader, action as deleteInvoiceAction} from "./pages/InvoicePages/InvoiceDetailPage";
+import {
+  action as InvoiceManipulateAction,
+  Loader as invoiceSupplierLoader,
+} from "./components/InvoiceComponents/InvoiceForm";
+import InvoiceDetailPage, {
+  loader as invoiceLoader,
+  action as deleteInvoiceAction,
+} from "./pages/InvoicePages/InvoiceDetailPage";
 import InvoiceEditPage from "./pages/InvoicePages/EditInvoicePage";
 import ReceiptEditPage from "./pages/ReceiptPages/EditReceiptPage";
-import AllReceiptsPage, {loader as ReceiptsLoader} from "./pages/ReceiptPages/AllReceiptPage";
+import AllReceiptsPage, {
+  loader as ReceiptsLoader,
+} from "./pages/ReceiptPages/AllReceiptPage";
 import NewReceiptPage from "./pages/ReceiptPages/NewReceiptPage";
-import ReceiptDetailPage, {loader as ReceiptLoader, action as ReceiptDeleteAction} from "./pages/ReceiptPages/ReceiptDetailPage";
-import {action as ReceiptManipulateAction, Loader as ReceiptCustomerLoader} from "./components/ReceiptComponents/ReceiptForm"
+import ReceiptDetailPage, {
+  loader as ReceiptLoader,
+  action as ReceiptDeleteAction,
+} from "./pages/ReceiptPages/ReceiptDetailPage";
+import {
+  action as ReceiptManipulateAction,
+  Loader as ReceiptCustomerLoader,
+} from "./components/ReceiptComponents/ReceiptForm";
 import InvoiceAccountingPage from "./pages/InvoicePages/InvoiceAccountingPage";
-import {action as InvoiceAccountingAction} from "./components/InvoiceComponents/InvoiceAccountingForm"
+import { action as InvoiceAccountingAction } from "./components/InvoiceComponents/InvoiceAccountingForm";
 import InvoicePaymentPage from "./pages/InvoicePages/InvoicePaymentPage";
-import {action as InvoicePaymentAction, loader as InvoicePaymentLoader} from "./components/InvoiceComponents/InvoicePaymentForm"
+import {
+  action as InvoicePaymentAction,
+  loader as InvoicePaymentLoader,
+} from "./components/InvoiceComponents/InvoicePaymentForm";
 import SupplierPaymentRoot from "./pages/SupplierPaymentPages/SupplierPaymentRoot";
-import AllSupplierPaymentPage, {loader as SupplierPaymentsLoader} from "./pages/SupplierPaymentPages/AllSupplierPaymentPage";
+import AllSupplierPaymentPage, {
+  loader as SupplierPaymentsLoader,
+} from "./pages/SupplierPaymentPages/AllSupplierPaymentPage";
 import NewPaymentsPage from "./pages/SupplierPaymentPages/NewPaymentsPage";
-import SupplierPaymentDetailPage, {action as SupplierPaymentDeleteAction, loader as SupplierPaymentDetailLoader} from "./pages/SupplierPaymentPages/SupplierPaymentDetailPage";
+import SupplierPaymentDetailPage, {
+  action as SupplierPaymentDeleteAction,
+  loader as SupplierPaymentDetailLoader,
+} from "./pages/SupplierPaymentPages/SupplierPaymentDetailPage";
 import SupplierPaymentApprovePage from "./pages/SupplierPaymentPages/SupplierPaymentApprovePage";
-import {action as SupplierPaymentApproveAction} from "./components/SupplierPaymentComponents/SupplierPaymentApproveForm"
+import { action as SupplierPaymentApproveAction } from "./components/SupplierPaymentComponents/SupplierPaymentApproveForm";
+import BalanceRoot from "./pages/InventoryBalancePage/BalanceRoot";
+import InventoryBalancesPage, {
+  loader as InventoryBalancesLoader,
+} from "./pages/InventoryBalancePage/AllInventoryBalances";
+import InventoryBalanceSearchPage from "./pages/InventoryBalancePage/InventoryBalanceSearchPage";
+import MiscReceiptPage from "./pages/InventoryBalancePage/MiscReceiptPage";
+import MiscIssuePage from "./pages/InventoryBalancePage/MiscIssuePage";
+import {action as MiscReceiptAction} from "./components/InventoryBalancesComponents/MiscReceiptForm"
+import {action as MiscIssueAction} from "./components/InventoryBalancesComponents/MiscIssueForm"
+import ViewInvoiceAccountingPage, {loader as ViewInvoiceAccountingLoader} from "./pages/InvoicePages/ViewInvoiceAccountingPage";
+import ViewSupplierPaymentAccountingPage,{loader as ViewPaymentAccountingLoader} from "./pages/SupplierPaymentPages/ViewSupplierPaymentAccountingPage";
 
 const router = createBrowserRouter([
   {
@@ -182,26 +229,55 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <HomePage />
       },
       {
-        path: "payment",
-        element: <SupplierPaymentRoot/>,
-        id: "payments",
-        loader: SupplierPaymentsLoader,
+        path: "inventory-balance",
+        element: <BalanceRoot />,
+        id: "inventory-balances",
+        loader: InventoryBalancesLoader,
         children: [
-          {index: true, element: <AllSupplierPaymentPage/>},
-          {path: "new", element: <NewPaymentsPage/>},
-          {path: ":id", id: "payment", loader: SupplierPaymentDetailLoader, children:[
-            {index:true, element:<SupplierPaymentDetailPage/>, action: SupplierPaymentDeleteAction},
-            {path:"approve", element: <SupplierPaymentApprovePage/>, action: SupplierPaymentApproveAction},
-            
-          ]}
+          { index: true, element: <InventoryBalancesPage /> },
+          { path: "search", element: <InventoryBalanceSearchPage /> },
+          { path: "receipt" , element: <MiscReceiptPage/>, action: MiscReceiptAction},
+          { path: "issue" , element: <MiscIssuePage/>, action: MiscIssueAction}
         ]
       },
       {
+        path: "payment",
+        element: <SupplierPaymentRoot />,
+        id: "payments",
+        loader: SupplierPaymentsLoader,
+        children: [
+          { index: true, element: <AllSupplierPaymentPage /> },
+          { path: "new", element: <NewPaymentsPage /> },
+          {
+            path: ":id",
+            id: "payment",
+            loader: SupplierPaymentDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <SupplierPaymentDetailPage />,
+                action: SupplierPaymentDeleteAction,
+              },
+              {
+                path: "approve",
+                element: <SupplierPaymentApprovePage />,
+                action: SupplierPaymentApproveAction,
+              },
+              {
+                path:"accounting",
+                element: <ViewSupplierPaymentAccountingPage/>,
+                loader: ViewPaymentAccountingLoader
+              }
+            ],
+          },
+        ],
+      },
+      {
         path: "auth",
-        element: <AuthentificationPage />,
+        element: <AuthenticationPage />,
         action: AuthAction,
       },
       {
@@ -229,7 +305,7 @@ const router = createBrowserRouter([
           {
             path: "supplier",
             element: <AllAccountRoot />,
-            loader: supplieraccountsLoader,
+            loader: SupplierAccountsLoader,
             id: "supplier",
             children: [
               { index: true, element: <SupplierAccountsPage /> },
@@ -246,7 +322,7 @@ const router = createBrowserRouter([
                   {
                     index: true,
                     element: <SupplierAccountDetailPage />,
-                    action: deleteaccountaction,
+                    action: DeleteAccountAction,
                   },
                   {
                     path: "edit",
@@ -272,7 +348,7 @@ const router = createBrowserRouter([
               {
                 path: ":id",
                 id: "purchase-account-detail",
-                loader: PurchaseAccountdetailLoader,
+                loader: PurchaseAccountDetailLoader,
                 children: [
                   {
                     index: true,
@@ -303,7 +379,7 @@ const router = createBrowserRouter([
               {
                 path: ":id",
                 id: "payment-account-detail",
-                loader: PaymentAccountdetailLoader,
+                loader: PaymentAccountDetailLoader,
                 children: [
                   {
                     index: true,
@@ -318,16 +394,17 @@ const router = createBrowserRouter([
                 ],
               },
             ],
-          },{
+          },
+          {
             path: "sales",
             element: <AllAccountRoot />,
             loader: AllSalesAccountLoader,
             id: "sales-accounts",
             children: [
-              { index: true, element: <SalesAccountsPage/> },
+              { index: true, element: <SalesAccountsPage /> },
               {
                 path: "new",
-                element: <NewSalesAccountPage/>,
+                element: <NewSalesAccountPage />,
                 action: SalesAccountAction,
               },
               {
@@ -337,28 +414,29 @@ const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
-                    element: <SalesAccountDetailPage/>,
+                    element: <SalesAccountDetailPage />,
                     action: DeleteSaleAccountAction,
                   },
                   {
                     path: "edit",
-                    element: <EditSalesAccountPage/>,
+                    element: <EditSalesAccountPage />,
                     action: SalesAccountAction,
                   },
                 ],
               },
             ],
-          },{
+          },
+          {
             path: "expense",
             element: <AllAccountRoot />,
             loader: AllExpenseAccountLoader,
             id: "expense-accounts",
             children: [
-              { index: true, element: <ExpenseAccountsPage/> },
+              { index: true, element: <ExpenseAccountsPage /> },
               {
                 path: "new",
-                element: <NewExpenseAccountPage/>,
-                action: ExpenseAccountManipulateaction,
+                element: <NewExpenseAccountPage />,
+                action: ExpenseAccountManipulateAction,
               },
               {
                 path: ":id",
@@ -367,23 +445,22 @@ const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
-                    element: <ExpenseAccountDetailPage/>,
-                    action: ExpenseaccountdeleteAction,
+                    element: <ExpenseAccountDetailPage />,
+                    action: ExpensesAccountDeleteAction,
                   },
                   {
                     path: "edit",
-                    element: <EditExpenseAccountPage/>,
-                    action: ExpenseAccountManipulateaction,
+                    element: <EditExpenseAccountPage />,
+                    action: ExpenseAccountManipulateAction,
                   },
                 ],
               },
             ],
-
           },
           {
             path: "customer",
             element: <AllAccountRoot />,
-            loader: customeraccountsloader,
+            loader: CustomerAccountsLoader,
             id: "customer",
             children: [
               { index: true, element: <CustomerAccountsPage /> },
@@ -400,7 +477,7 @@ const router = createBrowserRouter([
                   {
                     index: true,
                     element: <CustomerAccountDetailPage />,
-                    action: deletecustomeraccount,
+                    action: DeleteCustomerAccount,
                   },
                   {
                     path: "edit",
@@ -414,7 +491,7 @@ const router = createBrowserRouter([
           {
             path: "item",
             element: <AllAccountRoot />,
-            loader: itemaccountsloader,
+            loader: ItemAccountsLoader,
             id: "item",
             children: [
               { index: true, element: <ItemAccountsPage /> },
@@ -431,7 +508,7 @@ const router = createBrowserRouter([
                   {
                     index: true,
                     element: <CategoryAccountDetailPage />,
-                    action: deletecategoryaction,
+                    action: DeleteCategoryAction,
                   },
                   {
                     path: "edit",
@@ -458,7 +535,7 @@ const router = createBrowserRouter([
               {
                 path: "new",
                 element: <CreateCategoryPage />,
-                action: CategoryManipulateaction,
+                action: CategoryManipulateAction,
                 loader: AccountsCategoryLoader,
               },
               {
@@ -474,7 +551,7 @@ const router = createBrowserRouter([
                   {
                     path: "edit",
                     element: <CategoryEditPage />,
-                    action: CategoryManipulateaction,
+                    action: CategoryManipulateAction,
                     loader: AccountsCategoryLoader,
                   },
                 ],
@@ -527,7 +604,7 @@ const router = createBrowserRouter([
               },
               {
                 path: ":id",
-                loader: ItemDetaiLoader,
+                loader: ItemDetailLoader,
                 id: "item-main",
                 children: [
                   {
@@ -539,7 +616,7 @@ const router = createBrowserRouter([
                     path: "edit",
                     element: <ItemEditPage />,
                     action: ItemManipulateAction,
-                    loader: ItemCategoryDetailLodaer,
+                    loader: ItemCategoryDetailLoader,
                   },
                 ],
               },
@@ -582,32 +659,85 @@ const router = createBrowserRouter([
       },
       {
         path: "invoice",
-        element: <PurchaseRootPage/>,
+        element: <PurchaseRootPage />,
         loader: invoicesLoader,
         id: "invoices",
-        children:[
-          {index: true, element: <AllInvoicePage/>},
-          {path: "new", element: <NewInvoicePage/>, loader: invoiceSupplierLoader, action: InvoiceManipulateAction},
-          {path: ":id", id: "invoice-detail", loader: invoiceLoader, children: [
-            {index: true, element: <InvoiceDetailPage/>, action: deleteInvoiceAction},
-            {path: "edit", element: <InvoiceEditPage/>, action:InvoiceManipulateAction, loader: invoiceSupplierLoader},
-            {path: "account", element: <InvoiceAccountingPage/>, action: InvoiceAccountingAction},
-            {path: "payment", element: <InvoicePaymentPage/>, action: InvoicePaymentAction, loader: InvoicePaymentLoader}
-          ]}
-        ]
-      },{
+        children: [
+          { index: true, element: <AllInvoicePage /> },
+          {
+            path: "new",
+            element: <NewInvoicePage />,
+            loader: invoiceSupplierLoader,
+            action: InvoiceManipulateAction,
+          },
+          {
+            path: ":id",
+            id: "invoice-detail",
+            loader: invoiceLoader,
+            children: [
+              {
+                index: true,
+                element: <InvoiceDetailPage />,
+                action: deleteInvoiceAction,
+              },
+              {
+                path: "edit",
+                element: <InvoiceEditPage />,
+                action: InvoiceManipulateAction,
+                loader: invoiceSupplierLoader,
+              },
+              {
+                path: "account",
+                element: <InvoiceAccountingPage />,
+                action: InvoiceAccountingAction,
+              },
+              {
+                path: "payment",
+                element: <InvoicePaymentPage />,
+                action: InvoicePaymentAction,
+                loader: InvoicePaymentLoader,
+              },
+              {
+                path: "accounting",
+                element:<ViewInvoiceAccountingPage/>,
+                loader: ViewInvoiceAccountingLoader
+              }
+            ],
+          },
+        ],
+      },
+      {
         path: "receipt",
-        element:<SalesRootNav/>,
+        element: <SalesRootNav />,
         loader: ReceiptsLoader,
         id: "receipts",
-        children:[
-          {index: true, element: <AllReceiptsPage/>},
-          {path: "new", element: <NewReceiptPage/>, loader: ReceiptCustomerLoader, action: ReceiptManipulateAction},
-          {path: ":id", id: "receipt-detail", loader: ReceiptLoader, children: [
-            {index: true, element: <ReceiptDetailPage/>, action: ReceiptDeleteAction},
-            {path: "edit", element: <ReceiptEditPage/>, loader: ReceiptCustomerLoader,action: ReceiptManipulateAction}
-          ]}
-        ]
+        children: [
+          { index: true, element: <AllReceiptsPage /> },
+          {
+            path: "new",
+            element: <NewReceiptPage />,
+            loader: ReceiptCustomerLoader,
+            action: ReceiptManipulateAction,
+          },
+          {
+            path: ":id",
+            id: "receipt-detail",
+            loader: ReceiptLoader,
+            children: [
+              {
+                index: true,
+                element: <ReceiptDetailPage />,
+                action: ReceiptDeleteAction,
+              },
+              {
+                path: "edit",
+                element: <ReceiptEditPage />,
+                loader: ReceiptCustomerLoader,
+                action: ReceiptManipulateAction,
+              },
+            ],
+          },
+        ],
       },
       {
         path: "supplier",
@@ -625,7 +755,7 @@ const router = createBrowserRouter([
           {
             path: ":id",
             id: "suppliers-detail",
-            loader: supaccLoader,
+            loader: SupAccLoader,
             children: [
               {
                 index: true,
@@ -661,11 +791,11 @@ const router = createBrowserRouter([
                 path: "edit",
                 element: <EditUserPage />,
                 action: UserManipulateAction,
-              },
-            ],
+              }
+            ]
           },
         ],
-      }
+      },
     ],
   },
 ]);

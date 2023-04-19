@@ -1,4 +1,4 @@
-import ExpenseAccountForm from "../../components/Accountcomponents/ExpenseAccountForm";
+import ExpenseAccountForm from "../../components/AccountComponents/ExpenseAccountForm";
 
 function NewExpenseAccountPage() {
   return <ExpenseAccountForm method="post" title="Expense" />;

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { defer, json, Await, useRouteLoaderData} from "react-router-dom";
-import AccountsList from "../../../components/Accountcomponents/AccountsList";
+import AccountsList from "../../../components/AccountComponents/AccountsList";
 import { getAuthToken } from "../../../util/Auth";
 
 function ItemAccountsPage(){

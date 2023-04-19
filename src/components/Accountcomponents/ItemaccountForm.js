@@ -167,8 +167,11 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(accountData),
     });
+    if (response.status === 409) {
+      return response;
+    }
+
     if (!response.ok) {
-      window.alert("failed");
       throw json({ message: "Failed to save the account" }, { status: 500 });
     }
 
@@ -185,8 +188,11 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(accountData),
     });
+    if (response.status === 400) {
+      return response;
+    }
+
     if (!response.ok) {
-      window.alert("failed update");
       throw json({ message: "Failed to save the account" }, { status: 500 });
     }
 

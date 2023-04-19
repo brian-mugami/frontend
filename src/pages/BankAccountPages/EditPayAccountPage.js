@@ -1,5 +1,5 @@
 import { useRouteLoaderData } from "react-router-dom";
-import PaymentAccountForm from "../../components/Accountcomponents/BankAccountForm";
+import PaymentAccountForm from "../../components/AccountComponents/BankAccountForm";
 
 function EditPaymentAccountPage(){
     const {account} = useRouteLoaderData("payment-account-detail")
