@@ -31,7 +31,7 @@ import NewCustomerAccountPage from "./pages/CustomerPages/CustomerAccountPages/N
 import NewItemAccountPage from "./pages/ItemPages/CategoryAccounts/NewCategoryAccount";
 import { action as SupplierAccountAction } from "./components/AccountComponents/SupplierAccountsForm";
 import { action as CreateItemAccountAction } from "./components/AccountComponents/ItemAccountForm";
-import { action as CreateCustomerAccountAction } from "./components/AccountComponents/CustomerAccountform";
+import { action as CreateCustomerAccountAction } from "./components/AccountComponents/CustomerAccountForm";
 import SupplierAccountDetailPage, {
   loader as supplierAccountLoader,
 } from "./pages/SupplierPages/SupplierAccounts/SupplierAccountDetailPage";
@@ -69,7 +69,7 @@ import CategoryDetailPage, {
 } from "./pages/ItemPages/Categories/CategoryDetailPage";
 import { action as DeleteCatItemAction } from "./pages/ItemPages/Categories/CategoryDetailPage";
 import CategoryEditPage from "./pages/ItemPages/Categories/CategoryEditPage";
-import ItemsRoot from "./pages/ItemPages/ItemSAllRootNav";
+import ItemsRoot from "./pages/ItemPages/ItemsAllRootNav";
 import ItemRoot from "./pages/ItemPages/Items/ItemRoot";
 import AllItemsPage, {
   loader as AllItemsLoader,

@@ -8,7 +8,7 @@ function ReceiptList({ receipts, title }) {
 
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
-  const paginatedreceipts = receipts.slice(startIndex, endIndex);
+  const paginatedReceipts = receipts.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(receipts.length / PAGE_SIZE);
 
@@ -44,7 +44,7 @@ function ReceiptList({ receipts, title }) {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {paginatedreceipts.map((receipt) => (
+            {paginatedReceipts.map((receipt) => (
               <tr
                 key={receipt.id}
                 className="hover:bg-gray-100 transition-colors duration-200"
