@@ -14,7 +14,7 @@ import { getAuthToken } from "../../util/Auth";
 import {
   currencyTypes,
   destinationTypes,
-  purchaseTypes,
+  purchaseTypes
 } from "../../data/paymentTypes";
 
 let itemList = [];
