@@ -31,7 +31,7 @@ import NewCustomerAccountPage from "./pages/CustomerPages/CustomerAccountPages/N
 import NewItemAccountPage from "./pages/ItemPages/CategoryAccounts/NewCategoryAccount";
 import { action as SupplierAccountAction } from "./components/AccountComponents/SupplierAccountsForm";
 import { action as CreateItemAccountAction } from "./components/AccountComponents/ItemAccountForm";
-import { action as CreateCustomerAccountAction } from "./components/AccountComponents/CustomerAccountForm";
+import { action as CreateCustomerAccountAction } from "./components/AccountComponents/CustomerAccountform";
 import SupplierAccountDetailPage, {
   loader as supplierAccountLoader,
 } from "./pages/SupplierPages/SupplierAccounts/SupplierAccountDetailPage";
