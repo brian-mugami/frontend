@@ -94,11 +94,10 @@ function InvoiceForm({ invoiceData, title, method }) {
 
   itemList = tableRows;
 
-  let itemsAvailable = false
-  if (invoiceData){
-    itemsAvailable = (invoiceData.purchase_items.length > 0) === true
+  let itemsAvailable = false;
+  if (invoiceData) {
+    itemsAvailable = (invoiceData.purchase_items.length > 0) === true;
   }
-  
 
   return (
     <React.Fragment>
@@ -514,6 +513,15 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceData),
     });
+    if (response.status === 400) {
+      return response;
+    }
+    if (response.status === 404) {
+      return response;
+    }
+    if (response.status === 500) {
+      return response;
+    }
     if (!response.ok) {
       window.alert("Please enter a valid invoice");
       return redirect("./");
@@ -536,8 +544,16 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(lines),
     });
+    if (invoiceLines.status === 400){
+      return invoiceLines
+    }
+    if (invoiceLines.status === 500){
+      return invoiceLines
+    }
+    if (invoiceLines.status === 404){
+      return invoiceLines
+    }
     if (!invoiceLines.ok) {
-      console.log(itemList);
       window.alert("error in invoice lines");
       return redirect("./");
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Form,
@@ -8,21 +8,71 @@ import {
   redirect,
   json,
   useLoaderData,
+  defer,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import { currencyTypes, purchaseTypes } from "../../data/paymentTypes";
 
+let item_list = []
+
 function ReceiptForm({ receiptData, title, method }) {
-  const customers = useLoaderData();
+  const { customers, items } = useLoaderData();
   const navigate = useNavigate();
   const navigation = useNavigation();
   const date = new Date().toISOString().slice(0, 10);
   const data = useActionData();
+  const [tableRows, setTableRows] = useState([
+    {
+      item_name: "",
+      item_quantity: 0,
+      selling_price: 0,
+      item_cost: 0,
+    },
+  ]);
 
   const isSubmitting = navigation.state === "submitting";
+
   function cancelHandler() {
     navigate("..");
   }
+
+  const handleAddRow = () => {
+    setTableRows((rows) => [
+      ...rows,
+      {
+        item_name: "",
+        item_quantity: 0,
+        selling_price: 0,
+        item_cost: 0,
+      },
+    ]);
+  };
+
+  const handleRemoveRow = (index) => {
+    setTableRows((rows) => rows.filter((row, i) => i !== index));
+  };
+
+  const handleInputChange = (event, index, key) => {
+    const value = event.target.value;
+    setTableRows((rows) => {
+      const newRows = [...rows];
+      newRows[index][key] = value;
+      if (key === "item_quantity" || key === "selling_price") {
+        newRows[index].item_cost =
+          newRows[index].item_quantity * newRows[index].selling_price;
+      }
+      return newRows;
+    });
+  };
+
+  item_list = tableRows
+
+  let itemsAvailable = false;
+  if (receiptData) {
+    itemsAvailable = (receiptData.sale_items.length > 0) === true;
+  }
+
+
   return (
     <React.Fragment>
       {data && data.errors && (
@@ -69,11 +119,14 @@ function ReceiptForm({ receiptData, title, method }) {
               </label>
               <div className="mt-2">
                 <input
+                  disabled={!receiptData}
                   placeholder="Receipt Amount"
                   name="receipt_amount"
                   type="number"
-                  step="0.0001"
-                  defaultValue={receiptData ? receiptData.amount : 0}
+                  step="0.01"
+                  defaultValue={
+                    receiptData ? receiptData.amount : ""
+                  }
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -198,6 +251,139 @@ function ReceiptForm({ receiptData, title, method }) {
             </button>
           </div>
         </div>
+        <div>
+          <button className="btn btn-secondary" onClick={handleAddRow}>
+            Add Row
+          </button>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Line Number</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Item Quantity</th>
+                <th scope="col">Selling Price</th>
+                <th scope="col">Total Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              {itemsAvailable
+                ? receiptData.sale_items.map((item, index) => (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>
+                        <input
+                          name="item_name"
+                          type="text"
+                          defaultValue={item.item.item_name}
+                          list="options"
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_name")
+                          }
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        />
+                        <datalist id="options">
+                          {items.map((item) => (
+                            <option key={item.id} value={item.item_name} />
+                          ))}
+                        </datalist>
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          name="item_quantity"
+                          min="1"
+                          defaultValue={item.quantity}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_quantity")
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          min="1"
+                          step="0.01"
+                          name="selling_price"
+                          defaultValue={item.selling_price}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "selling_price")
+                          }
+                        />
+                      </td>
+                      <td>{item.item_cost}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleRemoveRow(index)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                : tableRows.map((row, index) => (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>
+                        <input
+                          name="item_name"
+                          type="text"
+                          value={row.item_name}
+                          list="options"
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_name")
+                          }
+                          required
+                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        />
+                        <datalist id="options">
+                          {items.map((item) => (
+                            <option key={item.id} value={item.item_name} />
+                          ))}
+                        </datalist>
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          name="item_quantity"
+                          min="1"
+                          value={row.item_quantity}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "item_quantity")
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          required
+                          type="number"
+                          min="1"
+                          step="0.01"
+                          name="selling_price"
+                          value={row.selling_price}
+                          onChange={(e) =>
+                            handleInputChange(e, index, "selling_price")
+                          }
+                        />
+                      </td>
+                      <td>{row.item_cost}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleRemoveRow(index)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+            </tbody>
+          </table>
+        </div>
       </Form>
     </React.Fragment>
   );
@@ -229,11 +415,51 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(ReceiptData),
     });
+    if (response.status === 404) {
+      return response;
+    }
+    if (response.status === 500) {
+      return response;
+    }
+    if (response.status === 400) {
+      return response;
+    }
     if (!response.ok) {
-      window.alert("failed");
-      throw json({ message: "Failed to save the invoice" }, { status: 500 });
+      throw json({ message: "Failed to save the receipt" }, { status: 500 });
+    }
+    const receiptId = (await response.json()).id;
+    const lines = {
+      receipt_id: receiptId,
+      item_list: item_list.map((item) => ({
+        item_name: item.item_name,
+        selling_price: item.selling_price,
+        quantity: item.item_quantity,
+      })),
+    };
+    const receiptLines = await fetch("/sales", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(lines),
+    });
+    if (receiptLines.status === 400){
+      return receiptLines
+    }
+    if (receiptLines.status === 500){
+      return receiptLines
+    }
+    if (receiptLines.status === 404){
+      return receiptLines
+    }
+    if (!receiptLines.ok) {
+      window.alert("error in receipt lines");
+      return redirect("./");
     }
     return redirect("/receipt");
+
   } else {
     const id = params.id;
     url = "/receipt/" + id;
@@ -255,7 +481,7 @@ export async function action({ request, params }) {
   }
 }
 
-export async function Loader() {
+async function customersLoader() {
   const token = getAuthToken();
   const response = await fetch("/customer", {
     method: "get",
@@ -269,4 +495,28 @@ export async function Loader() {
     const resData = await response.json();
     return resData;
   }
+}
+
+async function itemsLoader() {
+  const token = getAuthToken();
+
+  const response = await fetch("/item", {
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  if (!response.ok) {
+    throw json({ message: "The response was not ok" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    return resData;
+  }
+}
+
+export async function Loader({ params, request }) {
+  return defer({
+    customers: await customersLoader(),
+    items: await itemsLoader(),
+  });
 }

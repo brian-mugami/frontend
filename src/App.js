@@ -214,10 +214,14 @@ import InventoryBalancesPage, {
 import InventoryBalanceSearchPage from "./pages/InventoryBalancePage/InventoryBalanceSearchPage";
 import MiscReceiptPage from "./pages/InventoryBalancePage/MiscReceiptPage";
 import MiscIssuePage from "./pages/InventoryBalancePage/MiscIssuePage";
-import {action as MiscReceiptAction} from "./components/InventoryBalancesComponents/MiscReceiptForm"
-import {action as MiscIssueAction} from "./components/InventoryBalancesComponents/MiscIssueForm"
-import ViewInvoiceAccountingPage, {loader as ViewInvoiceAccountingLoader} from "./pages/InvoicePages/ViewInvoiceAccountingPage";
-import ViewSupplierPaymentAccountingPage,{loader as ViewPaymentAccountingLoader} from "./pages/SupplierPaymentPages/ViewSupplierPaymentAccountingPage";
+import { action as MiscReceiptAction } from "./components/InventoryBalancesComponents/MiscReceiptForm";
+import { action as MiscIssueAction } from "./components/InventoryBalancesComponents/MiscIssueForm";
+import ViewInvoiceAccountingPage, {
+  loader as ViewInvoiceAccountingLoader,
+} from "./pages/InvoicePages/ViewInvoiceAccountingPage";
+import ViewSupplierPaymentAccountingPage, {
+  loader as ViewPaymentAccountingLoader,
+} from "./pages/SupplierPaymentPages/ViewSupplierPaymentAccountingPage";
 
 const router = createBrowserRouter([
   {
@@ -229,7 +233,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <HomePage />,
       },
       {
         path: "inventory-balance",
@@ -239,9 +243,17 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <InventoryBalancesPage /> },
           { path: "search", element: <InventoryBalanceSearchPage /> },
-          { path: "receipt" , element: <MiscReceiptPage/>, action: MiscReceiptAction},
-          { path: "issue" , element: <MiscIssuePage/>, action: MiscIssueAction}
-        ]
+          {
+            path: "receipt",
+            element: <MiscReceiptPage />,
+            action: MiscReceiptAction,
+          },
+          {
+            path: "issue",
+            element: <MiscIssuePage />,
+            action: MiscIssueAction,
+          },
+        ],
       },
       {
         path: "payment",
@@ -267,10 +279,10 @@ const router = createBrowserRouter([
                 action: SupplierPaymentApproveAction,
               },
               {
-                path:"accounting",
-                element: <ViewSupplierPaymentAccountingPage/>,
-                loader: ViewPaymentAccountingLoader
-              }
+                path: "accounting",
+                element: <ViewSupplierPaymentAccountingPage />,
+                loader: ViewPaymentAccountingLoader,
+              },
             ],
           },
         ],
@@ -699,9 +711,9 @@ const router = createBrowserRouter([
               },
               {
                 path: "accounting",
-                element:<ViewInvoiceAccountingPage/>,
-                loader: ViewInvoiceAccountingLoader
-              }
+                element: <ViewInvoiceAccountingPage />,
+                loader: ViewInvoiceAccountingLoader,
+              },
             ],
           },
         ],
@@ -791,8 +803,8 @@ const router = createBrowserRouter([
                 path: "edit",
                 element: <EditUserPage />,
                 action: UserManipulateAction,
-              }
-            ]
+              },
+            ],
           },
         ],
       },
