@@ -52,11 +52,7 @@ function Sidebar() {
           <NavLink className="sidebar-nav-link" to="supplier">
             Suppliers
           </NavLink>
-<<<<<<< HEAD
-       
-       
-=======
-        )}
+        
         {token && (
           <NavLink className="sidebar-nav-link" to="payment">
             Payments
@@ -68,10 +64,9 @@ function Sidebar() {
           </NavLink>
         )}
         {token && (
->>>>>>> origin/mugami_frontend
           <Form action="logout" method="post">
             <button className="btn btn-danger">Logout</button>
-          </Form>
+          </Form>)}
        
       </nav>
     </div>
