@@ -62,6 +62,11 @@ function InvoicePaymentForm() {
             ))}
           </select>
         </p>
+        <p>
+          <label>Transaction Number</label>
+          <input type="text" name="transaction-number" placeholder="transaction code" required>
+          </input>
+        </p>
         <button type="submit" disabled={isSubmitting} className="btn btn-primary">
           Yes
         </button>
@@ -84,6 +89,7 @@ export async function action({ request, params }) {
     amount: data.get("amount"),
     currency: data.get("currency"),
     bank_account: data.get("account"),
+    payment_description: data.get("transaction-number")
   };
   const response = await fetch(url, {
     method: "POST",
