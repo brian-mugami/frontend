@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
@@ -222,6 +222,10 @@ import ViewInvoiceAccountingPage, {
 import ViewSupplierPaymentAccountingPage, {
   loader as ViewPaymentAccountingLoader,
 } from "./pages/SupplierPaymentPages/ViewSupplierPaymentAccountingPage";
+
+const ReceiptAccountingViewPage = lazy(() =>
+  import("./pages/ReceiptPages/ReceiptAccountingViewPage")
+);
 
 const router = createBrowserRouter([
   {
@@ -746,6 +750,14 @@ const router = createBrowserRouter([
                 element: <ReceiptEditPage />,
                 loader: ReceiptCustomerLoader,
                 action: ReceiptManipulateAction,
+              },
+              {
+                path: "accounting",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <ReceiptAccountingViewPage />
+                  </Suspense>
+                ),
               },
             ],
           },
