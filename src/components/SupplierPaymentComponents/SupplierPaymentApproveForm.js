@@ -56,6 +56,12 @@ export async function action({ request, params }) {
       "Access-Control-Allow-Origin": "*",
     },
   });
+  if (response.status === 400){
+    return response
+  }
+  if (response.status === 404){
+    return response
+  }
   if (!response.ok) {
     window.alert("Failed to approve payment");
     throw json({ message: "Failed to approve payment" }, { status: 500 });

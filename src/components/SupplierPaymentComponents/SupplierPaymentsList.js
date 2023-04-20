@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useActionData } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 
@@ -9,7 +9,7 @@ const SupplierPaymentList = ({ payments }) => {
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
   const paginatedPayments = payments.slice(startIndex, endIndex);
-
+  const data = useActionData()
   const totalPages = Math.ceil(payments.length / PAGE_SIZE);
 
   const goToPage = (pageNumber) => {
@@ -20,6 +20,14 @@ const SupplierPaymentList = ({ payments }) => {
     <div className="max-w-screen-lg mx-auto">
       <h2 className="text-lg font-semibold mb-4">Payments</h2>
       <div className="shadow border rounded-md">
+      {data && data.errors && (
+          <ul>
+            {Object.values(data.errors).map((err) => (
+              <li key={err}>{err}</li>
+            ))}
+          </ul>
+        )}
+        {data && data.message && <p>{data.message}</p>}
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

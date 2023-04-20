@@ -20,6 +20,10 @@ function ErrorPage(){
         title = "Unauthorized"
         message = error.data.message
     }
+    if (isRouteErrorResponse(error) && error.status===400){
+        title = "Server error"
+        message = error.data.message
+    }
     
     return(
         <React.Fragment>

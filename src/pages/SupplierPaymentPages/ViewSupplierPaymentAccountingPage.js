@@ -1,11 +1,11 @@
 import React from "react";
-import { defer, json, useLoaderData, useNavigate } from "react-router-dom";
+import { defer, json, useActionData, useLoaderData, useNavigate } from "react-router-dom";
 import Modal from "../../components/UIComponents/Modal";
 import { getAuthToken } from "../../util/Auth";
 
 function ViewSupplierPaymentAccountingPage() {
   const navigate = useNavigate();
-
+  const data = useActionData()
   function cancelHandler() {
     navigate("/payment");
   }
@@ -14,22 +14,29 @@ function ViewSupplierPaymentAccountingPage() {
   return (
     <React.Fragment>
       <Modal>
-        {accounting.map((account) => (
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
+      {data && data.message && <p>{data.message}</p>}
           <div>
             <p>
               Credit Account:{" "}
               <strong>
-                {account.credit_account} - ({account.credit_amount})
+                {accounting.credit_account} - ({accounting.credit_amount})
               </strong>
             </p>
             <p>
               Debit Account:{" "}
               <strong>
-                {account.debit_account} - {account.debit_amount}
+                {accounting.debit_account} - {accounting.debit_amount}
               </strong>
             </p>
           </div>
-        ))}
+        
         <button onClick={cancelHandler}>Back</button>
       </Modal>
     </React.Fragment>
@@ -45,14 +52,19 @@ async function accountingLoader(id) {
     headers: {
       Authorization: "Bearer " + token,
     },
-  });
-
+  }); 
+  if (response.status === 404){
+    return response
+  }
+  if (response.status === 400){
+    return response
+  }
   if (!response.ok) {
     throw json({ message: "Not gotten accounting" }, { status: 404 });
   }
   const resData = await response.json();
   console.log(resData)
-  return resData.accounting;
+  return resData.accounting[0];
 }
 
 export async function loader({ params, request }) {

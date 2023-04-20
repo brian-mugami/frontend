@@ -100,6 +100,12 @@ export async function action({ request, params }) {
     },
     body: JSON.stringify(paymentData),
   });
+  if (response.status === 400){
+    return response
+  }
+  if(response.status === 404){
+    return response
+  }
   if(!response.ok){
     window.alert("Failed to pay")
     throw json({ message: "Failed to create payment" }, { status: 500 })
