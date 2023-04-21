@@ -29,7 +29,6 @@ export async function loader({request, params}){
     }
 
     const resData = await response.json()
-    console.log(resData)
     return resData
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
@@ -223,7 +223,28 @@ import ViewSupplierPaymentAccountingPage, {
   loader as ViewPaymentAccountingLoader,
 } from "./pages/SupplierPaymentPages/ViewSupplierPaymentAccountingPage";
 
-import ReceiptAccountingViewPage, {loader as ReceiptAccountingViewLoader} from "./pages/ReceiptPages/ReceiptAccountingViewPage";
+import ReceiptAccountingViewPage, {
+  loader as ReceiptAccountingViewLoader,
+} from "./pages/ReceiptPages/ReceiptAccountingViewPage";
+import ReceiptPaymentPage, {
+  action as ReceiptPaymentAction,
+  loader as ReceiptPaymentLoader,
+} from "./pages/ReceiptPages/ReceiptPaymentPage";
+import AllCustomerPaymentRoot from "./pages/CustomerPaymentsPage/AllCustomerPaymentRoot";
+
+const ReceiptPaymentsPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/AllCustomerPayments")
+);
+const NewReceiptPaymentPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/NewCustomerPaymentPage")
+);
+const CustomerPaymentDetailPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentDetailPage")
+);
+const CustomerPaymentApprovePage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentApprovePage")
+);
+const ViewCustomerPaymentAccountingPage = lazy(() =>import("./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"))
 
 const router = createBrowserRouter([
   {
@@ -236,6 +257,72 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "customer-payment",
+        element: <AllCustomerPaymentRoot />,
+        id: "customer-payments",
+        loader: () =>
+          import("./pages/CustomerPaymentsPage/AllCustomerPayments").then(
+            (module) => module.loader()
+          ),
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <ReceiptPaymentsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "new",
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <NewReceiptPaymentPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ":id",
+            id: "customer-payment-detail",
+            loader: (meta) =>
+              import(
+                "./pages/CustomerPaymentsPage/CustomerPaymentDetailPage"
+              ).then((module) => module.loader(meta)),
+            children: [
+              {
+                index: true,
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <CustomerPaymentDetailPage />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "approve",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <CustomerPaymentApprovePage />
+                  </Suspense>
+                ),
+                action: (meta)=>import("./pages/CustomerPaymentsPage/CustomerPaymentApprovePage").then((module)=>module.action(meta))
+              },
+              {
+                path: "accounting",
+                element:(
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <ViewCustomerPaymentAccountingPage />
+                  </Suspense>
+                ),
+                loader:(meta) =>
+                import(
+                  "./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"
+                ).then((module) => module.loader(meta))
+              }
+            ]
+          }
+        ]
       },
       {
         path: "inventory-balance",
@@ -754,6 +841,12 @@ const router = createBrowserRouter([
                 element: <ReceiptAccountingViewPage />,
                 loader: ReceiptAccountingViewLoader,
               },
+              {
+                path: "pay",
+                element: <ReceiptPaymentPage />,
+                loader: ReceiptPaymentLoader,
+                action: ReceiptPaymentAction,
+              },
             ],
           },
         ],
@@ -791,7 +884,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      ,
       {
         path: "user",
         children: [

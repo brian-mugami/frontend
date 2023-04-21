@@ -59,6 +59,11 @@ function Sidebar() {
           </NavLink>
         )}
         {token && (
+          <NavLink className="sidebar-nav-link" to="customer-payment">
+            Customer Payments
+          </NavLink>
+        )}
+        {token && (
           <NavLink className="sidebar-nav-link" to="inventory-balance">
             Inventory Balances
           </NavLink>

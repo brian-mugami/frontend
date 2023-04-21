@@ -95,6 +95,7 @@ function ReceiptList({ receipts, title }) {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <button className="btn btn-primary"><Link to={`./${receipt.id}/accounting`}>View Accounting</Link></button>
+                  <button className="btn btn-dark"><Link to={`./${receipt.id}/pay`}>Pay</Link></button>
                 </td>
               </tr>
             ))}
