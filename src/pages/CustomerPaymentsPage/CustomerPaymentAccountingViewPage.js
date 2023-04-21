@@ -1,21 +1,21 @@
-import Modal from "../../components/UIComponents/Modal";
 import React from "react";
 import {
-  defer,
   json,
   useActionData,
   useLoaderData,
   useNavigate,
-} from "react-router";
+} from "react-router-dom";
+import Modal from "../../components/UIComponents/Modal";
 import { getAuthToken } from "../../util/Auth";
 
-function ReceiptAccountingViewPage() {
-  const data = useActionData();
-  const { accounting } = useLoaderData();
+function CustomerPaymentAccountingViewPage() {
   const navigate = useNavigate();
+  const data = useActionData();
   function cancelHandler() {
-    navigate("/receipt");
+    navigate("/customer-payment");
   }
+
+  const accounting = useLoaderData();
   return (
     <React.Fragment>
       <Modal>
@@ -27,28 +27,32 @@ function ReceiptAccountingViewPage() {
           </ul>
         )}
         {data && data.message && <p>{data.message}</p>}
-        <p>
-          Credit Account:{" "}
-          <strong>
-            {accounting.credit_account} - ({accounting.credit_amount})
-          </strong>
-        </p>
-        <p>
-          Debit Account:{" "}
-          <strong>
-            {accounting.debit_account} - +{accounting.debit_amount}
-          </strong>
-        </p>
+        <div>
+          <p>
+            Credit Account:{" "}
+            <strong>
+              {accounting.credit_account} - ({accounting.credit_amount})
+            </strong>
+          </p>
+          <p>
+            Debit Account:{" "}
+            <strong>
+              {accounting.debit_account} - {accounting.debit_amount}
+            </strong>
+          </p>
+        </div>
+
         <button onClick={cancelHandler}>Back</button>
       </Modal>
     </React.Fragment>
   );
 }
 
-export default ReceiptAccountingViewPage;
+export default CustomerPaymentAccountingViewPage;
 
-async function accountingLoader(id) {
-  let url = "/receipt/";
+export async function loader({ params, request }) {
+  const id = params.id;
+  let url = "/customer/payment/";
   const token = getAuthToken();
   const response = await fetch(url + id + "/account", {
     method: "get",
@@ -56,22 +60,16 @@ async function accountingLoader(id) {
       Authorization: "Bearer " + token,
     },
   });
-  if (response.status === 400) {
+  if (response.status === 404) {
     return response;
   }
-  if (response.status === 404) {
+  if (response.status === 400) {
     return response;
   }
   if (!response.ok) {
     throw json({ message: "Not gotten accounting" }, { status: 404 });
   }
   const resData = await response.json();
-  return resData;
-}
-
-export async function loader({ params, request }) {
-  const id = params.id;
-  return defer({
-    accounting: await accountingLoader(id),
-  });
+  console.log(resData);
+  return resData.accounting[0];
 }

@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import {
-  Form,
-  useNavigate,
-  useNavigation,
-} from "react-router-dom";
+import { Form, useNavigate, useNavigation } from "react-router-dom";
 
-function SupplierPaymentSearchForm({ onSearch }) {
+function CustomerSearchPaymentForm({ onSearch }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const [searchName, setSearchName] = useState("");
@@ -23,16 +19,15 @@ function SupplierPaymentSearchForm({ onSearch }) {
   const cancelHandler = () => {
     navigate("..");
   };
-
   return (
     <React.Fragment>
       <Form id="search-form" onSubmit={onSubmitHandler}>
-        <label>Search the supplier</label>
+        <label>Search the customer</label>
         <input
           required
-          name="supplier_name"
+          name="customer_name"
           type="text"
-          placeholder="search supplier"
+          placeholder="search customer"
           value={searchName}
           onChange={onSearchHandler}
         />
@@ -41,7 +36,7 @@ function SupplierPaymentSearchForm({ onSearch }) {
           type="submit"
           className="btn btn-success"
         >
-          Search
+          {isSubmitting ? "Searching...": "Search"}
         </button>
         <button onClick={cancelHandler} type="button" className="btn btn-dark">
           Cancel
@@ -51,4 +46,4 @@ function SupplierPaymentSearchForm({ onSearch }) {
   );
 }
 
-export default SupplierPaymentSearchForm;
+export default CustomerSearchPaymentForm;

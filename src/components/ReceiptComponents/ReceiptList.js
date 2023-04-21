@@ -8,7 +8,7 @@ function ReceiptList({ receipts, title }) {
 
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
-  const paginatedreceipts = receipts.slice(startIndex, endIndex);
+  const paginatedReceipts = receipts.slice(startIndex, endIndex);
 
   const totalPages = Math.ceil(receipts.length / PAGE_SIZE);
 
@@ -41,10 +41,34 @@ function ReceiptList({ receipts, title }) {
               >
                 receipt Amount
               </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Accounting Status
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Payment Status
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Sale Type
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Date
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {paginatedreceipts.map((receipt) => (
+            {paginatedReceipts.map((receipt) => (
               <tr
                 key={receipt.id}
                 className="hover:bg-gray-100 transition-colors duration-200"
@@ -61,7 +85,17 @@ function ReceiptList({ receipts, title }) {
                   {receipt.amount}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <button><Link to={`./${receipt.id}/accounting`}>View Accounting</Link></button>
+                  {receipt.accounted_status}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {receipt.status}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {receipt.sale_type}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button className="btn btn-primary"><Link to={`./${receipt.id}/accounting`}>View Accounting</Link></button>
+                  <button className="btn btn-dark"><Link to={`./${receipt.id}/pay`}>Pay</Link></button>
                 </td>
               </tr>
             ))}
