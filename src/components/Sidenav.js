@@ -1,6 +1,8 @@
 import { NavLink, Form} from "react-router-dom";
 import React from "react";
 import "../components/Sidenav.css";
+import { ProSidebarProvider, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent, SidebarFooter } from "react-pro-sidebar";
+import 'react-pro-sidebar/dist/'
 
 function Sidebar() {
   
@@ -53,25 +55,22 @@ function Sidebar() {
             Suppliers
           </NavLink>
         
-        {token && (
           <NavLink className="sidebar-nav-link" to="payment">
             Supplier Payments
           </NavLink>
-        )}
-        {token && (
+        
           <NavLink className="sidebar-nav-link" to="customer-payment">
             Customer Payments
           </NavLink>
-        )}
-        {token && (
+        
           <NavLink className="sidebar-nav-link" to="inventory-balance">
             Inventory Balances
           </NavLink>
-        )}
-        {token && (
+        
+        
           <Form action="logout" method="post">
             <button className="btn btn-danger">Logout</button>
-          </Form>)}
+          </Form>
        
       </nav>
     </div>
