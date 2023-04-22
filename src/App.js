@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from "react";
+import { ProSidebarProvider } from "react-pro-sidebar";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
@@ -244,7 +245,9 @@ const CustomerPaymentDetailPage = lazy(() =>
 const CustomerPaymentApprovePage = lazy(() =>
   import("./pages/CustomerPaymentsPage/CustomerPaymentApprovePage")
 );
-const ViewCustomerPaymentAccountingPage = lazy(() =>import("./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"))
+const ViewCustomerPaymentAccountingPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage")
+);
 
 const router = createBrowserRouter([
   {
@@ -306,23 +309,26 @@ const router = createBrowserRouter([
                     <CustomerPaymentApprovePage />
                   </Suspense>
                 ),
-                action: (meta)=>import("./pages/CustomerPaymentsPage/CustomerPaymentApprovePage").then((module)=>module.action(meta))
+                action: (meta) =>
+                  import(
+                    "./pages/CustomerPaymentsPage/CustomerPaymentApprovePage"
+                  ).then((module) => module.action(meta)),
               },
               {
                 path: "accounting",
-                element:(
+                element: (
                   <Suspense fallback={<p>Loading...</p>}>
                     <ViewCustomerPaymentAccountingPage />
                   </Suspense>
                 ),
-                loader:(meta) =>
-                import(
-                  "./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"
-                ).then((module) => module.loader(meta))
-              }
-            ]
-          }
-        ]
+                loader: (meta) =>
+                  import(
+                    "./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"
+                  ).then((module) => module.loader(meta)),
+              },
+            ],
+          },
+        ],
       },
       {
         path: "inventory-balance",
@@ -912,7 +918,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <ProSidebarProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </ProSidebarProvider>
+  );
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet, useRouteLoaderData } from "react-router-dom";
 import Sidebar from "../../components/Sidenav";
-
+import SideBarNav from "../../components/LayoutComponents/SideBarNav";
 
 function RootLayout() {
   const token = useRouteLoaderData("root")
@@ -9,11 +9,9 @@ function RootLayout() {
     <React.Fragment>
       <div></div>
       {token && (
-        <div className="flex ">
         <Sidebar/>
-      </div>
       )}
-      <main className="flex-1 ml-60">
+      <main className="flex-0.5 ml-60">
         <Outlet />
       </main>
     </React.Fragment>
