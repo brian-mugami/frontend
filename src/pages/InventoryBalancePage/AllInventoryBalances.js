@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { defer, json,Await, useRouteLoaderData,  } from "react-router-dom";
+import { defer, json,Await, useRouteLoaderData} from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import InventoryBalanceList from "../../components/InventoryBalancesComponents/InventoryBalanceList";
 
@@ -24,6 +24,9 @@ async function InventoryBalancesLoader(){
             'Authorization': 'Bearer '+ token
         }
     })
+    if (response.status === 404){
+        return response
+    }
     if(!response.ok){
         throw json({message: "The response was not ok"},{status: 500})
     }else{
