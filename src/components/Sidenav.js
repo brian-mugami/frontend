@@ -66,23 +66,19 @@ function Sidebar() {
           <NavLink className="sidebar-nav-link" to="inventory-balance">
             Inventory Balances
           </NavLink>
-        )}
-        {token && (
+       
           <NavLink className="sidebar-nav-link" to="bank-balances">
             Bank Balances
           </NavLink>
-        )}
-        {token && (
+      
           <NavLink className="sidebar-nav-link" to="supplier-balances">
            Supplier  Balances
           </NavLink>
-        )}
-        {token && (
+       
           <NavLink className="sidebar-nav-link" to="customer-balances">
             Customer Balances
           </NavLink>
-        )}
-        {token && (
+      
           <Form action="logout" method="post">
             <button className="btn btn-danger">Logout</button>
           </Form>
