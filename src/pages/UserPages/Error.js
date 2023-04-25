@@ -10,7 +10,8 @@ function ErrorPage(){
     let title="An error occurred"
     let message = "Something went wrong"
 
-    if ( isRouteErrorResponse(error) && error.status===500){
+    if ( error.status===500){
+        title = "An error occurred"
         message = error.data.message
     }
     if (isRouteErrorResponse(error) && error.status===404){

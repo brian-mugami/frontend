@@ -28,8 +28,11 @@ async function InvoiceLoader() {
       "Authorization": "Bearer " + token,
     },
   });
+  if (response.status=== 500){
+    throw json({message: "This is a server error. Please try again"}, {status: 500})
+  }
   if (!response.ok) {
-    throw json({ message: "Could not fetch invoices" }, { status: 500 });
+    throw json({ message: "Could not fetch invoices" }, { status: 422 });
   } else {
     const resData = await response.json();
     if (resData.status === 401) {

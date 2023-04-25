@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet, useRouteLoaderData } from "react-router-dom";
 import Sidebar from "../../components/Sidenav";
-import SideBarNav from "../../components/LayoutComponents/SideBarNav";
 
 function RootLayout() {
   const token = useRouteLoaderData("root")

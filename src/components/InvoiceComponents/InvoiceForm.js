@@ -14,13 +14,16 @@ import { getAuthToken } from "../../util/Auth";
 import {
   currencyTypes,
   destinationTypes,
-  purchaseTypes
+  purchaseTypes,
 } from "../../data/paymentTypes";
 
 let itemList = [];
 let invoiceBalanced = false;
+let isExpense = false;
+let existingData 
 
 function InvoiceForm({ invoiceData, title, method }) {
+  existingData = invoiceData
   const navigate = useNavigate();
   const [numberIsValid, setNumberIsValid] = useState(false);
   const [nameIsValid, setNameIsValid] = useState(false);
@@ -35,8 +38,9 @@ function InvoiceForm({ invoiceData, title, method }) {
   const [invoiceTotal, setInvoiceTotal] = useState(0);
   const navigation = useNavigation();
   const date = new Date().toISOString().slice(0, 10);
-  const { suppliers, items } = useLoaderData();
+  const { suppliers, items, expenseAccounts } = useLoaderData();
   const data = useActionData();
+  const [expense, setExpense] = useState(false);
 
   const handleAddRow = () => {
     setTableRows((rows) => [
@@ -60,6 +64,13 @@ function InvoiceForm({ invoiceData, title, method }) {
     }
   }
 
+  function checkExpenseHandler(event) {
+    if (event.target.value === "expense") {
+      setExpense(true);
+    }
+  }
+
+  isExpense = expense
   function checkInvoiceAmountHandler(event) {
     if (event.target.value > 0) {
       const value = parseFloat(event.target.value);
@@ -213,6 +224,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                   defaultValue={
                     invoiceData ? invoiceData.destination_type : "stores"
                   }
+                  onChange={checkExpenseHandler}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   {destinationTypes.map((type) => (
@@ -275,6 +287,28 @@ function InvoiceForm({ invoiceData, title, method }) {
                 </select>
               </div>
             </div>
+            {expense=== true ? (
+              <p>
+                <label>Expense Account</label>
+                <select
+                  name="expense_account"
+                  type="text"
+                  required
+                  defaultValue={
+                    invoiceData ? invoiceData.expense_account.account_name : ""
+                  }
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  {" "}
+                  {expenseAccounts.map((account) => (
+                    <option key={account.id} value={account.account_name}>
+                      {" "}
+                      {account.account_name}
+                    </option>
+                  ))}
+                </select>
+              </p>
+            ): ""}
 
             <p>
               <label>Date</label>
@@ -325,8 +359,8 @@ function InvoiceForm({ invoiceData, title, method }) {
             <tbody>
               {itemsAvailable
                 ? invoiceData.purchase_items.map((item, index) => (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
+                    <tr key={item.id}>
+                      <th scope="row">{item.id}</th>
                       <td>
                         <input
                           name="item_name"
@@ -479,10 +513,28 @@ async function ItemsLoader() {
   }
 }
 
+async function AccountLoader() {
+  const token = getAuthToken();
+
+  const response = await fetch("/expense/account", {
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  if (!response.ok) {
+    throw json({ message: "The response was not ok" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    return resData;
+  }
+}
+
 export async function Loader() {
   return defer({
     items: await ItemsLoader(),
     suppliers: await suppliersLoader(),
+    expenseAccounts: await AccountLoader(),
   });
 }
 
@@ -490,94 +542,150 @@ export async function action({ request, params }) {
   const method = request.method;
   const data = await request.formData();
   const token = getAuthToken();
+  let InvoiceData;
 
-  const InvoiceData = {
-    invoice_number: data.get("inv_number"),
-    amount: data.get("inv_amount"),
-    currency: data.get("currency"),
-    description: data.get("description"),
-    destination_type: data.get("destinationType"),
-    date: data.get("inv_date"),
-    purchase_type: data.get("purchase_type"),
-    supplier_name: data.get("supplier"),
-  };
-
-  let url = "/invoice";
-  if (method === "POST") {
-    const response = await fetch(url, {
-      method: request.method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(InvoiceData),
-    });
-    if (response.status === 400) {
-      return response;
-    }
-    if (response.status === 404) {
-      return response;
-    }
-    if (response.status === 500) {
-      return response;
-    }
-    if (!response.ok) {
-      window.alert("Please enter a valid invoice");
-      return redirect("./");
-    }
-    const invoiceId = (await response.json()).id;
-    const lines = {
-      invoice_id: invoiceId,
-      items_list: itemList.map((item) => ({
-        item_name: item.item_name,
-        buying_price: item.buying_price,
-        item_quantity: item.item_quantity,
-      })),
+  if (isExpense === true) {
+    InvoiceData = {
+      invoice_number: data.get("inv_number"),
+      amount: data.get("inv_amount"),
+      currency: data.get("currency"),
+      description: data.get("description"),
+      destination_type: data.get("destinationType"),
+      date: data.get("inv_date"),
+      purchase_type: data.get("purchase_type"),
+      supplier_name: data.get("supplier"),
+      expense_account_name: data.get("expense_account"),
     };
-    const invoiceLines = await fetch("/purchase", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(lines),
-    });
-    if (invoiceLines.status === 400){
-      return invoiceLines
-    }
-    if (invoiceLines.status === 500){
-      return invoiceLines
-    }
-    if (invoiceLines.status === 404){
-      return invoiceLines
-    }
-    if (!invoiceLines.ok) {
-      window.alert("error in invoice lines");
-      return redirect("./");
-    }
-    if (invoiceBalanced === false) {
-      window.alert("Invoice lines amount does not match header amount!");
-    }
-    return redirect("/invoice");
   } else {
-    const id = params.id;
-    url = "/invoice/" + id;
-    const response = await fetch(url, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(InvoiceData),
-    });
-    if (!response.ok) {
-      window.alert("failed update");
-      throw json({ message: "Failed to update" }, { status: 500 });
-    }
-
-    return redirect("/invoice");
+    InvoiceData = {
+      invoice_number: data.get("inv_number"),
+      amount: data.get("inv_amount"),
+      currency: data.get("currency"),
+      description: data.get("description"),
+      destination_type: data.get("destinationType"),
+      date: data.get("inv_date"),
+      purchase_type: data.get("purchase_type"),
+      supplier_name: data.get("supplier"),
+    };
   }
-}
+    const InvoiceUpdateData = {
+      invoice_number: data.get("inv_number"),
+      amount: data.get("inv_amount"),
+      currency: data.get("currency"),
+      description: data.get("description"),
+      destination_type: data.get("destinationType"),
+      purchase_type: data.get("purchase_type"),
+      supplier_name: data.get("supplier"),
+      expense_account_name: data.get("expense_account"),
+    };
+
+    let url = "/invoice";
+    if (method === "POST") {
+      const response = await fetch(url, {
+        method: request.method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(InvoiceData),
+      });
+      if (response.status === 400) {
+        return response;
+      }
+      if (response.status === 404) {
+        return response;
+      }
+      if (response.status === 500) {
+        return response;
+      }
+      if (!response.ok) {
+        window.alert("Please enter a valid invoice");
+        return redirect("./");
+      }
+      console.log(response)
+      const invoiceId = (await response.json()).id;
+      const lines = {
+        invoice_id: invoiceId,
+        items_list: itemList.map((item) => ({
+          item_name: item.item_name,
+          buying_price: item.buying_price,
+          item_quantity: item.item_quantity,
+        })),
+      };
+      const invoiceLines = await fetch("/purchase", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(lines),
+      });
+      if (invoiceLines.status === 400) {
+        return invoiceLines;
+      }
+      if (invoiceLines.status === 500) {
+        return invoiceLines;
+      }
+      if (invoiceLines.status === 404) {
+        return invoiceLines;
+      }
+      if (!invoiceLines.ok) {
+        window.alert("error in invoice lines");
+        return redirect("./");
+      }
+      if (invoiceBalanced === false) {
+        window.alert("Invoice lines amount does not match header amount!");
+      }
+      return redirect("/invoice");
+    } else {
+      const id = params.id;
+      url = "/invoice/" + id;
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(InvoiceUpdateData),
+      });
+      if (response.status === 404) {
+        return response;
+      }
+      if (response.status === 400) {
+        return response;
+      }
+      if (!response.ok) {
+        window.alert("failed update");
+        throw json({ message: "Failed to update" }, { status: 500 });
+      }
+      const invoiceUpdateLines = {
+        invoice_id: id,
+        item_list:itemList.map((item) => ({
+          item_name: item.item_name,
+          buying_price: item.buying_price,
+          item_quantity: item.item_quantity,
+        })),
+      };
+      for(let item of existingData.purchase_items){
+        const lineResponse = await fetch("/purchase/"+item.id,{
+          method:"PATCH",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(invoiceUpdateLines)
+        });
+        if (lineResponse.status===400){
+          return lineResponse
+        }
+        if(lineResponse.status===404){
+          return lineResponse
+        }
+      }
+      return redirect("/invoice");
+    }
+  }
+
