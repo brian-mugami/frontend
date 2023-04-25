@@ -35,7 +35,7 @@ export default function SideBarNav() {
               {" "}
               Inventory Balances{" "}
             </MenuItem>
-            <MenuItem component={<NavLink to="bank-balance" />}>
+            <MenuItem component={<NavLink to="bank-balances" />}>
               {" "}
               Bank Balances{" "}
             </MenuItem>

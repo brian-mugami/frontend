@@ -232,6 +232,9 @@ import ReceiptPaymentPage, {
   loader as ReceiptPaymentLoader,
 } from "./pages/ReceiptPages/ReceiptPaymentPage";
 import AllCustomerPaymentRoot from "./pages/CustomerPaymentsPage/AllCustomerPaymentRoot";
+import BankBalanceRoot from "./pages/BankBalancePages/BankBalanceRoot";
+import CustomerBalanceRoot from "./pages/CustomerBalancePages/CustomerBalanceRoot";
+import SupplierBalanceRoot from "./pages/SupplierBalancePages/SupplierBalanceRoot";
 
 const ReceiptPaymentsPage = lazy(() =>
   import("./pages/CustomerPaymentsPage/AllCustomerPayments")
@@ -248,6 +251,15 @@ const CustomerPaymentApprovePage = lazy(() =>
 const ViewCustomerPaymentAccountingPage = lazy(() =>
   import("./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage")
 );
+const AllBankBalancesPage = lazy(() =>
+  import("./pages/BankBalancePages/AllBankBalancesPage")
+);
+const AllCustomerBalancesPage = lazy(() =>
+  import("./pages/CustomerBalancePages/AllCustomerBalancesPage")
+);
+const AllSupplierBalancePages = lazy(() =>
+  import("./pages/SupplierBalancePages/AllSupplierBalancesPage")
+);
 
 const router = createBrowserRouter([
   {
@@ -260,6 +272,63 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "bank-balances",
+        loader: () =>
+          import("./pages/BankBalancePages/AllBankBalancesPage").then(
+            (module) => module.loader()
+          ),
+        id: "bank-balances",
+        element: <BankBalanceRoot />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllBankBalancesPage />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "customer-balances",
+        id: "customer-balances",
+        loader: () =>
+          import("./pages/CustomerBalancePages/AllCustomerBalancesPage").then(
+            (module) => module.loader()
+          ),
+        element: <CustomerBalanceRoot />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllCustomerBalancesPage />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "supplier-balances",
+        id: "supplier-balances",
+        loader: () =>
+          import("./pages/SupplierBalancePages/AllSupplierBalancesPage").then(
+            (module) => module.loader()
+          ),
+        element: <SupplierBalanceRoot />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllSupplierBalancePages />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "customer-payment",
