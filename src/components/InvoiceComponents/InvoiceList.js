@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { Link, useActionData } from "react-router-dom";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { useActionData } from 'react-router';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const PAGE_SIZE = 10;
 
 function InvoiceList({ invoices, title }) {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
@@ -16,8 +18,81 @@ function InvoiceList({ invoices, title }) {
     setCurrentPage(pageNumber);
   };
 
+  const columns = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      width: 100,
+      renderCell: (params) => (
+        <Link to={`./${params.value}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: 'date',
+      headerName: 'Creation Date',
+      width: 200,
+    },
+    {
+      field: 'supplier',
+      headerName: 'Supplier Name',
+      width: 200,
+      valueGetter: (params) => params.row.supplier.supplier_name,
+    },
+    {
+      field: 'amount',
+      headerName: 'Invoice Amount',
+      width: 200,
+    },
+    {
+      field: 'currency',
+      headerName: 'Currency',
+      width: 150,
+    },
+    {
+      field: 'status',
+      headerName: 'Payement Status',
+      width: 200,
+    },
+    {
+      field: 'accounted',
+      headerName: 'Accounted Status',
+      width: 200,
+    },
+    {
+      field: 'update_date',
+      headerName: 'Update Date',
+      width: 200,
+    },
+    {
+      field: 'matched_to_lines',
+      headerName: 'Matched Status',
+      width: 200,
+    },
+    {
+      field: 'options',
+      headerName: 'Options',
+      width: 400,
+      renderCell: (params) => (
+        <>
+          <button className="btn btn-success">
+            <Link to={`./${params.row.id}/account`}> Account</Link>
+          </button>
+          <button className="btn btn-warning">
+            <Link to={`./${params.row.id}/payment`}> Pay</Link>
+          </button>
+          <button className="btn btn-primary">
+            <Link to={`./${params.row.id}/accounting`}>
+              {" "}
+              View Accounting
+            </Link>
+          </button>
+        </>
+      ),
+    },
+  ];
+
   return (
-    <div className="max-w-screen-lg mx-auto">
+    <div style={{ height: 600, width: '100%' }}>
       <h2 className="text-lg font-semibold mb-4">invoices</h2>
       <div className="shadow border rounded-md">
         {data && data.errors && (
@@ -28,147 +103,22 @@ function InvoiceList({ invoices, title }) {
           </ul>
         )}
         {data && data.message && <p>{data.message}</p>}
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                invoice Number
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Creation Date
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Supplier Name
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                invoice Amount
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Currency
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Payement Status
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Accounted Status
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Update Date
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Matched Status
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Options
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {paginatedInvoices.map((invoice) => (
-              <tr
-                key={invoice.id}
-                className="hover:bg-gray-100 transition-colors duration-200"
-              >
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  <Link to={`./${invoice.id}`}>{invoice.invoice_number}</Link>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.date}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.supplier.supplier_name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.amount}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.currency}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.status}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.accounted}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.update_date}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {invoice.matched_to_lines}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <button className="btn btn-success">
-                    <Link to={`./${invoice.id}/account`}> Account</Link>
-                  </button>
-                  <button className="btn btn-warning">
-                    <Link to={`./${invoice.id}/payment`}> Pay</Link>
-                  </button>
-                  <button className="btn btn-primary">
-                    <Link to={`./${invoice.id}/accounting`}>
-                      {" "}
-                      View Accounting
-                    </Link>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <DataGrid
+          rows={paginatedInvoices}
+          columns={columns}
+          pageSize={PAGE_SIZE}
+          rowCount={invoices.length}
+          pagination
+          paginationMode="server"
+          onPageChange={(params) => goToPage(params.page + 1)}
+          autoHeight
+          components={{
+            Toolbar: GridToolbar,
+          }}
+        />
       </div>
-      {totalPages > 1 && (
-        <div className="flex justify-center mt-4">
-          <nav className="inline-flex rounded-md shadow">
-            <ul className="flex">
-              {Array.from({ length: totalPages }, (_, index) => (
-                <li key={index}>
-                  <button
-                    className={`px-4 py-2 ${
-                      currentPage === index + 1
-                        ? "bg-gray-900 text-white"
-                        : "bg-white text-gray-700"
-                    } font-medium`}
-                    onClick={() => goToPage(index + 1)}
-                  >
-                    {index + 1}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
     </div>
   );
 }
 
-export default InvoiceList;
+export default InvoiceList
