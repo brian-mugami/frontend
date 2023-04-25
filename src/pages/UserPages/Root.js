@@ -6,10 +6,11 @@ function RootLayout() {
   const token = useRouteLoaderData("root")
   return (
     <React.Fragment>
-      <div></div>
+      <div>
       {token && (
         <Sidebar/>
       )}
+      </div>
       <main className="flex-0.5 ml-60">
         <Outlet />
       </main>
