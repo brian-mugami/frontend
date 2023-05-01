@@ -1,50 +1,55 @@
-import React from "react"
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { DataGrid } from '@mui/x-data-grid';
 
-function ItemList({items}){
-    return (
-        <React.Fragment>
+const PAGE_SIZE = 20;
 
+const ItemList = ({ items }) => {
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const endIndex = startIndex + PAGE_SIZE;
+  const paginatedItems = items.slice(startIndex, endIndex);
 
+  const totalPages = Math.ceil(items.length / PAGE_SIZE);
 
+  const handlePageChange = (params) => {
+    setCurrentPage(params.page);
+  };
 
+  const columns = [
+    { field: "id", headerName: "ID", hide: true },
+    { field: "item_name", headerName: "Item Name", width: 250,  renderCell: (params) => (<Link to={`./${params.id}`}>{params.value}</Link>) },
+    { field: "item_number", headerName: "Item Number", width: 200 },
+    { field: "price", headerName: "Price", width: 200 },
+  ];
 
-<div className="shadow-lg rounded-lg overflow-hidden border border-gray-200">
-      <div className="relative">
-        <div className="absolute top-0 left-0 bg-purple-700 py-1 px-4 text-white shadow-lg text-2xl font-bold tracking-wide z-10 filter drop-shadow-lg">
-        items
-        </div>
-        <div className="relative overflow-x-auto pt-12">
-          <table className="table-auto w-full">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 bg-gray-200 font-semibold text-gray-600 text-left">item Name</th>
-                <th className="px-4 py-2 bg-gray-200 font-semibold text-gray-600 text-left">item Number</th>
-                <th className="px-4 py-2 bg-gray-200 font-semibold text-gray-600 text-left">item Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-gray-100">
-                <td className="px-4 py-2 border border-t border-gray-200 pt-4">{items.map((item)=><li key={item.id}><Link to={`./${item.id}`}>{item.item_name}</Link></li>)}</td>
-                <td className="px-4 py-2 border border-t border-gray-200 pt-4">{items.map((item)=><li key={item.id}><Link to={`./${item.id}`}>{item.item_number}</Link></li>)}</td>
-                <td className="px-4 py-2 borde rborder-t border-gray-200 pt-4">{items.map((item)=><li key={item.id}><Link to={`./${item.id}`}>{item.price}</Link></li>)}</td>
-              </tr>
+  const rows = paginatedItems.map((item) => {
+    return {
+      id: item.id,
+      item_name:item.item_name,
+      item_number:item.item_number,
+      price:item.price,
+    };
+  });
 
-            </tbody>
-          </table>
-        </div>
+  return (
+    <div className="max-w-screen-lg mx-auto">
+      <h2 className="text-lg font-semibold mb-4">Items</h2>
+      <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pagination
+          pageSize={PAGE_SIZE}
+          rowCount={items.length}
+          onPageChange={handlePageChange}
+          checkboxSelection
+          disableSelectionOnClick
+        />
       </div>
     </div>
+  );
+};
 
-
-
-
-
-
-
-
-        </React.Fragment>
-    )
-}
 export default ItemList;

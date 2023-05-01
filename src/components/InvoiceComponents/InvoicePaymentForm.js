@@ -23,7 +23,12 @@ function InvoicePaymentForm() {
   }
   return (
     <Modal>
-      <h3>Payment Form</h3>
+      <h2 className="text-base font-semibold leading-7 text-gray-900">
+        Payement Form
+      </h2>
+      <p className="mt-1 text-sm leading-6 text-gray-600">
+        Use a permanent address where you can receive mail.
+      </p>
       {data && data.errors && (
         <ul>
           {Object.values(data.errors).map((err) => (
@@ -34,8 +39,15 @@ function InvoicePaymentForm() {
       {data && data.message && <p>{data.message}</p>}
       <Form method="post">
         <p>
-          <label>Currency</label>
-          <select name="currency" type="text" defaultValue="KES">
+          <label className="block text-sm my-2 font-medium leading-6 text-gray-900">
+            Currency
+          </label>
+          <select
+            name="currency"
+            type="text"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            defaultValue="KES"
+          >
             {currencyTypes.map((type) => (
               <option key={type.id} value={type.currency_type}>
                 {type.currency_type}
@@ -43,9 +55,12 @@ function InvoicePaymentForm() {
             ))}
           </select>
         </p>
-        <p>
-          <label>Payment amount</label>
+        <p className="sm:col-span-2 sm:col-start-1">
+          <label className="block text-sm my-2 font-medium leading-6 text-gray-900">
+            Payment amount
+          </label>
           <input
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             type="number"
             min="0"
             name="amount"
@@ -53,8 +68,14 @@ function InvoicePaymentForm() {
           ></input>
         </p>
         <p>
-          <label>Bank Account</label>
-          <select name="account" type="text">
+          <label className="block text-sm font-medium my-2 leading-6 text-gray-900">
+            Bank Account
+          </label>
+          <select
+            name="account"
+            type="text"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+          >
             {accounts.map((account) => (
               <option key={account.id} value={account.account_name}>
                 {account.account_name}
@@ -63,16 +84,34 @@ function InvoicePaymentForm() {
           </select>
         </p>
         <p>
-          <label>Transaction Number</label>
-          <input type="text" name="transaction-number" placeholder="transaction code" required>
-          </input>
+          <label className="block text-sm my-2 font-medium leading-6 text-gray-900">
+            Transaction Number
+          </label>
+          <input
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            type="text"
+            name="transaction-number"
+            placeholder="transaction code"
+            required
+          ></input>
         </p>
-        <button type="submit" disabled={isSubmitting} className="btn btn-primary">
-          Yes
-        </button>
-        <button type="button" className="btn btn-primary" onClick={cancelHandler}>
-          Return To Invoice
-        </button>
+
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button
+            type="button"
+            onClick={cancelHandler}
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Pay
+          </button>
+        </div>
       </Form>
     </Modal>
   );
@@ -89,7 +128,7 @@ export async function action({ request, params }) {
     amount: data.get("amount"),
     currency: data.get("currency"),
     bank_account: data.get("account"),
-    payment_description: data.get("transaction-number")
+    payment_description: data.get("transaction-number"),
   };
   const response = await fetch(url, {
     method: "POST",
@@ -100,11 +139,17 @@ export async function action({ request, params }) {
     },
     body: JSON.stringify(paymentData),
   });
-  if(!response.ok){
-    window.alert("Failed to pay")
-    throw json({ message: "Failed to create payment" }, { status: 500 })
+  if (response.status === 400) {
+    return response;
   }
-  return redirect ("/invoice");
+  if (response.status === 404) {
+    return response;
+  }
+  if (!response.ok) {
+    window.alert("Failed to pay");
+    throw json({ message: "Failed to create payment" }, { status: 500 });
+  }
+  return redirect("/invoice");
 }
 
 async function accountLoader() {
