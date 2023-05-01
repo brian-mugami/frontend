@@ -55,12 +55,32 @@ function Sidebar() {
         )}
         {token && (
           <NavLink className="sidebar-nav-link" to="payment">
-            Payments
+            Supplier Payments
+          </NavLink>
+        )}
+        {token && (
+          <NavLink className="sidebar-nav-link" to="customer-payment">
+            Customer Payments
           </NavLink>
         )}
         {token && (
           <NavLink className="sidebar-nav-link" to="inventory-balance">
             Inventory Balances
+          </NavLink>
+        )}
+        {token && (
+          <NavLink className="sidebar-nav-link" to="bank-balances">
+            Bank Balances
+          </NavLink>
+        )}
+        {token && (
+          <NavLink className="sidebar-nav-link" to="supplier-balances">
+           Supplier  Balances
+          </NavLink>
+        )}
+        {token && (
+          <NavLink className="sidebar-nav-link" to="customer-balances">
+            Customer Balances
           </NavLink>
         )}
         {token && (

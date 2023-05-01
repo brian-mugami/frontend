@@ -23,7 +23,7 @@ export async function loader({request, params}){
             "Authorization": "Bearer " + token
         }
     })
-
+    
     if(!response.ok){
         throw json({message: "Wrong Url"}, {status: 404})
     }

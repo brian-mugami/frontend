@@ -1,4 +1,5 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
@@ -69,7 +70,7 @@ import CategoryDetailPage, {
 } from "./pages/ItemPages/Categories/CategoryDetailPage";
 import { action as DeleteCatItemAction } from "./pages/ItemPages/Categories/CategoryDetailPage";
 import CategoryEditPage from "./pages/ItemPages/Categories/CategoryEditPage";
-import ItemsRoot from "./pages/ItemPages/ItemSAllRootNav";
+import ItemsRoot from "./pages/ItemPages/ItemsAllRootNav";
 import ItemRoot from "./pages/ItemPages/Items/ItemRoot";
 import AllItemsPage, {
   loader as AllItemsLoader,
@@ -223,6 +224,43 @@ import ViewSupplierPaymentAccountingPage, {
   loader as ViewPaymentAccountingLoader,
 } from "./pages/SupplierPaymentPages/ViewSupplierPaymentAccountingPage";
 
+import ReceiptAccountingViewPage, {
+  loader as ReceiptAccountingViewLoader,
+} from "./pages/ReceiptPages/ReceiptAccountingViewPage";
+import ReceiptPaymentPage, {
+  action as ReceiptPaymentAction,
+  loader as ReceiptPaymentLoader,
+} from "./pages/ReceiptPages/ReceiptPaymentPage";
+import AllCustomerPaymentRoot from "./pages/CustomerPaymentsPage/AllCustomerPaymentRoot";
+import BankBalanceRoot from "./pages/BankBalancePages/BankBalanceRoot";
+import CustomerBalanceRoot from "./pages/CustomerBalancePages/CustomerBalanceRoot";
+import SupplierBalanceRoot from "./pages/SupplierBalancePages/SupplierBalanceRoot";
+
+const ReceiptPaymentsPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/AllCustomerPayments")
+);
+const NewReceiptPaymentPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/NewCustomerPaymentPage")
+);
+const CustomerPaymentDetailPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentDetailPage")
+);
+const CustomerPaymentApprovePage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentApprovePage")
+);
+const ViewCustomerPaymentAccountingPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage")
+);
+const AllBankBalancesPage = lazy(() =>
+  import("./pages/BankBalancePages/AllBankBalancesPage")
+);
+const AllCustomerBalancesPage = lazy(() =>
+  import("./pages/CustomerBalancePages/AllCustomerBalancesPage")
+);
+const AllSupplierBalancePages = lazy(() =>
+  import("./pages/SupplierBalancePages/AllSupplierBalancesPage")
+);
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -233,7 +271,133 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <HomePage/>,
+      },
+      {
+        path: "bank-balances",
+        loader: () =>
+          import("./pages/BankBalancePages/AllBankBalancesPage").then(
+            (module) => module.loader()
+          ),
+        id: "bank-balances",
+        element: <BankBalanceRoot />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllBankBalancesPage />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "customer-balances",
+        id: "customer-balances",
+        loader: () =>
+          import("./pages/CustomerBalancePages/AllCustomerBalancesPage").then(
+            (module) => module.loader()
+          ),
+        element: <CustomerBalanceRoot />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllCustomerBalancesPage />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "supplier-balances",
+        id: "supplier-balances",
+        loader: () =>
+          import("./pages/SupplierBalancePages/AllSupplierBalancesPage").then(
+            (module) => module.loader()
+          ),
+        element: <SupplierBalanceRoot />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllSupplierBalancePages />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "customer-payment",
+        element: <AllCustomerPaymentRoot />,
+        id: "customer-payments",
+        loader: () =>
+          import("./pages/CustomerPaymentsPage/AllCustomerPayments").then(
+            (module) => module.loader()
+          ),
+        children: [
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <ReceiptPaymentsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "new",
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <NewReceiptPaymentPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ":id",
+            id: "customer-payment-detail",
+            loader: (meta) =>
+              import(
+                "./pages/CustomerPaymentsPage/CustomerPaymentDetailPage"
+              ).then((module) => module.loader(meta)),
+            children: [
+              {
+                index: true,
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <CustomerPaymentDetailPage />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "approve",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <CustomerPaymentApprovePage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import(
+                    "./pages/CustomerPaymentsPage/CustomerPaymentApprovePage"
+                  ).then((module) => module.action(meta)),
+              },
+              {
+                path: "accounting",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <ViewCustomerPaymentAccountingPage />
+                  </Suspense>
+                ),
+                loader: (meta) =>
+                  import(
+                    "./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"
+                  ).then((module) => module.loader(meta)),
+              },
+            ],
+          },
+        ],
       },
       {
         path: "inventory-balance",
@@ -377,7 +541,7 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: "payment",
+            path: "bank",
             element: <AllAccountRoot />,
             loader: PaymentsAccountsLoader,
             id: "payment-accounts",
@@ -747,6 +911,17 @@ const router = createBrowserRouter([
                 loader: ReceiptCustomerLoader,
                 action: ReceiptManipulateAction,
               },
+              {
+                path: "accounting",
+                element: <ReceiptAccountingViewPage />,
+                loader: ReceiptAccountingViewLoader,
+              },
+              {
+                path: "pay",
+                element: <ReceiptPaymentPage />,
+                loader: ReceiptPaymentLoader,
+                action: ReceiptPaymentAction,
+              },
             ],
           },
         ],
@@ -784,7 +959,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      ,
       {
         path: "user",
         children: [
@@ -813,7 +987,9 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+      <RouterProvider router={router}></RouterProvider>
+  );
 }
 
 export default App;

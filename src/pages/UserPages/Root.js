@@ -4,18 +4,11 @@ import Sidebar from "../../components/Sidenav";
 
 
 function RootLayout() {
-  const token = useRouteLoaderData("root")
+  const token = useRouteLoaderData("root");
   return (
     <React.Fragment>
-      <div></div>
-      {token && (
-        <div className="flex ">
-        <Sidebar/>
-      </div>
-      )}
-      <main className="flex-1 ml-60">
-        <Outlet />
-      </main>
+      {token && <Sidebar />}
+      <Outlet />
     </React.Fragment>
   );
 }

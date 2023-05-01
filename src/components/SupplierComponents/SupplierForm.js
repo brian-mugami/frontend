@@ -10,7 +10,7 @@ import { getAuthToken } from "../../util/Auth";
 import { paymentTypes } from "../../data/paymentTypes";
 import { useActionData } from "react-router-dom";
 
-function SupplierForm({ method, supData, title, accounts }) {
+function SupplierForm({ method, supData, accounts }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const data = useActionData();
@@ -59,7 +59,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                       </label>
                       <input
                         type="text"
-                        name="supname"
+                        name="supplier-name"
                         id="first-name"
                         autoComplete="given-name"
                         required
@@ -74,7 +74,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                       </label>
                       <input
                         type="email"
-                        name="supemail"
+                        name="supplier-email"
                         id="email-address"
                         defaultValue={supData ? supData.supplier_email : ""}
                         className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -87,7 +87,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                       </label>
                       <input
                         type="text"
-                        name="supcon"
+                        name="supplier-contact"
                         id="email-address"
                         defaultValue={supData ? supData.supplier_phone_no : ""}
                         className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -121,7 +121,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                         Supplier Payment Type
                       </label>
                       <select
-                        name="paytype"
+                        name="payType"
                         autoComplete="country-name"
                         required
                         defaultValue={supData ? supData.payment_type : ""}
@@ -145,7 +145,7 @@ function SupplierForm({ method, supData, title, accounts }) {
                       </label>
                       <input
                         type="text"
-                        name="supsite"
+                        name="supplier-site"
                         id="street-address"
                         defaultValue={supData ? supData.supplier_site : ""}
                         className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -204,13 +204,13 @@ export async function action({ request, params }) {
   const token = getAuthToken();
 
   const supData = {
-    supplier_name: data.get("supname"),
-    supplier_phone_no: data.get("supcon"),
-    supplier_email: data.get("supemail"),
+    supplier_name: data.get("supplier-name"),
+    supplier_phone_no: data.get("supplier-contact"),
+    supplier_email: data.get("supplier-email"),
     account_name: data.get("account"),
-    supplier_site: data.get("supsite"),
+    supplier_site: data.get("supplier-site"),
     is_active: data.get("active"),
-    payment_type: data.get("paytype"),
+    payment_type: data.get("payType"),
   };
 
   let url = "/supplier";
