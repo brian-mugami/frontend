@@ -9,12 +9,13 @@ import {
   json,
   useLoaderData,
   defer,
+  Link,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import {
   currencyTypes,
   destinationTypes,
-  purchaseTypes
+  purchaseTypes,
 } from "../../data/paymentTypes";
 
 let itemList = [];
@@ -96,7 +97,7 @@ function InvoiceForm({ invoiceData, title, method }) {
 
   let itemsAvailable = false;
   if (invoiceData) {
-    itemsAvailable = (invoiceData.purchase_items.length > 0) === true;
+    itemsAvailable = invoiceData.purchase_items.length > 0 === true;
   }
 
   return (
@@ -308,10 +309,55 @@ function InvoiceForm({ invoiceData, title, method }) {
             </button>
           </div>
         </div>
-        <div>
-          <button className="btn btn-secondary" onClick={handleAddRow}>
-            Add Row
-          </button>
+        <div className="pt-5 ">
+          <div className="">
+            <button className="btn btn-secondary mb-4 mr-5 " onClick={handleAddRow}>
+              <div className="flex ">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 4.5v15m7.5-7.5h-15"
+                  />
+                </svg>
+
+                <p>Add Row</p>
+              </div>
+            </button>
+
+            <Link to="/item/main/new">
+
+            <button className="btn btn-warning mb-4 " onClick={handleAddRow}>
+              <div className="flex">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+
+                <p>Create Item</p>
+              </div>
+            </button>
+            </Link>
+          </div>
           <table className="table table-striped">
             <thead>
               <tr>
@@ -544,14 +590,14 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(lines),
     });
-    if (invoiceLines.status === 400){
-      return invoiceLines
+    if (invoiceLines.status === 400) {
+      return invoiceLines;
     }
-    if (invoiceLines.status === 500){
-      return invoiceLines
+    if (invoiceLines.status === 500) {
+      return invoiceLines;
     }
-    if (invoiceLines.status === 404){
-      return invoiceLines
+    if (invoiceLines.status === 404) {
+      return invoiceLines;
     }
     if (!invoiceLines.ok) {
       window.alert("error in invoice lines");

@@ -14,8 +14,7 @@ import { getAuthToken } from "../../util/Auth";
 import { currencyTypes } from "../../data/paymentTypes";
 
 function ReceiptPaymentPage() {
-
-  const {receipt, accounts} = useLoaderData()
+  const { receipt, accounts } = useLoaderData();
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
@@ -37,8 +36,15 @@ function ReceiptPaymentPage() {
         {data && data.message && <p>{data.message}</p>}
         <Form method="post">
           <p>
-            <label>Currency</label>
-            <select name="currency" type="text" defaultValue="KES">
+            <label className="block text-sm my-2 font-medium leading-6 text-gray-900">
+              Currency
+            </label>{" "}
+            <select
+              name="currency"
+              type="text"
+              defaultValue="KES"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            >
               {currencyTypes.map((type) => (
                 <option key={type.id} value={type.currency_type}>
                   {type.currency_type}
@@ -47,8 +53,11 @@ function ReceiptPaymentPage() {
             </select>
           </p>
           <p>
-            <label>Payment amount</label>
+            <label className="block text-sm my-2 font-medium leading-6 text-gray-900">
+              Payment amount
+            </label>{" "}
             <input
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="number"
               min="0"
               name="amount"
@@ -56,8 +65,14 @@ function ReceiptPaymentPage() {
             ></input>
           </p>
           <p>
-            <label>Bank Account</label>
-            <select name="account" type="text">
+            <label className="block text-sm font-medium my-2 leading-6 text-gray-900">
+              Bank Account
+            </label>{" "}
+            <select
+              name="account"
+              type="text"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            >
               {accounts.map((account) => (
                 <option key={account.id} value={account.account_name}>
                   {account.account_name}
@@ -66,19 +81,33 @@ function ReceiptPaymentPage() {
             </select>
           </p>
           <p>
-            <label>Transaction Number</label>
+            <label className="block text-sm my-2 font-medium leading-6 text-gray-900">
+              Transaction Number
+            </label>{" "}
             <input
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="text"
               name="transaction-number"
               placeholder="transaction code"
               required
             ></input>
           </p>
-          <button disabled={isSubmitting}>
-            {" "}
-            {isSubmitting ? "Paying" : "Pay"}
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button
+            type="button"
+            onClick={cancelHandler}
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
+            Cancel
           </button>
-          <button onClick={cancelHandler}>back to receipt</button>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            {isSubmitting ? "Paying": "Pay" }
+          </button>
+        </div>
         </Form>
       </Modal>
     </React.Fragment>
@@ -145,8 +174,8 @@ async function receiptLoader(id) {
       Authorization: "Bearer " + token,
     },
   });
-  if (response.status === 404){
-    throw json({message: "Account could not be found"})
+  if (response.status === 404) {
+    throw json({ message: "Account could not be found" });
   }
   if (!response.ok) {
     throw json({ message: "Wrong Url" }, { status: 404 });
