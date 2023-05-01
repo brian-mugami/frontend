@@ -334,16 +334,6 @@ function InvoiceForm({ invoiceData, title, method }) {
             </button>
           </div>
         </div>
-<<<<<<< HEAD
-        <div>
-          <button
-            className="btn btn-secondary"
-            onClick={handleAddRow}
-            disabled={itemsAvailable}
-          >
-            Add Row
-          </button>
-=======
         <div className="pt-5 ">
           <div className="">
             <button className="btn btn-secondary mb-4 mr-5 " onClick={handleAddRow}>
@@ -393,7 +383,6 @@ function InvoiceForm({ invoiceData, title, method }) {
             </button>
             </Link>
           </div>
->>>>>>> c8977a5f4a6723b934fef64bd0d25a60e113bf2e
           <table className="table table-striped">
             <thead>
               <tr>
@@ -661,10 +650,6 @@ export async function action({ request, params }) {
       window.alert("Please enter a valid invoice");
       return redirect("./");
     }
-    if (invoiceBalanced === false) {
-      window.alert("The lines don't match the header amount");
-      return redirect("./");
-    }
     console.log(response);
     const invoiceId = (await response.json()).id;
     const lines = {
@@ -684,10 +669,9 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(lines),
     });
-<<<<<<< HEAD
-    if (invoiceBalanced === false) {
-      window.alert("The lines don't match the header amount");
-      return redirect("./");
+    if(!invoiceBalanced){
+      window.alert("Invoice header amount does not match line amount!!")
+      return redirect("./")
     }
     if (invoiceLines.status === 400) {
       return invoiceLines;
@@ -695,14 +679,6 @@ export async function action({ request, params }) {
     if (invoiceLines.status === 500) {
       return invoiceLines;
     }
-=======
-    if (invoiceLines.status === 400) {
-      return invoiceLines;
-    }
-    if (invoiceLines.status === 500) {
-      return invoiceLines;
-    }
->>>>>>> c8977a5f4a6723b934fef64bd0d25a60e113bf2e
     if (invoiceLines.status === 404) {
       return invoiceLines;
     }
@@ -746,7 +722,6 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceUpdateData),
     });
-
     if (response.status === 404) {
       return response;
     }

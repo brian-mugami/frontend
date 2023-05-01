@@ -1,13 +1,6 @@
 import React from "react";
-<<<<<<< HEAD
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
-import PageContent from "../../components/UserComponents/PageContent";
-import { useNavigate } from "react-router-dom";
-import NavExample from "../../components/LayoutComponents/NavBarNav";
-=======
 import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
 import SideNav from "../../components/SideNav";
->>>>>>> c8977a5f4a6723b934fef64bd0d25a60e113bf2e
 
 function ErrorPage() {
   const error = useRouteError();
@@ -15,37 +8,6 @@ function ErrorPage() {
   let message = "Something went wrong";
   let status = 400;
 
-<<<<<<< HEAD
-    if ( error.status===500){
-        title = "An error occurred"
-        message = error.data.message
-    }
-    if (isRouteErrorResponse(error) && error.status===404){
-        title = "Not found"
-        message = "Could not find page!!"
-    }
-    if (isRouteErrorResponse(error) && error.status===401){
-        title = "Unauthorized"
-        message = error.data.message
-    }
-    if (isRouteErrorResponse(error) && error.status===400){
-        title = "Server error"
-        message = error.data.message
-    }
-
-    function returnHandler(){
-        navigate("..")
-    }
-    
-    return(
-        <React.Fragment>
-            <NavExample/>
-            <PageContent title={title}>
-                <p>{message}</p>
-            </PageContent>
-            <div>
-                <button onClick={returnHandler}>Back</button>
-=======
   if (isRouteErrorResponse(error) && error.status === 500) {
     message = error.data.message;
     status = 500;
@@ -91,7 +53,6 @@ function ErrorPage() {
               >
                 Contact support <span aria-hidden="true">&rarr;</span>
               </a>
->>>>>>> c8977a5f4a6723b934fef64bd0d25a60e113bf2e
             </div>
           </div>
         </main>
