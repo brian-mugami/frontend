@@ -644,10 +644,6 @@ export async function action({ request, params }) {
     if (invoiceLines.status === 404) {
       return invoiceLines;
     }
-    if (!invoiceLines.ok) {
-      window.alert("error in invoice lines");
-      return redirect("./");
-    }
     return redirect("/invoice");
   } else {
     let InvoiceUpdateData;
@@ -684,7 +680,10 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceUpdateData),
     });
-
+    if (!invoiceLines.ok) {
+      window.alert("error in invoice lines");
+      return redirect("./");
+    }
     if (response.status === 404) {
       return response;
     }
