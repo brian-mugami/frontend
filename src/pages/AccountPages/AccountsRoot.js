@@ -5,10 +5,8 @@ import AccountNavigation from "../../components/AccountComponents/AccountNav";
 function AccountRoot() {
   return (
     <React.Fragment>
-      <div className="flex ">
-        <AccountNavigation/>
-      </div>
-      <main className="flex-1 pr-5 pl-60">
+      
+      <main className="">
         <Outlet />
       </main>
     </React.Fragment>

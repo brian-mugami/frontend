@@ -5,8 +5,10 @@ import { Outlet } from "react-router";
 function PurchaseRootPage(){
     return(
         <React.Fragment>
-            <PurchasingNav/>
-            <Outlet/>
+            <div> <PurchasingNav/></div>
+           
+            <div className=''><Outlet/></div>
+            
         </React.Fragment>
     )
 }
