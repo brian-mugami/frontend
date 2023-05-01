@@ -718,13 +718,6 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceUpdateData),
     });
-<<<<<<< HEAD
-    if (!invoiceLines.ok) {
-      window.alert("error in invoice lines");
-      return redirect("./");
-    }
-=======
->>>>>>> origin/master
     if (response.status === 404) {
       return response;
     }
