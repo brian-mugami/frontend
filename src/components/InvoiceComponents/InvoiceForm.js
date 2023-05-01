@@ -54,9 +54,9 @@ function InvoiceForm({ invoiceData, title, method }) {
       ...rows,
       {
         item_name: " ",
-        item_quantity: 0,
-        buying_price: 0,
-        item_cost: 0,
+        item_quantity: parseFloat(0),
+        buying_price: parseFloat(0),
+        item_cost: parseFloat(0),
       },
     ]);
   };
