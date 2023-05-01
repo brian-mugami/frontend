@@ -1,45 +1,25 @@
-import React from "react"
+import React from "react";
+import { DataGrid } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 
-function lotLotList({lots}){
-    return (
-        <React.Fragment>
+function LotList({ lots }) {
 
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'lot', headerName: 'Lot Name', width: 200, renderCell: (params) => <Link to={`./${params.value}`}>{params.value}</Link> },
+    { field: 'batch', headerName: 'Lot Number', width: 200, renderCell: (params) => <Link to={`./${params.row.id}`}>{params.value}</Link> },
+    { field: 'expiry_date', headerName: 'Lot Email', width: 200, renderCell: (params) => <Link to={`./${params.row.id}`}>{params.value}</Link> }
+  ];
 
+  const rows = lots.map((lot, index) => {
+    return { id: lot.id, lot: lot.lot, batch: lot.batch, expiry_date: lot.expiry_date };
+  });
 
-
-
-<div className="shadow-lg rounded-lg overflow-hidden border border-gray-200">
-      <div className="relative">
-        <div className="absolute top-0 left-0 bg-purple-700 py-1 px-4 text-white shadow-lg text-2xl font-bold tracking-wide z-10 filter drop-shadow-lg">
-        Itemlots
-        </div>
-        <div className="relative overflow-x-auto pt-12">
-          <table className="table-auto w-full">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 bg-gray-200 font-semibold text-gray-600 text-left">lot Name</th>
-                <th className="px-4 py-2 bg-gray-200 font-semibold text-gray-600 text-left">lot Number</th>
-                <th className="px-4 py-2 bg-gray-200 font-semibold text-gray-600 text-left">lot Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-gray-100">
-                <td className="px-4 py-2 border border-t border-gray-200 pt-4">{lots.map((lot)=><li key={lot.id}><Link to={`./${lot.id}`}>{lot.lot}</Link></li>)}</td>
-                <td className="px-4 py-2 border border-t border-gray-200 pt-4">{lots.map((lot)=><li key={lot.id}><Link to={`./${lot.id}`}>{lot.batch}</Link></li>)}</td>
-                <td className="px-4 py-2 borde rborder-t border-gray-200 pt-4">{lots.map((lot)=><li key={lot.id}><Link to={`./${lot.id}`}>{lot.expiry_date}</Link></li>)}</td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-      </div>
+  return (
+    <div style={{ height: 400, width: '100%' }}>
+      <DataGrid rows={rows} columns={columns} pageSize={5} />
     </div>
-
-
-
-        </React.Fragment>
-    )
+  );
 }
-export default lotLotList;
 
+export default LotList;

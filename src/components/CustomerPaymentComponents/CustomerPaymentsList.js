@@ -1,131 +1,116 @@
-import React, { useState } from 'react'
-import { Link, useActionData } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { DataGrid } from '@mui/x-data-grid';
 
 const PAGE_SIZE = 10;
 
-function CustomerPaymentsList({payments}) {
-    const [currentPage, setCurrentPage] = useState(1);
+function CustomerPaymentsList({ payments }) {
+  const [currentPage, setCurrentPage] = useState(1);
 
-    const startIndex = (currentPage - 1) * PAGE_SIZE;
-    const endIndex = startIndex + PAGE_SIZE;
-    const paginatedPayments = payments.slice(startIndex, endIndex);
-    const data = useActionData()
-    const totalPages = Math.ceil(payments.length / PAGE_SIZE);
-  
-    const goToPage = (pageNumber) => {
-      setCurrentPage(pageNumber);
-    };
-  
-    return (
-      <div className="max-w-screen-lg mx-auto">
-        <h2 className="text-lg font-semibold mb-4">Payments</h2>
-        <div className="shadow border rounded-md">
-        {data && data.errors && (
-            <ul>
-              {Object.values(data.errors).map((err) => (
-                <li key={err}>{err}</li>
-              ))}
-            </ul>
-          )}
-          {data && data.message && <p>{data.message}</p>}
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Payment
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Customer
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Receipt Number
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Approved
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Payment Date
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Receipt Date
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {paginatedPayments.map((payment) => (
-                <tr
-                  key={payment.id}
-                  className="hover:bg-gray-100 transition-colors duration-200"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    <Link to={`./${payment.id}`}>{payment.id}</Link>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.receipt.customer.customer_name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.receipt.receipt_number}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.approved === true ? "approved" : "Not Approved"}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.date}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.receipt.date}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  <button className="btn btn-danger"><Link to={`./${payment.id}/approve`}>Approve</Link></button>
-                  <button className="btn btn-primary"><Link to={`./${payment.id}/accounting`}>Accounting</Link></button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+  const startIndex = (currentPage - 1) * PAGE_SIZE;
+  const endIndex = startIndex + PAGE_SIZE;
+  const paginatedPayments = payments.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(payments.length / PAGE_SIZE);
+
+  const handlePageChange = (params) => {
+    setCurrentPage(params.page + 1);
+  };
+
+  const columns = [
+    {
+      field: 'payment',
+      headerName: 'Payment',
+      flex: 1,
+      renderCell: (params) => (
+        <Link to={`./${params.row.id}`}>{params.row.id}</Link>
+      ),
+    },
+    {
+      field: 'customer',
+      headerName: 'Customer',
+      flex: 1,
+      valueGetter: (params) =>
+        params.row.receipt.customer.customer_name || '',
+    },
+    {
+      field: 'receiptNumber',
+      headerName: 'Receipt Number',
+      flex: 1,
+      valueGetter: (params) => params.row.receipt.receipt_number || '',
+    },
+    {
+      field: 'approved',
+      headerName: 'Approved',
+      flex: 1,
+      valueGetter: (params) =>
+        params.row.approved === true ? 'approved' : 'Not Approved',
+    },
+    {
+      field: 'paymentDate',
+      headerName: 'Payment Date',
+      flex: 1,
+      valueGetter: (params) => params.row.date || '',
+    },
+    {
+      field: 'receiptDate',
+      headerName: 'Receipt Date',
+      flex: 1,
+      valueGetter: (params) => params.row.receipt.date || '',
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      flex: 1,
+      renderCell: (params) => (
+        <div>
+          <button className="btn btn-danger">
+            <Link to={`./${params.row.id}/approve`}>Approve</Link>
+          </button>
+          <button className="btn btn-primary">
+            <Link to={`./${params.row.id}/accounting`}>Accounting</Link>
+          </button>
         </div>
-        {totalPages > 1 && (
-          <div className="flex justify-center mt-4">
-            <nav className="inline-flex rounded-md shadow">
-              <ul className="flex">
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <li key={index}>
-                    <button
-                      className={`px-4 py-2 ${
-                        currentPage === index + 1
-                          ? "bg-gray-900 text-white"
-                          : "bg-white text-gray-700"
-                      } font-medium`}
-                      onClick={() => goToPage(index + 1)}
-                    >
-                      {index + 1}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-        )}
-      </div>
-    );
-}
+      ),
+    },
+  ];
 
-export default CustomerPaymentsList
+  return (
+    <div style={{ height: 400, width: '100%' }}>
+      <h2 className="text-lg font-semibold mb-4">Payments</h2>
+      <DataGrid
+        rows={paginatedPayments}
+        columns={columns}
+        pagination
+        pageSize={PAGE_SIZE}
+        onPageChange={handlePageChange}
+        rowCount={payments.length}
+        paginationMode="server"
+      />
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4">
+          <nav className="inline-flex rounded-md shadow">
+            <ul className="flex">
+              {Array.from({ length: totalPages }, (_, index) => (
+                <li key={index}>
+                  <button
+                    className={`px-4 py-2 ${
+                      currentPage === index + 1
+                        ? 'bg-gray-900 text-white'
+                        : 'bg-white text-gray-700'
+                    } font-medium`}
+                    onClick={() => setCurrentPage(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+           </ul>
+          </nav>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CustomerPaymentsList;

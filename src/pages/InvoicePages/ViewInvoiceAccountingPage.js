@@ -1,10 +1,16 @@
 import React from "react";
-import { defer, json, useActionData, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  defer,
+  json,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import Modal from "../../components/UIComponents/Modal";
 import { getAuthToken } from "../../util/Auth";
 
 function ViewInvoiceAccountingPage() {
-  const data = useActionData()
+  const data = useActionData();
   const { accounting } = useLoaderData();
   const navigate = useNavigate();
   function cancelHandler() {
@@ -13,27 +19,38 @@ function ViewInvoiceAccountingPage() {
   return (
     <React.Fragment>
       <Modal>
-      {data && data.errors && (
-        <ul>
-          {Object.values(data.errors).map((err) => (
-            <li key={err}>{err}</li>
-          ))}
-        </ul>
-      )}
-      {data && data.message && <p>{data.message}</p>}
-        <p>
+        <h2 className="text-base font-semibold leading-7 text-gray-900">
+          Transactions
+        </h2>
+        <p className="mt-1 text-sm leading-6 text-gray-600">
+          These are the transactions that occured{" "}
+        </p>
+        {data && data.errors && (
+          <ul>
+            {Object.values(data.errors).map((err) => (
+              <li key={err}>{err}</li>
+            ))}
+          </ul>
+        )}
+        {data && data.message && <p>{data.message}</p>}
+        <p className="mt-1 text-sm leading-6 text-gray-600">
           Credit Account:{" "}
           <strong>
-            {accounting.credit_account} - ({accounting.credit_amount})
+            {accounting.credit_account}<span></span> <span></span><p className="font-semibold">{accounting.credit_amount}</p>
           </strong>
         </p>
-        <p>
+        <p className="mt-1 text-sm leading-6 text-gray-600">
           Debit Account:{" "}
           <strong>
-            {accounting.debit_account} - {accounting.debit_amount}
+            {accounting.debit_account}<span></span> <span></span> <p className="font-semibold"> {accounting.debit_amount}</p> 
           </strong>
         </p>
-        <button onClick={cancelHandler}>Back</button>
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+        <button type="button" onClick={cancelHandler} className="text-sm font-semibold leading-6 text-gray-900">
+          Cancel
+        </button>
+      
+      </div>
       </Modal>
     </React.Fragment>
   );
