@@ -1,8 +1,8 @@
 import React from "react";
 import { useRouteError, isRouteErrorResponse } from "react-router-dom";
-import Sidebar from "../../components/Sidenav";
 import PageContent from "../../components/UserComponents/PageContent";
 import { useNavigate } from "react-router-dom";
+import NavExample from "../../components/LayoutComponents/NavBarNav";
 
 function ErrorPage(){
     const error = useRouteError()
@@ -33,7 +33,7 @@ function ErrorPage(){
     
     return(
         <React.Fragment>
-            <Sidebar/>
+            <NavExample/>
             <PageContent title={title}>
                 <p>{message}</p>
             </PageContent>

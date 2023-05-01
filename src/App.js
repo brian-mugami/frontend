@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import { ProSidebarProvider } from "react-pro-sidebar";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
@@ -271,7 +271,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <HomePage/>,
       },
       {
         path: "bank-balances",
@@ -541,7 +541,7 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: "payment",
+            path: "bank",
             element: <AllAccountRoot />,
             loader: PaymentsAccountsLoader,
             id: "payment-accounts",
@@ -988,9 +988,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ProSidebarProvider>
       <RouterProvider router={router}></RouterProvider>
-    </ProSidebarProvider>
   );
 }
 

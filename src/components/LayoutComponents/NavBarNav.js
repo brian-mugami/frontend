@@ -1,89 +1,84 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { NavDropdown } from "react-bootstrap";
+import { Form } from "react-router-dom";
 
-function NavBarNav() {
+function NavExample() {
   return (
-    <nav className="navbar navbar-expand-lg" >
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Mugami
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <nav>
-            <button className="btn btn-secondary">
-                test
-            </button>
-        </nav>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <NavLink>
-                test
-            </NavLink>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul className="dropdown-menu">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled">Disabled</a>
-            </li>
-          </ul>
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
+    <>
+      <Navbar bg="dark" variant="dark">
+        <Container fluid>
+          <Navbar.Brand href="home">Dashboard</Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav
+              className="me-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+              navbarScroll
+            >
+              <NavDropdown title="Receipts" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="/receipt">All Receipts</NavDropdown.Item>
+                <NavDropdown.Item href="/receipt/new">
+                  New Receipt
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/customer-payment">
+                  Customer Payments
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Invoices" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="/invoice">All invoices</NavDropdown.Item>
+                <NavDropdown.Item href="/invoice/new">
+                  New Invoice
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/payment">
+                  Supplier Payments
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Balances" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="bank-balances">
+                  Bank Balances
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/supplier-balances">
+                  Supplier Balances
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/customer-balances">
+                  Customer Balances
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/inventory-balance">
+                  Inventory balances
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Accounts" id="navbarScrollingDropdown">
+                <NavDropdown.Item href="/account/bank">
+                  Bank accounts
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/account/supplier">
+                  Supplier accounts
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/account/customer">
+                  Customer accounts
+                </NavDropdown.Item>
+                <NavDropdown.Item href="/account/item">
+                  Category accounts
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="/inventory-balance">
+                  Inventory balances
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            <Form action="logout" method="post">
+              <button className="btn btn-danger">Logout</button>
+            </Form>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </>
   );
 }
 
-export default NavBarNav;
+export default NavExample;

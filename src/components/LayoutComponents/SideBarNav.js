@@ -7,13 +7,18 @@ import {
 } from "react-pro-sidebar";
 
 import React from "react";
-import { Form, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
+import { SidebarClasses } from "react-admin";
 
 export default function SideBarNav() {
   const { collapseSidebar } = useProSidebar();
   return (
     <div style={{ display: "flex", height: "100%" }}>
-      <Sidebar>
+      <Sidebar rootStyles={{
+    [`.${SidebarClasses.container}`]: {
+      backgroundColor: 'red',
+    },
+  }}>
         <Menu>
           <MenuItem component={<NavLink to="/home" />}> Dashboard</MenuItem>
           <SubMenu label="Invoices">
@@ -51,9 +56,6 @@ export default function SideBarNav() {
           <MenuItem> Calendar</MenuItem>
           <MenuItem> E-commerce</MenuItem>
         </Menu>
-          <Form action="logout" method="post">
-            <button className="btn btn-danger">Logout</button>
-          </Form>
       </Sidebar>
       <main>
         <button className="btn btn-dark" onClick={() => collapseSidebar()}>
