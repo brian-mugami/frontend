@@ -591,6 +591,10 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceData),
     });
+    if(!invoiceBalanced){
+      window.alert("Invoice header amount does not match line amount!!")
+      return redirect("./")
+    }
     if (response.status === 400) {
       return response;
     }
