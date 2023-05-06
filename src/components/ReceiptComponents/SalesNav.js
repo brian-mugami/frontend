@@ -8,7 +8,7 @@ function SalesNav(){
 
 
 <React.Fragment>
-      <div className="flex space-x-11 py-5 px-5">
+      <div className="flex space-x-11 py-5 ">
         <Breadcrumbs>
           <NavLink to="." className="opacity-60">
             <div className="flex">

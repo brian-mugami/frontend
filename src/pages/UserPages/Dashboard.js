@@ -3,7 +3,10 @@ import DashboardComps from "../../components/DashboardComps";
 
 function Dashboard() {
   return (
+
+
     <div className="flex">
+      
       <DashboardComps />
     </div>
   );

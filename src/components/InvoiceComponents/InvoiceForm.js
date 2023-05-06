@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 import {
   Form,
   useNavigate,
@@ -24,6 +25,10 @@ let isExpense = false;
 let existingData;
 
 function InvoiceForm({ invoiceData, title, method }) {
+
+
+
+
   existingData = invoiceData;
   const navigate = useNavigate();
   const [tableRows, setTableRows] = useState([
@@ -722,7 +727,9 @@ export async function action({ request, params }) {
       return response;
     }
     if (response.status === 400) {
-      return response;
+      const resData = await response.json()
+      window.alert(resData.message)
+      return redirect("./") ;
     }
     if (!response.ok) {
       window.alert("failed update");
