@@ -37,7 +37,7 @@ function ItemNavigation() {
           {data.map(({ label, value, desc }) => (
             
             <Tab key={label} value={value}>
-              <NavLink to={desc}>{label}</NavLink>
+              <NavLink to={desc} className=" px-24">{label}</NavLink>
             </Tab>
           ))}
         </TabsHeader>

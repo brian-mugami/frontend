@@ -5,14 +5,14 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 function ItemLotNav() {
   return (
-    <React.Fragment>
+    <div className="pb-5">
       <Breadcrumbs>
         <div className="flex justify">
           <PlusCircleIcon strokeWidth={3} className="h-6 w-6" />
           <NavLink to="./new">Add Lot</NavLink>
         </div>
       </Breadcrumbs>
-    </React.Fragment>
+    </div >
   );
 }
 

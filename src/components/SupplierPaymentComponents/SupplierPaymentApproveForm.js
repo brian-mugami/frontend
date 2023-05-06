@@ -13,7 +13,7 @@ function SupplierPaymentApproveForm({ bank, amount, supplier, currency }) {
   }
   return (
     <Modal>
-      <h3>Payment Approval Form</h3>
+      <h3 className="text-base font-semibold leading-7 text-gray-900">Payment Approval Form</h3>
       {data && data.errors && (
         <ul>
           {Object.values(data.errors).map((err) => (
@@ -23,19 +23,21 @@ function SupplierPaymentApproveForm({ bank, amount, supplier, currency }) {
       )}
       {data && data.message && <p>{data.message}</p>}
       <Form method="post">
-        <p>
-          Are you sure you want to approve this payment of {currency} {amount}{" "}
+        <p className="mt-1 text-sm leading-6 text-gray-600">
+          Are you sure you want to approve this payment of <b>{currency} {amount}{" "}</b> 
         </p>
-        <p>
+        <p className="mt-1 text-sm leading-6 text-gray-600">
           To <strong>supplier</strong>:{supplier} from <strong>bank</strong> :
           {bank}
         </p>
+        <div  className="mt-6 flex items-center justify-end gap-x-6">
         <button type="submit" disabled={isSubmitting}>
           Yes
         </button>
         <button type="button" onClick={cancelHandler}>
           No
         </button>
+        </div>
       </Form>
     </Modal>
   );

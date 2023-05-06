@@ -3,9 +3,11 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useRouteLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Kd from "../../components/assets/ktslogo.png";
+import Pricing from "./Pricing";
 
 const navigation = [
-  { name: "Pricing", href: "#" },
+  { name: "Pricing", href: <Pricing/>},
   { name: "Features", href: "#" },
 ];
 
@@ -45,11 +47,7 @@ export default function HomePage() {
           <div className="flex lg:flex-1">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
-                className="h-8"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
+              <img className="h-20" src={Kd} alt="" />
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -133,7 +131,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div className="relative rounded-full py-1 px-3 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                Tunalaunch soon .{" "}
+                Launching soon .{" "}
                 <a href="#" className="font-semibold text-indigo-600">
                   <span className="absolute inset-0" aria-hidden="true" />
                   Read more <span aria-hidden="true">&rarr;</span>

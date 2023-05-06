@@ -22,7 +22,7 @@ function CustomerPaymentApprovePage() {
   }
   return (
     <Modal>
-      <h3>Payment Approval Form</h3>
+      <h3 className="text-base font-semibold leading-7 text-gray-900">Payment Approval Form</h3>
       {data && data.errors && (
         <ul>
           {Object.values(data.errors).map((err) => (
@@ -32,20 +32,22 @@ function CustomerPaymentApprovePage() {
       )}
       {data && data.message && <p>{data.message}</p>}
       <Form method="post">
-        <p>
+        <p className="mt-1 text-sm leading-6 text-gray-600">
           Are you sure you want to approve this payment of {payment.currency}{" "}
           {payment.amount}{" "}
         </p>
-        <p>
+        <p className="mt-1 text-sm leading-6 text-gray-600">
           From <strong>customer</strong>:{payment.receipt.customer.customer_name}{" "}
           To <strong>bank</strong> :{payment.account.account_name}
         </p>
+        <div  className="mt-6 flex items-center justify-end gap-x-6">
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Receiving": "Receive"}
         </button>
         <button type="button" onClick={cancelHandler}>
           No
         </button>
+        </div>
       </Form>
     </Modal>
   );

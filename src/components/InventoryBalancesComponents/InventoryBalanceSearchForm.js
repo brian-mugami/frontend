@@ -1,5 +1,6 @@
 import { Form, useNavigation, useRouteLoaderData } from "react-router-dom";
 import React, { useState } from "react";
+import { Button } from "@material-tailwind/react";
 
 function InventoryBalanceSearchForm({onSearchHandler}) {
     const [search, setSearch] = useState("")
@@ -34,9 +35,9 @@ function InventoryBalanceSearchForm({onSearchHandler}) {
             <option key={item.id} value={item.item_name} />
           ))}
         </datalist>
-        <button className="btn btn-outline-success" type="submit" disabled={isSubmitting}>
+        <Button  type="submit" disabled={isSubmitting}>
           Search
-        </button>
+        </Button>
       </Form>
     </React.Fragment>
   );

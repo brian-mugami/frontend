@@ -1,62 +1,64 @@
 import React, { useState } from "react";
 import { Link, useActionData } from "react-router-dom";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid } from "@mui/x-data-grid";
 
 const PAGE_SIZE = 10;
 
 const columns = [
   {
-    field: 'id',
-    headerName: 'Payment',
+    field: "id",
+    headerName: "Payment",
     width: 150,
     renderCell: (params) => (
       <Link to={`./${params.value}`}>{params.value}</Link>
-    )
+    ),
   },
   {
-    field: 'supplierName',
-    headerName: 'Supplier',
+    field: "supplierName",
+    headerName: "Supplier",
     width: 200,
   },
   {
-    field: 'invoiceNumber',
-    headerName: 'Invoice Number',
+    field: "invoiceNumber",
+    headerName: "Invoice Number",
     width: 200,
   },
   {
-    field: 'approved',
-    headerName: 'Approved',
+    field: "approved",
+    headerName: "Approved",
     width: 150,
     renderCell: (params) => (
-      <span>
-        {params.value === true ? "approved" : "Not Approved"}
-      </span>
-    )
+      <span>{params.value === true ? "approved" : "Not Approved"}</span>
+    ),
   },
   {
-    field: 'date',
-    headerName: 'Date',
+    field: "date",
+    headerName: "Date",
     width: 200,
   },
   {
-    field: 'invoiceDate',
-    headerName: 'Invoice Date',
+    field: "invoiceDate",
+    headerName: "Invoice Date",
     width: 200,
   },
   {
-    field: 'actions',
-    headerName: 'Actions',
+    field: "actions",
+    headerName: "Actions",
     width: 300,
     renderCell: (params) => (
-      <div>
-        <button className="btn btn-danger">
+      <div className="flex" >
+        <div className="pr-2">
+        <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
           <Link to={`./${params.value}/approve`}>Approve</Link>
-        </button>
-        <button className="btn btn-primary">
+        </span>
+        </div>
+        <div>
+        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
           <Link to={`./${params.value}/accounting`}>Accounting</Link>
-        </button>
+        </span>
+        </div>
       </div>
-    )
+    ),
   },
 ];
 
@@ -65,7 +67,7 @@ const SupplierPaymentList = ({ payments }) => {
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
   const paginatedPayments = payments.slice(startIndex, endIndex);
-  const data = useActionData()
+  const data = useActionData();
   const totalPages = Math.ceil(payments.length / PAGE_SIZE);
 
   const handlePageChange = (params) => {
@@ -76,7 +78,7 @@ const SupplierPaymentList = ({ payments }) => {
     <div className="max-w-screen-lg mx-auto">
       <h2 className="text-lg font-semibold mb-4">Payments</h2>
       <div className="shadow border rounded-md">
-      {data && data.errors && (
+        {data && data.errors && (
           <ul>
             {Object.values(data.errors).map((err) => (
               <li key={err}>{err}</li>
@@ -84,9 +86,9 @@ const SupplierPaymentList = ({ payments }) => {
           </ul>
         )}
         {data && data.message && <p>{data.message}</p>}
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={paginatedPayments.map(payment => ({
+            rows={paginatedPayments.map((payment) => ({
               id: payment.id,
               supplierName: payment.invoice.supplier.supplier_name,
               invoiceNumber: payment.invoice.invoice_number,

@@ -1,11 +1,17 @@
 import React from "react";
-import { defer, json, useActionData, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  defer,
+  json,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import Modal from "../../components/UIComponents/Modal";
 import { getAuthToken } from "../../util/Auth";
 
 function ViewSupplierPaymentAccountingPage() {
   const navigate = useNavigate();
-  const data = useActionData()
+  const data = useActionData();
   function cancelHandler() {
     navigate("/payment");
   }
@@ -14,30 +20,45 @@ function ViewSupplierPaymentAccountingPage() {
   return (
     <React.Fragment>
       <Modal>
-      {data && data.errors && (
-        <ul>
-          {Object.values(data.errors).map((err) => (
-            <li key={err}>{err}</li>
-          ))}
-        </ul>
-      )}
-      {data && data.message && <p>{data.message}</p>}
-          <div>
-            <p>
-              Credit Account:{" "}
-              <strong>
-                {accounting.credit_account} - ({accounting.credit_amount})
-              </strong>
-            </p>
-            <p>
-              Debit Account:{" "}
-              <strong>
-                {accounting.debit_account} - {accounting.debit_amount}
-              </strong>
-            </p>
-          </div>
-        
-        <button onClick={cancelHandler}>Back</button>
+        <h2 className="text-base font-semibold leading-7 text-gray-900">
+          Transactions
+        </h2>
+        <p className="mt-1 text-sm leading-6 text-gray-600">
+          These are the transactions that occured{" "}
+        </p>
+        {data && data.errors && (
+          <ul>
+            {Object.values(data.errors).map((err) => (
+              <li key={err}>{err}</li>
+            ))}
+          </ul>
+        )}
+        {data && data.message && <p>{data.message}</p>}
+        <div>
+          <p className="mt-1 text-sm leading-6 text-gray-600">
+            Credit Account:{" "}
+            <strong>
+              {accounting.credit_account}
+              <span></span> <span></span>
+              <p className="font-semibold">{accounting.credit_amount}</p>
+            </strong>
+          </p>
+          <p className="mt-1 text-sm leading-6 text-gray-600">
+            Debit Account:{" "}
+            <strong>
+              {accounting.debit_account}
+              <span></span> <span></span>{" "}
+              <p className="font-semibold"> {accounting.debit_amount}</p>
+            </strong>
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={cancelHandler}
+          className="text-sm font-semibold leading-6 text-gray-900"
+        >
+          Cancel
+        </button>{" "}
       </Modal>
     </React.Fragment>
   );
@@ -52,18 +73,18 @@ async function accountingLoader(id) {
     headers: {
       Authorization: "Bearer " + token,
     },
-  }); 
-  if (response.status === 404){
-    return response
+  });
+  if (response.status === 404) {
+    return response;
   }
-  if (response.status === 400){
-    return response
+  if (response.status === 400) {
+    return response;
   }
   if (!response.ok) {
     throw json({ message: "Not gotten accounting" }, { status: 404 });
   }
   const resData = await response.json();
-  console.log(resData)
+  console.log(resData);
   return resData.accounting[0];
 }
 
