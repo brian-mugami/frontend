@@ -63,14 +63,19 @@ function CustomerPaymentsList({ payments }) {
       headerName: 'Actions',
       flex: 1,
       renderCell: (params) => (
-        <div>
-          <button className="btn btn-danger">
-            <Link to={`./${params.row.id}/approve`}>Approve</Link>
-          </button>
-          <button className="btn btn-primary">
-            <Link to={`./${params.row.id}/accounting`}>Accounting</Link>
-          </button>
+        <div className="flex" >
+        <div className="pr-2">
+        <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+          <Link to={`./${params.row.id}/approve`}>Approve</Link>
+        </span>
         </div>
+        <div>
+        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+          <Link to={`./${params.row.id}/accounting`}>Accounting</Link>
+        </span>
+        </div>
+      </div>
+   
       ),
     },
   ];
