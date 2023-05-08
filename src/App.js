@@ -260,6 +260,10 @@ const AllCustomerBalancesPage = lazy(() =>
 const AllSupplierBalancePages = lazy(() =>
   import("./pages/SupplierBalancePages/AllSupplierBalancesPage")
 );
+const SupplierPaymentRejectPage =lazy(()=> 
+import("./pages/SupplierPaymentPages/SupplierPaymentRejectPage"))
+
+const InvoiceVoidPage =lazy(()=> import("./pages/InvoicePages/InvoiceVoidPage"))
 
 const router = createBrowserRouter([
   {
@@ -441,7 +445,19 @@ const router = createBrowserRouter([
                 path: "approve",
                 element: <SupplierPaymentApprovePage />,
                 action: SupplierPaymentApproveAction,
-              },
+              },{
+                path: 'reject',
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <SupplierPaymentRejectPage />
+                  </Suspense>
+                ), 
+                action: (meta) =>
+                import(
+                  "./components/SupplierPaymentComponents/SupplierPaymentRejectForm"
+                ).then((module) => module.action(meta))
+              }
+              ,
               {
                 path: "accounting",
                 element: <ViewSupplierPaymentAccountingPage />,
@@ -877,7 +893,18 @@ const router = createBrowserRouter([
                 path: "accounting",
                 element: <ViewInvoiceAccountingPage />,
                 loader: ViewInvoiceAccountingLoader,
-              },
+              },{
+                path: "void",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <InvoiceVoidPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                import(
+                  "./components/InvoiceComponents/InvoiceVoidForm"
+                ).then((module) => module.action(meta)) 
+              }
             ],
           },
         ],

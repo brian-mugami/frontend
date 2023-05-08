@@ -59,9 +59,9 @@ function InvoiceForm({ invoiceData, title, method }) {
       ...rows,
       {
         item_name: " ",
-        item_quantity: 0,
-        buying_price: 0,
-        item_cost: 0,
+        item_quantity: parseFloat(0),
+        buying_price: parseFloat(0),
+        item_cost: parseFloat(0),
       },
     ]);
   };
@@ -686,10 +686,6 @@ export async function action({ request, params }) {
     }
     if (invoiceLines.status === 404) {
       return invoiceLines;
-    }
-    if (!invoiceLines.ok) {
-      window.alert("error in invoice lines");
-      return redirect("./");
     }
     return redirect("/invoice");
   } else {

@@ -24,11 +24,11 @@ const columns = [
     width: 200,
   },
   {
-    field: "approved",
+    field: "approvalStatus",
     headerName: "Approved",
     width: 150,
     renderCell: (params) => (
-      <span>{params.value === true ? "approved" : "Not Approved"}</span>
+      <span>{params.value === "pending approval" ? "pending approved" : "Not Approved"}</span>
     ),
   },
   {
@@ -55,6 +55,11 @@ const columns = [
         <div>
         <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
           <Link to={`./${params.value}/accounting`}>Accounting</Link>
+        </span>
+        </div>
+        <div>
+        <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-black-700 ring-1 ring-inset ring-blue-700/10">
+          <Link to={`./${params.value}/reject`}>Reject</Link>
         </span>
         </div>
       </div>

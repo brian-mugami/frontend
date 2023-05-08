@@ -1,0 +1,75 @@
+import React from "react";
+import { Form, useActionData, useNavigate, useNavigation, json, redirect } from "react-router-dom";
+import Modal from "../UIComponents/Modal";
+import { getAuthToken } from "../../util/Auth";
+
+function SupplierPaymentRejectForm({ bank, amount, supplier, currency }) {
+    const data = useActionData()
+    const navigation = useNavigation();
+    const navigate = useNavigate();
+    const isSubmitting = navigation.state === "submitting";
+    function cancelHandler() {
+      navigate("/payment");
+    }
+  return (
+    <Modal>
+    <h3 className="text-base font-semibold leading-7 text-gray-900">Payment Approval Form</h3>
+    {data && data.errors && (
+      <ul>
+        {Object.values(data.errors).map((err) => (
+          <li key={err}>{err}</li>
+        ))}
+      </ul>
+    )}
+    {data && data.message && <p>{data.message}</p>}
+    <Form method="post">
+      <p className="mt-1 text-sm leading-6 text-gray-600">
+        Are you sure you want to reject this payment of <b>{currency} {amount}{" "}</b> 
+      </p>
+      <p className="mt-1 text-sm leading-6 text-gray-600">
+        To <strong>supplier</strong>:{supplier} from <strong>bank</strong> :
+        {bank}
+      </p>
+      <input name="reason" type="text" placeholder="reason" required></input>
+      <div  className="mt-6 flex items-center justify-end gap-x-6">
+      <button type="submit" disabled={isSubmitting}>
+        Yes
+      </button>
+      <button type="button" onClick={cancelHandler}>
+        No
+      </button>
+      </div>
+    </Form>
+  </Modal>
+  )
+}
+
+export default SupplierPaymentRejectForm;
+
+export async function action({ request, params }) {
+    const token = getAuthToken();
+    const id = params.id;
+    let url = "/payment/reject/" + id;
+    const data = await request.formData()
+
+    const rejectData = {
+        reason: data.get('reason')
+    }
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(rejectData)
+    });
+    if (response.status === 400){
+      return response
+    }
+    if (!response.ok) {
+      window.alert("Failed to reject payment");
+      throw json({ message: "Failed to reject payment" }, { status: 500 });
+    }
+    return redirect("/payment");
+  }
