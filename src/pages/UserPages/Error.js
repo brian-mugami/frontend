@@ -1,6 +1,8 @@
 import React from "react";
 import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
 import SideNav from "../../components/SideNav";
+import { Outlet, useRouteLoaderData } from "react-router-dom";
+
 
 function ErrorPage() {
   const error = useRouteError();
@@ -28,10 +30,13 @@ function ErrorPage() {
     status = 400;
   }
 
+  const token = useRouteLoaderData("root");
+
+
   return (
     <React.Fragment>
       <div>
-        <SideNav />
+      {token && <SideNav />}
 
         <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
           <div className="text-center">
