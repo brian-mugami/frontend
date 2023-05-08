@@ -174,7 +174,7 @@ export async function action({ request, params }) {
       throw json({ message: "Failed to save the account" }, { status: 500 });
     }
 
-    return redirect("/account/payment");
+    return redirect("/account/bank");
   } else {
     const id = params.id;
     url = "/bank/account/" + id;
@@ -197,6 +197,6 @@ export async function action({ request, params }) {
       throw json({ message: "Failed to update the account" }, { status: 500 });
     }
 
-    return redirect("/account/payment");
+    return redirect("/account/bank");
   }
 }

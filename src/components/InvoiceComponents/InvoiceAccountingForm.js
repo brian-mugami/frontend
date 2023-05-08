@@ -2,16 +2,26 @@ import Modal from "../UIComponents/Modal";
 import { Form, redirect, json } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import { useNavigate, useNavigation } from "react-router-dom";
+import { useActionData } from "react-router-dom/dist/umd/react-router-dom.development";
 
 function InvoiceAccountForm() {
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const data = useActionData()
   const isSubmitting = navigation.state === "submitting";
   function cancelHandler() {
     navigate("/invoice");
   }
   return (
     <Modal>
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
+      {data && data.message && <p>{data.message}</p>}
       <Form method="post">
         <h2 className="text-base font-semibold leading-7 text-gray-900">
           Accounting Confirmation

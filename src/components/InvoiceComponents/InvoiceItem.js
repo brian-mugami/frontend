@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
+import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
 
 function InvoiceItem({ invoice }) {
   const token = useRouteLoaderData("root");
   const submit = useSubmit();
+  const navigate = useNavigate()
 
   function startDeleteHandler() {
     const proceed = window.confirm("Are you sure?");
@@ -11,6 +13,10 @@ function InvoiceItem({ invoice }) {
     if (proceed) {
       submit(null, { method: "delete" });
     }
+  }
+
+  function cancelHandler(){
+    navigate("..")
   }
 
   return (
@@ -41,8 +47,8 @@ function InvoiceItem({ invoice }) {
       <b>Payments</b>
       {invoice.payments.map((payment)=>(
         <div>
-        <h>{payment.payment_status}</h>
-        <h1> Amount Paid : {payment.amount} Approval Status : {payment.approved === true ? " Approved" : " Not Approved"   }</h1>
+        <h1>{payment.payment_status}</h1>
+        <h1> Amount Paid : {payment.amount} Approval Status : {payment.approval_status }</h1>
         <h1> Transaction code : {payment.payment_description}</h1>
         </div>
       ))}
@@ -58,6 +64,17 @@ function InvoiceItem({ invoice }) {
               >
                 Edit invoice
               </Link>
+            </div>
+            <div className="pr-5">
+              <Link
+                to="void"
+                className="rounded-md bg-blue-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Void invoice
+              </Link>
+            </div>
+            <div className="pr-5">
+              <button className="btn btn-warning" onClick={cancelHandler}>Back</button>
             </div>
             <div>
               <button

@@ -169,6 +169,9 @@ export async function action({ request, params }) {
     if (response.status === 409) {
       return response;
     }
+    if (response.status === 400) {
+      return response;
+    }
 
     if (!response.ok) {
       throw json({ message: "Failed to save the account" }, { status: 500 });

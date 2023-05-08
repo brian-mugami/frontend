@@ -24,7 +24,7 @@ function AccountNavigation() {
             Customer Accounts
           </NavLink>
 
-          <NavLink className="sidebar-nav-link" to="/account/payment">
+          <NavLink className="sidebar-nav-link" to="/account/bank">
             Bank Accounts
           </NavLink>
 
