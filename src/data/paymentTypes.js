@@ -24,3 +24,22 @@ export const currencyTypes = [
     { id: 1,currency_type: "KES"},
     { id: 2,currency_type: "USD"},
 ]
+
+export const unitTypes = [
+    {id: 1, unit_type: "M"},
+    {id: 2, unit_type: "unit"},
+    {id: 3, unit_type: "L"},
+    {id: 4, unit_type: "mm"},
+    {id: 5, unit_type: "Kg"},
+    {id: 6, unit_type: "g"},
+    {id: 7, unit_type: "mg"},
+    {id: 9, unit_type: "cm"},
+    {id: 10, unit_type: "mg"},
+    {id: 11, unit_type: "ml"},
+    {id: 12, unit_type: "m3"},
+    {id: 14, unit_type: "cm2"},
+    {id: 1, unit_type: "inch"},
+    {id: 1, unit_type: "feet"},
+    {id: 13, unit_type: "m2"},
+    {id: 8, unit_type: "tonnes"},
+]

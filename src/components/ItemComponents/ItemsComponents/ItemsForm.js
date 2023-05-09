@@ -8,6 +8,7 @@ import {
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../../util/Auth";
+import { unitTypes } from "../../../data/paymentTypes";
 
 function ItemForm({ method, itemData, title, categories }) {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function ItemForm({ method, itemData, title, categories }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="itemname"
+                  name="itemName"
                   required
                   defaultValue={itemData ? itemData.item_name : ""}
                   placeholder="Item Name"
@@ -62,14 +63,14 @@ function ItemForm({ method, itemData, title, categories }) {
                 htmlFor="region"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Item Weight
+                Item Unit Measure
               </label>
               <div className="mt-2">
                 <input
                   type="number"
-                  name="itemweight"
-                  placeholder="Item Weight"
-                  defaultValue={itemData ? itemData.item_weight : 1}
+                  name="unit"
+                  placeholder="Unit Measure"
+                  defaultValue={itemData ? itemData.item_unit : 1}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -80,16 +81,22 @@ function ItemForm({ method, itemData, title, categories }) {
                 htmlFor="Item-Volume"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Item Volume
+                Unit Type
               </label>
               <div className="mt-2">
-                <input
-                  type="number"
-                  name="itemvolume"
-                  defaultValue={itemData ? itemData.item_volume : 1}
-                  placeholder="Item Volume"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+              <select
+                  id="unit type"
+                  name="unit-type"
+                  defaultValue={itemData ? itemData.unit_type : "unit"}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  {unitTypes.map((unit) => (
+                    <option key={unit.id} value={unit.unit_type}>
+                      {" "}
+                      {unit.unit_type}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -178,9 +185,9 @@ export async function action({ request, params }) {
   const token = getAuthToken();
 
   const ItemData = {
-    item_name: data.get("itemname"),
-    item_weight: data.get("itemweight"),
-    item_volume: data.get("itemvolume"),
+    item_name: data.get("itemName"),
+    item_unit: data.get("unit"),
+    unit_type: data.get("unit-type"),
     price: data.get("price"),
     is_active: data.get("active"),
     category_name: data.get("category"),
@@ -197,6 +204,12 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(ItemData),
     });
+    if (response.status === 409){
+      return response
+    }
+    if (response.status === 404){
+      return response
+    }
     if (!response.ok) {
       window.alert("failed");
       throw json({ message: "Failed to save the lot" }, { status: 500 });
@@ -215,9 +228,12 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(ItemData),
     });
+    if (response.status === 404){
+      return response
+    }
     if (!response.ok) {
       window.alert("failed update");
-      throw json({ message: "Failed to save the lot" }, { status: 500 });
+      throw json({ message: "Failed to save the Item. Try Again!!" }, { status: 500 });
     }
 
     return redirect("/item/main");
