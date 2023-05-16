@@ -8,7 +8,6 @@ import {
   useActionData,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { paymentTypes } from "../../data/paymentTypes";
 
 function CustomerForm({ method, cusData, title, accounts }) {
   const navigate = useNavigate();
@@ -145,26 +144,6 @@ function CustomerForm({ method, cusData, title, accounts }) {
                       </select>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-3">
-                      <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Customer Payment Type
-                      </label>
-                      <select
-                        name="paytype"
-                        autoComplete="country-name"
-                        required
-                        defaultValue={cusData ? cusData.payment_type : ""}
-                        className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      >
-                        {paymentTypes.map((type) => (
-                          <option key={type.id} value={type.payment_type}>
-                            {" "}
-                            {type.payment_type}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
                     <div className="col-span-6 sm:col-span-4">
                       <label>Status</label>
                       <div>
@@ -220,7 +199,6 @@ export async function action({ request, params }) {
     customer_phone_no: data.get("cuscon"),
     customer_email: data.get("email"),
     account_name: data.get("account"),
-    payment_type: data.get("paytype"),
     is_active: data.get("active"),
     customer_site: data.get("site"),
     customer_bill_to_site: data.get("billto"),

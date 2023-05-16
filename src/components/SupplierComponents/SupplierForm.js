@@ -7,7 +7,6 @@ import {
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { paymentTypes } from "../../data/paymentTypes";
 import { useActionData } from "react-router-dom";
 
 function SupplierForm({ method, supData, accounts }) {
@@ -116,26 +115,6 @@ function SupplierForm({ method, supData, accounts }) {
                       </select>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-3">
-                      <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Supplier Payment Type
-                      </label>
-                      <select
-                        name="payType"
-                        autoComplete="country-name"
-                        required
-                        defaultValue={supData ? supData.payment_type : ""}
-                        className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      >
-                        {paymentTypes.map((type) => (
-                          <option key={type.id} value={type.payment_type}>
-                            {" "}
-                            {type.payment_type}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
                     <div className="col-span-6">
                       <label
                         htmlFor="street-address"
@@ -210,7 +189,6 @@ export async function action({ request, params }) {
     account_name: data.get("account"),
     supplier_site: data.get("supplier-site"),
     is_active: data.get("active"),
-    payment_type: data.get("payType"),
   };
 
   let url = "/supplier";

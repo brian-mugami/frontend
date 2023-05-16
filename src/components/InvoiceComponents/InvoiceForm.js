@@ -579,7 +579,6 @@ export async function action({ request, params }) {
       return response;
     }
     if (!response.ok) {
-      window.alert("Please enter a valid invoice");
       return redirect("./");
     }
     console.log(response);
@@ -659,7 +658,6 @@ export async function action({ request, params }) {
       return redirect("./");
     }
     if (!response.ok) {
-      window.alert("failed update");
       throw json({ message: "Failed to update" }, { status: 500 });
     }
     const invoiceUpdateLines = {

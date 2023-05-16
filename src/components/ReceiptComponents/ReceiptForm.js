@@ -14,8 +14,9 @@ import { getAuthToken } from "../../util/Auth";
 import { currencyTypes, purchaseTypes } from "../../data/paymentTypes";
 
 let item_list = []
-
+let existingData
 function ReceiptForm({ receiptData, title, method }) {
+  existingData = receiptData
   const { customers, items } = useLoaderData();
   const navigate = useNavigate();
   const navigation = useNavigation();
@@ -157,7 +158,7 @@ function ReceiptForm({ receiptData, title, method }) {
               </label>
               <div className="mt-2">
                 <input
-                  disabled={!receiptData}
+                  disabled
                   placeholder="Receipt Amount"
                   name="receipt_amount"
                   type="number"
@@ -387,6 +388,14 @@ export async function action({ request, params }) {
     customer_name: data.get("customer"),
   };
 
+  const ReceiptUpdateData = {
+    currency: data.get("currency"),
+    description: data.get("description"),
+    date: data.get("date"),
+    sale_type: data.get("sale_type"),
+    customer_name: data.get("customer"),
+  };
+
   let url = "/receipt";
   if (method === "POST") {
     const response = await fetch(url, {
@@ -442,7 +451,6 @@ export async function action({ request, params }) {
       return redirect("./");
     }
     return redirect("/receipt");
-
   } else {
     const id = params.id;
     url = "/receipt/" + id;
@@ -453,13 +461,41 @@ export async function action({ request, params }) {
         Authorization: "Bearer " + token,
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(ReceiptData),
+      body: JSON.stringify(ReceiptUpdateData),
     });
+    if(response.status === 400){
+      return response
+    }
+    if(response.status === 404){
+      return response
+    }
     if (!response.ok) {
-      window.alert("failed update");
       throw json({ message: "Failed to update" }, { status: 500 });
     }
-
+    const receiptUpdateLines = {
+      receipt_id: id,
+      item_list: item_list.map((item) => ({
+        item_name: item.item_name,
+        selling_price: item.selling_price,
+        quantity: item.item_quantity,
+      })),
+    };
+    for (let item of existingData.sale_items) {
+      const lineResponse = await fetch("/sales/" + item.id, {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(receiptUpdateLines),
+      });
+      if (lineResponse.status === 400) {
+        return lineResponse;
+      }
+      if (lineResponse.status === 404) {
+        return lineResponse;
+      }
+    }
     return redirect("/receipt");
   }
 }
