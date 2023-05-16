@@ -56,7 +56,7 @@ function SupplierPaymentForm({ method, paymentData, accounts }) {
                       </label>
                       <input
                         type="text"
-                        name="supname"
+                        name="supName"
                         id="first-name"
                         autoComplete="given-name"
                         required
@@ -71,7 +71,7 @@ function SupplierPaymentForm({ method, paymentData, accounts }) {
                       </label>
                       <input
                         type="email"
-                        name="supemail"
+                        name="supEmail"
                         id="email-address"
                         defaultValue={paymentData ? paymentData.supplier_email : ""}
                         className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -84,7 +84,7 @@ function SupplierPaymentForm({ method, paymentData, accounts }) {
                       </label>
                       <input
                         type="text"
-                        name="supcon"
+                        name="supCon"
                         id="email-address"
                         defaultValue={paymentData ? paymentData.supplier_phone_no : ""}
                         className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -118,7 +118,7 @@ function SupplierPaymentForm({ method, paymentData, accounts }) {
                         Supplier Payment Type
                       </label>
                       <select
-                        name="paytype"
+                        name="payType"
                         autoComplete="country-name"
                         required
                         defaultValue={paymentData ? paymentData.payment_type : ""}
@@ -142,7 +142,7 @@ function SupplierPaymentForm({ method, paymentData, accounts }) {
                       </label>
                       <input
                         type="text"
-                        name="supsite"
+                        name="supSite"
                         id="street-address"
                         defaultValue={paymentData ? paymentData.supplier_site : ""}
                         className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -201,13 +201,13 @@ export async function action({ request, params }) {
   const token = getAuthToken();
 
   const paymentData = {
-    supplier_name: data.get("supname"),
-    supplier_phone_no: data.get("supcon"),
-    supplier_email: data.get("supemail"),
+    supplier_name: data.get("supName"),
+    supplier_phone_no: data.get("supCon"),
+    supplier_email: data.get("supEmail"),
     account_name: data.get("account"),
-    supplier_site: data.get("supsite"),
+    supplier_site: data.get("supSite"),
     is_active: data.get("active"),
-    payment_type: data.get("paytype"),
+    payment_type: data.get("payType"),
   };
 
   let url = "/supplier";

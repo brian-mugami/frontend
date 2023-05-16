@@ -21,14 +21,23 @@ function ReceiptForm({ receiptData, title, method }) {
   const navigation = useNavigation();
   const date = new Date().toISOString().slice(0, 10);
   const data = useActionData();
-  const [tableRows, setTableRows] = useState([
-    {
-      item_name: "",
-      item_quantity: 0,
-      selling_price: 0,
-      item_cost: 0,
-    },
-  ]);
+  const [tableRows, setTableRows] = useState(() => {
+    if (receiptData && receiptData.sale_items) {
+      return receiptData.sale_items.map((item) => ({
+        item_name: item.item.item_name,
+        item_quantity: parseFloat(item.quantity),
+        selling_price: parseFloat(item.selling_price),
+        item_cost: parseFloat(item.item_cost),
+      }));
+    } else {
+      return Array.from({ length: 1 }, () => ({
+        item_name: "",
+        item_quantity: 1,
+        selling_price: 1,
+        item_cost: 1,
+      }));
+    }
+  });
 
   const isSubmitting = navigation.state === "submitting";
 
@@ -41,9 +50,9 @@ function ReceiptForm({ receiptData, title, method }) {
       ...rows,
       {
         item_name: "",
-        item_quantity: 0,
-        selling_price: 0,
-        item_cost: 0,
+        item_quantity: 1,
+        selling_price: 1,
+        item_cost: 1,
       },
     ]);
   };
@@ -54,16 +63,45 @@ function ReceiptForm({ receiptData, title, method }) {
 
   const handleInputChange = (event, index, key) => {
     const value = event.target.value;
-    setTableRows((rows) => {
-      const newRows = [...rows];
-      newRows[index][key] = value;
-      if (key === "item_quantity" || key === "selling_price") {
-        newRows[index].item_cost =
-          newRows[index].item_quantity * newRows[index].selling_price;
+    if (key === 'item_name') {
+      // Find the item with the matching name in the items list
+      const selectedItem = items.find(item => item.item_name === value);
+  
+      // If a matching item is found, update the selling price for the corresponding row
+      if (selectedItem) {
+        const newSellingPrice = parseFloat(selectedItem.price);
+        setTableRows(rows => {
+          const newRows = [...rows];
+          newRows[index][key] = value;
+          newRows[index]['selling_price'] = newSellingPrice;
+          newRows[index]['item_cost'] = newRows[index]['item_quantity'] * newSellingPrice;
+          return newRows;
+        });
+      } else {
+        // If no matching item is found, reset the selling price and item cost for the corresponding row
+        setTableRows(rows => {
+          const newRows = [...rows];
+          newRows[index][key] = value;
+          newRows[index]['selling_price'] = 0;
+          newRows[index]['item_cost'] = 0;
+          return newRows;
+        });
       }
-      return newRows;
-    });
+    } else {
+      // If a different key is changed (e.g., selling_price), update the corresponding value directly
+      setTableRows(rows => {
+        const newRows = [...rows];
+        newRows[index][key] = value;
+        if (key === 'item_quantity' || key === 'selling_price') {
+          const itemQuantity = newRows[index]['item_quantity'];
+          const sellingPrice = newRows[index]['selling_price'];
+          newRows[index]['item_cost'] = itemQuantity * sellingPrice;
+        }
+        return newRows;
+      });
+    }
   };
+  
 
   item_list = tableRows
 
@@ -262,125 +300,70 @@ function ReceiptForm({ receiptData, title, method }) {
                 <th scope="col">Item Name</th>
                 <th scope="col">Item Quantity</th>
                 <th scope="col">Selling Price</th>
+                <th scope="col">Item Set Price</th>
                 <th scope="col">Total Cost</th>
               </tr>
             </thead>
             <tbody>
-              {itemsAvailable
-                ? receiptData.sale_items.map((item, index) => (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>
-                        <input
-                          name="item_name"
-                          type="text"
-                          defaultValue={item.item.item_name}
-                          list="options"
-                          onChange={(e) =>
-                            handleInputChange(e, index, "item_name")
-                          }
-                          required
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                        />
-                        <datalist id="options">
-                          {items.map((item) => (
-                            <option key={item.id} value={item.item_name} />
-                          ))}
-                        </datalist>
-                      </td>
-                      <td>
-                        <input
-                          required
-                          type="number"
-                          name="item_quantity"
-                          min="1"
-                          defaultValue={item.quantity}
-                          onChange={(e) =>
-                            handleInputChange(e, index, "item_quantity")
-                          }
-                        />
-                      </td>
-                      <td>
-                        <input
-                          required
-                          type="number"
-                          min="1"
-                          step="0.01"
-                          name="selling_price"
-                          defaultValue={item.selling_price}
-                          onChange={(e) =>
-                            handleInputChange(e, index, "selling_price")
-                          }
-                        />
-                      </td>
-                      <td>{item.item_cost}</td>
-                      <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleRemoveRow(index)}
-                        >
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                : tableRows.map((row, index) => (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>
-                        <input
-                          name="item_name"
-                          type="text"
-                          value={row.item_name}
-                          list="options"
-                          onChange={(e) =>
-                            handleInputChange(e, index, "item_name")
-                          }
-                          required
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                        />
-                        <datalist id="options">
-                          {items.map((item) => (
-                            <option key={item.id} value={item.item_name} />
-                          ))}
-                        </datalist>
-                      </td>
-                      <td>
-                        <input
-                          required
-                          type="number"
-                          name="item_quantity"
-                          min="1"
-                          value={row.item_quantity}
-                          onChange={(e) =>
-                            handleInputChange(e, index, "item_quantity")
-                          }
-                        />
-                      </td>
-                      <td>
-                        <input
-                          required
-                          type="number"
-                          min="1"
-                          step="0.01"
-                          name="selling_price"
-                          value={row.selling_price}
-                          onChange={(e) =>
-                            handleInputChange(e, index, "selling_price")
-                          }
-                        />
-                      </td>
-                      <td>{row.item_cost}</td>
-                      <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleRemoveRow(index)}
-                        >
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+            {tableRows.map((row, index) => (
+                  <tr key={index}>
+                    <th scope="row">{index + 1}</th>
+                    <td>
+                      <input
+                        name="item_name"
+                        defaultValue={
+                          receiptData?.sale_items?.[index]?.item
+                            .item_name || row.item_name
+                        }
+                        list="options"
+                        onChange={(e) =>
+                          handleInputChange(e, index, "item_name")
+                        }
+                        required
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      />
+                      <datalist id="options">
+                        {items.map((item) => (
+                          <option key={item.id} value={item.item_name} />
+                        ))}
+                      </datalist>
+                    </td>
+                    <td>
+                      <input
+                        required
+                        type="number"
+                        name="item_quantity"
+                        min="1"
+                        defaultValue={row.item_quantity}
+                        onChange={(e) =>
+                          handleInputChange(e, index, "item_quantity")
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        required
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        defaultValue={row.selling_price}
+                        onChange={(e) =>
+                          handleInputChange(e, index, "selling_price")
+                        }
+                      />
+                    </td>
+                    <td>{row.selling_price}</td>
+                    <td>{row.item_cost}</td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleRemoveRow(index)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -35,7 +35,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_cost: parseFloat(item.item_cost),
       }));
     } else {
-      return Array.from({ length: 3 }, () => ({
+      return Array.from({ length: 2 }, () => ({
         item_name: "",
         item_quantity: 1,
         buying_price: 1,
@@ -397,7 +397,6 @@ function InvoiceForm({ invoiceData, title, method }) {
                 <th scope="col">Total Cost</th>
               </tr>
             </thead>
-            <tbody>
               <tbody>
                 {tableRows.map((row, index) => (
                   <tr key={index}>
@@ -458,7 +457,6 @@ function InvoiceForm({ invoiceData, title, method }) {
                   </tr>
                 ))}
               </tbody>
-            </tbody>
           </table>
         </div>
       </Form>
