@@ -20,8 +20,8 @@ function Item({item}){
             <p>Item number-{item.item_number}</p>
             <p>Item category-{item.category.name}</p>
             <p>Item price -{item.price}</p>
-            <p>Item weight -{item.item_weight}</p>
-            <p>Item volume - {item.item_volume}</p>
+            <p>Item Unit -{item.item_unit}</p>
+            <p>Item Unit Type - {item.unit_type}</p>
             <p>Item Creation Date - {item.date_created}</p>
             <p>Is Item Active - {item.is_active ? "Active":"Inactive"}</p>
             {token && <menu>

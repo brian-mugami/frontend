@@ -185,7 +185,7 @@ function SideNav() {
                     <MenuItem>
                       <NavLink
                         className="sidebar-nav-link"
-                        to="/account/purchase"
+                        to="/account/bank"
                       >
                         Purchase Accounts
                       </NavLink>
