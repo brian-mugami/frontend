@@ -30,11 +30,12 @@ function NewPaymentsPage() {
       throw json({ message: "No such request" }, { status: 500 });
     }
     const resData = await response.json();
-    setResults(resData);
     if(resData.length === 0){
       window.alert("No such supplier has a pending payment!")
       navigate("./")
     }
+    setResults(resData);
+ 
     return results;
   }
 

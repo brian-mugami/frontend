@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 import {
   Form,
   useNavigate,
@@ -25,27 +24,25 @@ let isExpense = false;
 let existingData;
 
 function InvoiceForm({ invoiceData, title, method }) {
-
-
-
-
   existingData = invoiceData;
   const navigate = useNavigate();
-  const [tableRows, setTableRows] = useState([
-    invoiceData
-      ? invoiceData.purchase_items.map((item) => ({
-          item_name: item.item.item_name,
-          item_quantity: parseFloat(item.item_quantity),
-          buying_price: parseFloat(item.buying_price),
-          item_cost: parseFloat(item.item_cost),
-        }))
-      : {
-          item_name: "",
-          item_quantity: 1,
-          buying_price: 1,
-          item_cost: 1,
-        },
-  ]);
+  const [tableRows, setTableRows] = useState(() => {
+    if (invoiceData && invoiceData.purchase_items) {
+      return invoiceData.purchase_items.map((item) => ({
+        item_name: item.item.item_name,
+        item_quantity: parseFloat(item.item_quantity),
+        buying_price: parseFloat(item.buying_price),
+        item_cost: parseFloat(item.item_cost),
+      }));
+    } else {
+      return Array.from({ length: 3 }, () => ({
+        item_name: "",
+        item_quantity: 1,
+        buying_price: 1,
+        item_cost: 1,
+      }));
+    }
+  });
 
   const [invoiceTotal, setInvoiceTotal] = useState(0);
   const navigation = useNavigation();
@@ -59,7 +56,7 @@ function InvoiceForm({ invoiceData, title, method }) {
       ...rows,
       {
         item_name: " ",
-        item_quantity: parseFloat(0),
+        item_quantity: 0,
         buying_price: parseFloat(0),
         item_cost: parseFloat(0),
       },
@@ -341,7 +338,10 @@ function InvoiceForm({ invoiceData, title, method }) {
         </div>
         <div className="pt-5 ">
           <div className="">
-            <button className="btn btn-secondary mb-4 mr-5 " onClick={handleAddRow}>
+            <button
+              className="btn btn-secondary mb-4 mr-5 "
+              onClick={handleAddRow}
+            >
               <div className="flex ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -363,29 +363,28 @@ function InvoiceForm({ invoiceData, title, method }) {
             </button>
 
             <Link to="/item/main/new">
+              <button className="btn btn-warning mb-4 " onClick={handleAddRow}>
+                <div className="flex">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
 
-            <button className="btn btn-warning mb-4 " onClick={handleAddRow}>
-              <div className="flex">
-                <div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <p>Create Item</p>
                 </div>
-
-                <p>Create Item</p>
-              </div>
-            </button>
+              </button>
             </Link>
           </div>
           <table className="table table-striped">
@@ -399,136 +398,66 @@ function InvoiceForm({ invoiceData, title, method }) {
               </tr>
             </thead>
             <tbody>
-              {itemsAvailable
-                ? invoiceData.purchase_items.map((invoiceItem) =>
-                    tableRows.map((row, index) => (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>
-                          <input
-                            name="item_name"
-                            type="text"
-                            defaultValue={
-                              invoiceItem
-                                ? invoiceItem.item.item_name
-                                : row.item_name
-                            }
-                            list="options"
-                            onChange={(e) =>
-                              handleInputChange(e, index, "item_name")
-                            }
-                            onBlur={(e) =>
-                              handleInputChange(e, index, "item_name")
-                            }
-                            required
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                          />
-                          <datalist id="options">
-                            {items.map((item) => (
-                              <option key={item.id} value={item.item_name} />
-                            ))}
-                          </datalist>
-                        </td>
-                        <td>
-                          <input
-                            required
-                            type="number"
-                            name="item_quantity"
-                            min="1"
-                            defaultValue={
-                              invoiceItem
-                                ? invoiceItem.item_quantity
-                                : row.item_quantity
-                            }
-                            onBlur={(e) =>
-                              handleInputChange(e, index, "item_quantity")
-                            }
-                          />
-                        </td>
-                        <td>
-                          <input
-                            required
-                            type="number"
-                            min="1"
-                            step="0.01"
-                            defaultValue={
-                              invoiceItem
-                                ? invoiceItem.buying_price
-                                : row.buying_price
-                            }
-                            onBlur={(e) =>
-                              handleInputChange(e, index, "buying_price")
-                            }
-                          />
-                        </td>
-                        <td>{row.item_cost}</td>
-                        <td>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleRemoveRow(index)}
-                          >
-                            Remove
-                          </button>
-                        </td>
-                      </tr>
-                    ))
-                  )
-                : tableRows.map((row, index) => (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>
-                        <input
-                          name="item_name"
-                          type="text"
-                          value={row.item_name}
-                          list="options"
-                          onChange={(e) =>
-                            handleInputChange(e, index, "item_name")
-                          }
-                          required
-                          className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                        />
-                        <datalist id="options">
-                          {items.map((item) => (
-                            <option key={item.id} value={item.item_name} />
-                          ))}
-                        </datalist>
-                      </td>
-                      <td>
-                        <input
-                          required
-                          type="number"
-                          name="item_quantity"
-                          min="1"
-                          value={row.item_quantity}
-                          onChange={(e) =>
-                            handleInputChange(e, index, "item_quantity")
-                          }
-                        />
-                      </td>
-                      <td>
-                        <input
-                          required
-                          type="number"
-                          min="1"
-                          step="0.01"
-                          value={row.buying_price}
-                          onChange={(e) =>
-                            handleInputChange(e, index, "buying_price")
-                          }
-                        />
-                      </td>
-                      <td>{row.item_cost}</td>
-                      <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleRemoveRow(index)}
-                        >
-                          Remove
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+              <tbody>
+                {tableRows.map((row, index) => (
+                  <tr key={index}>
+                    <th scope="row">{index + 1}</th>
+                    <td>
+                      <input
+                        name="item_name"
+                        defaultValue={
+                          invoiceData?.purchase_items?.[index]?.item
+                            .item_name || row.item_name
+                        }
+                        list="options"
+                        onChange={(e) =>
+                          handleInputChange(e, index, "item_name")
+                        }
+                        required
+                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      />
+                      <datalist id="options">
+                        {items.map((item) => (
+                          <option key={item.id} value={item.item_name} />
+                        ))}
+                      </datalist>
+                    </td>
+                    <td>
+                      <input
+                        required
+                        type="number"
+                        name="item_quantity"
+                        min="1"
+                        defaultValue={row.item_quantity}
+                        onChange={(e) =>
+                          handleInputChange(e, index, "item_quantity")
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        required
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        defaultValue={row.buying_price}
+                        onChange={(e) =>
+                          handleInputChange(e, index, "buying_price")
+                        }
+                      />
+                    </td>
+                    <td>{row.item_cost}</td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleRemoveRow(index)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </tbody>
           </table>
         </div>
@@ -638,9 +567,9 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceData),
     });
-    if(!invoiceBalanced){
-      window.alert("Invoice header amount does not match line amount!!")
-      return redirect("./")
+    if (!invoiceBalanced) {
+      window.alert("Invoice header amount does not match line amount!!");
+      return redirect("./");
     }
     if (response.status === 400) {
       return response;
@@ -674,9 +603,9 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(lines),
     });
-    if(!invoiceBalanced){
-      window.alert("Invoice header amount does not match line amount!!")
-      return redirect("./")
+    if (!invoiceBalanced) {
+      window.alert("Invoice header amount does not match line amount!!");
+      return redirect("./");
     }
     if (invoiceLines.status === 400) {
       return invoiceLines;
@@ -727,9 +656,9 @@ export async function action({ request, params }) {
       return response;
     }
     if (response.status === 400) {
-      const resData = await response.json()
-      window.alert(resData.message)
-      return redirect("./") ;
+      const resData = await response.json();
+      window.alert(resData.message);
+      return redirect("./");
     }
     if (!response.ok) {
       window.alert("failed update");
@@ -745,7 +674,7 @@ export async function action({ request, params }) {
     };
     for (let item of existingData.purchase_items) {
       const lineResponse = await fetch("/purchase/" + item.id, {
-        method: "PATCH",
+        method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
