@@ -16,13 +16,15 @@ function CategoryEditPage(){
 export default CategoryEditPage;
 
 export async function loader({params}){
-    let url = '/item/category/'
+    let url = 'https://flask-inventory.onrender.com/item/category/'
     const id = params.id
     const token = getAuthToken()
     const response = await fetch(url + id, {
         method:"get",
         headers:{
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
+            
         }
     })
     if(!response.ok){

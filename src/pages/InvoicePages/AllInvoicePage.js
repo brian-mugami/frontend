@@ -22,10 +22,11 @@ export default AllInvoicesPage;
 async function InvoiceLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/invoice", {
+  const response = await fetch("https://flask-inventory.onrender.com/invoice", {
     method: "get",
     headers: {
       "Authorization": "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
     },
   });
   if (response.status=== 500){

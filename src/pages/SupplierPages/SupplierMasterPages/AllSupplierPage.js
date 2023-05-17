@@ -21,10 +21,11 @@ export default SupplierPage;
 
 async function suppliersLoader(){
     const token = getAuthToken()
-    const response = await fetch("/supplier", {
+    const response = await fetch("https://flask-inventory.onrender.com/supplier", {
         method:"get",
         headers:{
-            "Authorization": "Bearer "+ token
+            "Authorization": "Bearer "+ token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     if(!response.ok){

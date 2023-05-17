@@ -26,7 +26,8 @@ async function LotLoader(){
     const response = await fetch("/item/lot", {
         method: "get",
         headers: {
-            "Authorization": "Bearer "+ token
+            "Authorization": "Bearer "+ token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     if(!response.ok){

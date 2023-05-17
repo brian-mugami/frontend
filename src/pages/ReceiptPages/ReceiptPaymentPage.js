@@ -119,7 +119,7 @@ export default ReceiptPaymentPage;
 export async function action({ request, params }) {
   const token = getAuthToken();
   const id = params.id;
-  let url = "/receipt/payment/" + id;
+  let url = "https://flask-inventory.onrender.com/receipt/payment/" + id;
   const data = await request.formData();
   const paymentData = {
     amount: data.get("amount"),
@@ -155,6 +155,7 @@ async function accountLoader() {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
     },
   });
   if (!response.ok) {
@@ -166,12 +167,13 @@ async function accountLoader() {
 }
 
 async function receiptLoader(id) {
-  let url = "/receipt/";
+  let url = "https://flask-inventory.onrender.com/receipt/";
   const token = getAuthToken();
   const response = await fetch(url + id, {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
     },
   });
   if (response.status === 404) {

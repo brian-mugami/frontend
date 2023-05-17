@@ -14,13 +14,14 @@ function ReceiptDetailPage(){
 export default ReceiptDetailPage;
 
 export async function loader({request, params}){
-    let url = '/receipt/'
+    let url = 'https://flask-inventory.onrender.com/receipt/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
         method:"get",
         headers:{
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
 

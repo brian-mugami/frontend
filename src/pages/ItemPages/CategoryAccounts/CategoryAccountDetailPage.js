@@ -21,9 +21,11 @@ export default CategoryAccountDetailPage;
 
 async function loadAccount(id){
     const token = getAuthToken();
-    const response = await fetch('/category/account/' + id,{
+    const response = await fetch('https://flask-inventory.onrender.com/category/account/' + id,{
         headers : {
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token,
+            "Access-Control-Allow-Origin": "*",
+
         }
     })
     if (!response.ok)

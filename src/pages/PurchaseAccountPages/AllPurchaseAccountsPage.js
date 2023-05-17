@@ -18,10 +18,11 @@ export default PurchaseAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('/purchase/account', {
+    const response = await fetch('https://flask-inventory.onrender.com/purchase/account', {
         method: "get",
         headers: {
-            'Authorization': 'Bearer '+ token
+            'Authorization': 'Bearer '+ token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     if(!response.ok){

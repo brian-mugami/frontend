@@ -120,7 +120,7 @@ export async function action({ request, params }) {
     expiry_date: data.get("expiry"),
   };
 
-  let url = "/item/lot";
+  let url = "https://flask-inventory.onrender.com/item/lot";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -139,7 +139,7 @@ export async function action({ request, params }) {
     return redirect("/item/lot");
   } else {
     const id = params.id;
-    url = "/item/lot/" + id;
+    url = "https://flask-inventory.onrender.com/item/lot/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

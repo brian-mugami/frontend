@@ -24,7 +24,8 @@ async function loadLot(id){
     const response = await fetch('/item/lot/' + id, {
         method:"get",
         headers:{
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
         }
         
     })
@@ -55,7 +56,8 @@ export async function action({request,params}){
     const response = await fetch("/item/lot/" + id, {
         method: request.method,
         headers : {
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token,
+            "Access-Control-Allow-Origin": "*",
         }
     });
     if (!response.ok) {

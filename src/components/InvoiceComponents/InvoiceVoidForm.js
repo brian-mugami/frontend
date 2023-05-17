@@ -60,7 +60,7 @@ export default InvoiceVoidForm;
 export async function action({ request, params }) {
   const token = getAuthToken();
   const id = params.id;
-  const url = "/invoice/void/" + id;
+  const url = "https://flask-inventory.onrender.com/invoice/void/" + id;
 
   const data = await request.formData()
 

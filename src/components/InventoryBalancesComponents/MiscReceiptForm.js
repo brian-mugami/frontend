@@ -91,6 +91,8 @@ export async function action({request, param}){
         headers: {
             "content-type": "application/json",
             "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
+
         },
         body: JSON.stringify(miscReceiptData)
     })

@@ -66,12 +66,13 @@ function ViewSupplierPaymentAccountingPage() {
 
 export default ViewSupplierPaymentAccountingPage;
 async function accountingLoader(id) {
-  let url = "/payment/";
+  let url = "https://flask-inventory.onrender.com/payment/";
   const token = getAuthToken();
   const response = await fetch(url + id + "/account", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
     },
   });
   if (response.status === 404) {

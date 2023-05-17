@@ -18,10 +18,11 @@ export default SalesAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('/sales/account', {
+    const response = await fetch('https://flask-inventory.onrender.com/sales/account', {
         method: "get",
         headers: {
-            'Authorization': 'Bearer '+ token
+            'Authorization': 'Bearer '+ token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     if(!response.ok){
