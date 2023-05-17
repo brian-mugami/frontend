@@ -28,10 +28,11 @@ export async function action({ request }) {
   };
 
   if (mode === "login") {
-    const response = await fetch("/login", {
+    const response = await fetch("https://flask-inventory.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(loginData),
     });
@@ -57,10 +58,11 @@ export async function action({ request }) {
   }
 
   if (mode === "register") {
-    const response = await fetch("/register", {
+    const response = await fetch("https://flask-inventory.onrender.com/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(regData),
     });
