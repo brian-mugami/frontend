@@ -26,7 +26,6 @@ import CustomerAccountsPage, {
 import ItemAccountsPage, {
   loader as ItemAccountsLoader,
 } from "./pages/ItemPages/CategoryAccounts/CategoryAccountPage";
-import AllAccountRoot from "./pages/AccountPages/SubAccountRoot";
 import NewSupplierAccountPage from "./pages/SupplierPages/SupplierAccounts/NewSupplierAccount";
 import NewCustomerAccountPage from "./pages/CustomerPages/CustomerAccountPages/NewCustomerAccount";
 import NewItemAccountPage from "./pages/ItemPages/CategoryAccounts/NewCategoryAccount";
@@ -260,10 +259,37 @@ const AllCustomerBalancesPage = lazy(() =>
 const AllSupplierBalancePages = lazy(() =>
   import("./pages/SupplierBalancePages/AllSupplierBalancesPage")
 );
-const SupplierPaymentRejectPage =lazy(()=> 
-import("./pages/SupplierPaymentPages/SupplierPaymentRejectPage"))
+const SupplierPaymentRejectPage = lazy(() =>
+  import("./pages/SupplierPaymentPages/SupplierPaymentRejectPage")
+);
 
-const InvoiceVoidPage =lazy(()=> import("./pages/InvoicePages/InvoiceVoidPage"))
+const InvoiceVoidPage = lazy(() =>
+  import("./pages/InvoicePages/InvoiceVoidPage")
+);
+
+const ReceiptVoidPage = lazy(() =>
+  import("./pages/ReceiptPages/ReceiptVoidPage")
+);
+
+const AllAccountRoot = lazy(() =>
+  import("./pages/AccountPages/SubAccountRoot")
+);
+
+const AllInvAdjAccount = lazy(() =>
+  import("./pages/InventoryAdjustmentAccountPages/AllInvAdjAccountPage")
+);
+
+const EditInvAdjPage = lazy(() =>
+  import("./pages/InventoryAdjustmentAccountPages/EditInvAdjAccountPage")
+);
+
+const InvAdjDetailPage = lazy(() =>
+  import("./pages/InventoryAdjustmentAccountPages/InvAdjAccountDetailPage")
+);
+
+const NewInvAdjAccountPage = lazy(() =>
+  import("./pages/InventoryAdjustmentAccountPages/NewInvAdjPage")
+);
 
 const router = createBrowserRouter([
   {
@@ -275,7 +301,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage/>,
+        element: <HomePage />,
       },
       {
         path: "bank-balances",
@@ -445,19 +471,19 @@ const router = createBrowserRouter([
                 path: "approve",
                 element: <SupplierPaymentApprovePage />,
                 action: SupplierPaymentApproveAction,
-              },{
-                path: 'reject',
+              },
+              {
+                path: "reject",
                 element: (
                   <Suspense fallback={<p>Loading...</p>}>
                     <SupplierPaymentRejectPage />
                   </Suspense>
-                ), 
+                ),
                 action: (meta) =>
-                import(
-                  "./components/SupplierPaymentComponents/SupplierPaymentRejectForm"
-                ).then((module) => module.action(meta))
-              }
-              ,
+                  import(
+                    "./components/SupplierPaymentComponents/SupplierPaymentRejectForm"
+                  ).then((module) => module.action(meta)),
+              },
               {
                 path: "accounting",
                 element: <ViewSupplierPaymentAccountingPage />,
@@ -496,7 +522,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: "supplier",
-            element: <AllAccountRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
             loader: SupplierAccountsLoader,
             id: "supplier",
             children: [
@@ -527,7 +557,11 @@ const router = createBrowserRouter([
           },
           {
             path: "purchase",
-            element: <AllAccountRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
             loader: PurchaseAccountsLoader,
             id: "purchase-accounts",
             children: [
@@ -558,7 +592,11 @@ const router = createBrowserRouter([
           },
           {
             path: "bank",
-            element: <AllAccountRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
             loader: PaymentsAccountsLoader,
             id: "payment-accounts",
             children: [
@@ -589,7 +627,11 @@ const router = createBrowserRouter([
           },
           {
             path: "sales",
-            element: <AllAccountRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
             loader: AllSalesAccountLoader,
             id: "sales-accounts",
             children: [
@@ -620,7 +662,11 @@ const router = createBrowserRouter([
           },
           {
             path: "expense",
-            element: <AllAccountRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
             loader: AllExpenseAccountLoader,
             id: "expense-accounts",
             children: [
@@ -650,8 +696,78 @@ const router = createBrowserRouter([
             ],
           },
           {
+            path: "inv-adj",
+            id: "inv-adj-accounts",
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
+            loader: () =>
+              import(
+                "./pages/InventoryAdjustmentAccountPages/AllInvAdjAccountPage"
+              ).then((module) => module.loader()),
+            children: [
+              {
+                index: true,
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <AllInvAdjAccount />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "new",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    {" "}
+                    <NewInvAdjAccountPage />{" "}
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import(
+                    "./components/AccountComponents/InvAdjAccountForm"
+                  ).then((module) => module.action(meta)),
+              },
+              {
+                path: ":id",
+                id: "inv-adj-account-detail",
+                loader: (meta) =>
+                  import(
+                    "./pages/InventoryAdjustmentAccountPages/InvAdjAccountDetailPage"
+                  ).then((module) => module.loader(meta)),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <Suspense fallback={<p>Loading...</p>}>
+                        <InvAdjDetailPage />
+                      </Suspense>
+                    ),
+                    action: (meta) =>
+                      import(
+                        "./pages/InventoryAdjustmentAccountPages/InvAdjAccountDetailPage"
+                      ).then((module) => module.action(meta)),
+                  },
+                  {
+                    path: "edit",
+                    element: (
+                      <Suspense fallback={<p>Loading...</p>}>
+                        <EditInvAdjPage />
+                      </Suspense>
+                    ),
+                  },
+                ],
+              },
+            ],
+          },
+          {
             path: "customer",
-            element: <AllAccountRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
             loader: CustomerAccountsLoader,
             id: "customer",
             children: [
@@ -682,7 +798,11 @@ const router = createBrowserRouter([
           },
           {
             path: "item",
-            element: <AllAccountRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AllAccountRoot />
+              </Suspense>
+            ),
             loader: ItemAccountsLoader,
             id: "item",
             children: [
@@ -893,7 +1013,8 @@ const router = createBrowserRouter([
                 path: "accounting",
                 element: <ViewInvoiceAccountingPage />,
                 loader: ViewInvoiceAccountingLoader,
-              },{
+              },
+              {
                 path: "void",
                 element: (
                   <Suspense fallback={<p>Loading...</p>}>
@@ -901,10 +1022,10 @@ const router = createBrowserRouter([
                   </Suspense>
                 ),
                 action: (meta) =>
-                import(
-                  "./components/InvoiceComponents/InvoiceVoidForm"
-                ).then((module) => module.action(meta)) 
-              }
+                  import("./components/InvoiceComponents/InvoiceVoidForm").then(
+                    (module) => module.action(meta)
+                  ),
+              },
             ],
           },
         ],
@@ -948,6 +1069,18 @@ const router = createBrowserRouter([
                 element: <ReceiptPaymentPage />,
                 loader: ReceiptPaymentLoader,
                 action: ReceiptPaymentAction,
+              },
+              {
+                path: "void",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <ReceiptVoidPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import("./pages/ReceiptPages/ReceiptVoidPage").then(
+                    (module) => module.action(meta)
+                  ),
               },
             ],
           },
@@ -1014,9 +1147,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-      <RouterProvider router={router}></RouterProvider>
-  );
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;

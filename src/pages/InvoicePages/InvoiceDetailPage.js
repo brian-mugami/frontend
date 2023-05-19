@@ -44,6 +44,9 @@ export async function action({request,params}){
             'Authorization': 'Bearer ' + token
         }
     });
+    if (response.status === 400){
+        return response
+    }
     if (!response.ok) {
         throw json(
           { message: 'Could not delete invoice.' },

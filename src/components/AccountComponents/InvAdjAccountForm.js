@@ -9,7 +9,7 @@ import { getAuthToken } from "../../util/Auth";
 import { useActionData } from "react-router-dom";
 import React from "react";
 
-function PaymentAccountForm({ method, title, account }) {
+function InvAdjAccountForm({ method, title, account }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const data = useActionData();
@@ -119,7 +119,7 @@ function PaymentAccountForm({ method, title, account }) {
   );
 }
 
-export default PaymentAccountForm;
+export default InvAdjAccountForm;
 
 export async function action({ request, params }) {
   const method = request.method;
@@ -132,7 +132,7 @@ export async function action({ request, params }) {
     account_number: data.get("accNum"),
   };
 
-  let url = "/bank/account";
+  let url = "/inventory-adjustment/account";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -146,15 +146,18 @@ export async function action({ request, params }) {
     if (response.status === 409) {
       return response;
     }
+    if (response.status === 400) {
+      return response;
+    }
 
     if (!response.ok) {
       throw json({ message: "Failed to save the account" }, { status: 500 });
     }
 
-    return redirect("/account/bank");
+    return redirect("/account/inv-adj");
   } else {
     const id = params.id;
-    url = "/bank/account/" + id;
+    url = "/inventory-adjustment/account/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {
@@ -167,13 +170,11 @@ export async function action({ request, params }) {
     if (response.status === 400) {
       return response;
     }
-    if (response.status === 409) {
-      return response;
-    }
+
     if (!response.ok) {
       throw json({ message: "Failed to update the account" }, { status: 500 });
     }
 
-    return redirect("/account/bank");
+    return redirect("/account/inv-adj");
   }
 }

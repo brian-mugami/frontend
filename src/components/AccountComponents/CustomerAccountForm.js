@@ -6,7 +6,6 @@ import {
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { accountTypes } from "../../data/paymentTypes";
 import { useActionData } from "react-router-dom";
 import React from "react";
 
@@ -96,30 +95,6 @@ function CustomerAccountForm({ method, title, account }) {
                 />
               </div>
             </div>
-
-            <div className="sm:col-span-1">
-              <label
-                htmlFor="country"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Customer Payment Type
-              </label>
-              <div className="mt-2">
-                <select
-                  name="payType"
-                  required
-                  defaultValue={account ? account.payment_type : ""}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                  {accountTypes.map((type) => (
-                    <option key={type.id} value={type.account_type}>
-                      {" "}
-                      {type.payment_type}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
           </div>
 
           <div className=" px-4 py-3 pb-10 text-right sm:px-6">
@@ -155,7 +130,6 @@ export async function action({ request, params }) {
     account_name: data.get("account-name"),
     account_description: data.get("account-description"),
     account_number: data.get("account-number"),
-    account_type: data.get("payType"),
   };
 
   let url = "/customer/account";

@@ -1,12 +1,15 @@
 import React from "react";
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
-import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
+import {
+  useActionData,
+  useNavigate,
+} from "react-router-dom/dist/umd/react-router-dom.development";
 
 function InvoiceItem({ invoice }) {
   const token = useRouteLoaderData("root");
   const submit = useSubmit();
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  const data = useActionData();
   function startDeleteHandler() {
     const proceed = window.confirm("Are you sure?");
 
@@ -15,18 +18,29 @@ function InvoiceItem({ invoice }) {
     }
   }
 
-  function cancelHandler(){
-    navigate("..")
+  function cancelHandler() {
+    navigate("..");
   }
 
   return (
     <React.Fragment>
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
+      {data && data.message && <p>{data.message}</p>}
       <h1>{invoice.invoice_number}</h1>
       <time>Date : {invoice.date}</time>
       <h1>{invoice.accounted}</h1>
       <h1>{invoice.amount}</h1>
       <h1>{invoice.destination_type}</h1>
-       <p className="pt-2"> <b>Items in invoice</b></p>
+      <p className="pt-2">
+        {" "}
+        <b>Items in invoice</b>
+      </p>
       {invoice.purchase_items.map((item) => (
         <h1>
           {item.item.item_name} selling price : {item.item.price} buying price :{" "}
@@ -35,7 +49,9 @@ function InvoiceItem({ invoice }) {
       ))}
       <h1>{invoice.purchase_type}</h1>
       <h1>Supplier : {invoice.supplier.supplier_name}</h1>
-      <p className="pt-2"><b> Balances </b></p>
+      <p className="pt-2">
+        <b> Balances </b>
+      </p>
       {invoice.supplier_balance.map((supBalance) => (
         <div>
           {" "}
@@ -45,11 +61,15 @@ function InvoiceItem({ invoice }) {
       ))}
 
       <b>Payments</b>
-      {invoice.payments.map((payment)=>(
+      {invoice.payments.map((payment) => (
         <div>
-        <h1>{payment.payment_status}</h1>
-        <h1> Amount Paid : {payment.amount} Approval Status : {payment.approval_status }</h1>
-        <h1> Transaction code : {payment.payment_description}</h1>
+          <h1>{payment.payment_status}</h1>
+          <h1>
+            {" "}
+            Amount Paid : {payment.amount} Approval Status :{" "}
+            {payment.approval_status}
+          </h1>
+          <h1> Transaction code : {payment.payment_description}</h1>
         </div>
       ))}
 
@@ -74,7 +94,9 @@ function InvoiceItem({ invoice }) {
               </Link>
             </div>
             <div className="pr-5">
-              <button className="btn btn-warning" onClick={cancelHandler}>Back</button>
+              <button className="btn btn-warning" onClick={cancelHandler}>
+                Back
+              </button>
             </div>
             <div>
               <button
