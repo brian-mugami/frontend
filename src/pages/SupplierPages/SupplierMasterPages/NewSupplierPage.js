@@ -1,8 +1,7 @@
 import React from "react";
-import { useLoaderData, json, Link } from "react-router-dom";
+import { useLoaderData, json } from "react-router-dom";
 import SupplierForm from "../../../components/SupplierComponents/SupplierForm";
 import { getAuthToken } from "../../../util/Auth";
-import { Breadcrumbs } from "@material-tailwind/react";
 
 function NewSupplierPage() {
   const accounts = useLoaderData();

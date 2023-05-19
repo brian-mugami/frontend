@@ -1,22 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Card, List, ListItem, Title } from "@tremor/react";
 
 function UserList({users}){
 
     return(
         <React.Fragment>
-        <div>
-            <h1>All Users</h1>
-            <ul>
-                {users.map((user)=>(
-                    <li key= {user.id}>
-                        <Link to={`${user.id}`}>
-                        <h2>{user.email}</h2>
-                        </Link>
-                        </li>
-                ))}
-            </ul>
-        </div>
+
+
+<Card className="max-w-xs">
+    <Title>All Users</Title>
+    <List>
+      {users.map((user) => (
+        <ListItem key={user.id}>
+            <Link to={`${user.id}`}>
+          <span>{user.email}</span>
+          </Link>
+          
+        </ListItem>
+      ))}
+    </List>
+  </Card>
+
+
+
+
         </React.Fragment>
     )
 }
