@@ -26,9 +26,7 @@ function InvoicePaymentForm() {
       <h2 className="text-base font-semibold leading-7 text-gray-900">
         Payement Form
       </h2>
-      <p className="mt-1 text-sm leading-6 text-gray-600">
-        Use a permanent address where you can receive mail.
-      </p>
+   
       {data && data.errors && (
         <ul>
           {Object.values(data.errors).map((err) => (

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Form, NavLink } from "react-router-dom";
+import { Outlet, useRouteLoaderData } from "react-router-dom";
+
 import {
   Menu,
   MenuHandler,
@@ -16,11 +18,16 @@ function SideNav() {
     setSidebarOpen(!sidebarOpen);
   };
 
+
+  const token = useRouteLoaderData("root");
+
   
   
 
   return (
-    <div>
+   
+    
+    <div> {token && 
       <div className="">
         <button
           data-drawer-target="separator-sidebar"
@@ -226,8 +233,9 @@ function SideNav() {
             </ul>
           </div>
         </aside>
-      </div>
+      </div> }
     </div>
+ 
   );
 }
 
