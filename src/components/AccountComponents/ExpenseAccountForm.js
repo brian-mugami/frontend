@@ -6,7 +6,6 @@ import {
   json,
 } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { accountTypes } from "../../data/paymentTypes";
 import { useActionData } from "react-router-dom";
 import React from "react";
 
@@ -50,7 +49,7 @@ function ExpenseAccountForm({ method, title, account }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="accname"
+                  name="accName"
                   required
                   defaultValue={account ? account.account_name : ""}
                   placeholder="account name"
@@ -69,7 +68,7 @@ function ExpenseAccountForm({ method, title, account }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="accdesc"
+                  name="accDesc"
                   rows="5"
                   placeholder="account description"
                   defaultValue={account ? account.account_description : ""}
@@ -88,33 +87,12 @@ function ExpenseAccountForm({ method, title, account }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="accnum"
+                  name="accNum"
                   required
                   defaultValue={account ? account.account_number : ""}
                   placeholder="account number"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
-              </div>
-            </div>
-
-            <div className="sm:col-span-1">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Supplier Payment Type
-              </label>
-              <div className="mt-2">
-                <select
-                  name="paytype"
-                  required
-                  defaultValue={account ? account.payment_type : ""}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                  {accountTypes.map((type) => (
-                    <option key={type.id} value={type.account_type}>
-                      {" "}
-                      {type.payment_type}
-                    </option>
-                  ))}
-                </select>
               </div>
             </div>
           </div>
@@ -149,10 +127,9 @@ export async function action({ request, params }) {
   const token = getAuthToken();
 
   const accountData = {
-    account_name: data.get("accname"),
-    account_description: data.get("accdesc"),
-    account_number: data.get("accnum"),
-    account_type: data.get("paytype"),
+    account_name: data.get("accName"),
+    account_description: data.get("accDesc"),
+    account_number: data.get("accNum"),
   };
 
   let url = "https://flask-inventory.onrender.com/expense/account";

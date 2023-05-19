@@ -61,6 +61,7 @@ function ReceiptPaymentPage() {
               type="number"
               min="0"
               name="amount"
+              max={receipt.customer_balance[0].balance}
               defaultValue={receipt.customer_balance[0].balance}
             ></input>
           </p>

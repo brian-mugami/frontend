@@ -9,10 +9,10 @@ import { getAuthToken } from "../../util/Auth";
 import { useActionData } from "react-router-dom";
 import React from "react";
 
-function CustomerAccountForm({ method, title, account }) {
-  const data = useActionData();
+function InvAdjAccountForm({ method, title, account }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const data = useActionData();
 
   const isSubmitting = navigation.state === "submitting";
   function cancelHandler() {
@@ -49,7 +49,7 @@ function CustomerAccountForm({ method, title, account }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="account-name"
+                  name="accName"
                   required
                   defaultValue={account ? account.account_name : ""}
                   placeholder="account name"
@@ -68,7 +68,7 @@ function CustomerAccountForm({ method, title, account }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="account-description"
+                  name="accDesc"
                   rows="5"
                   placeholder="account description"
                   defaultValue={account ? account.account_description : ""}
@@ -87,7 +87,7 @@ function CustomerAccountForm({ method, title, account }) {
               <div className="mt-2">
                 <input
                   type="text"
-                  name="account-number"
+                  name="accNum"
                   required
                   defaultValue={account ? account.account_number : ""}
                   placeholder="account number"
@@ -119,7 +119,7 @@ function CustomerAccountForm({ method, title, account }) {
   );
 }
 
-export default CustomerAccountForm;
+export default InvAdjAccountForm;
 
 export async function action({ request, params }) {
   const method = request.method;
@@ -127,12 +127,12 @@ export async function action({ request, params }) {
   const token = getAuthToken();
 
   const accountData = {
-    account_name: data.get("account-name"),
-    account_description: data.get("account-description"),
-    account_number: data.get("account-number"),
+    account_name: data.get("accName"),
+    account_description: data.get("accDesc"),
+    account_number: data.get("accNum"),
   };
 
-  let url = "https://flask-inventory.onrender.com/customer/account";
+  let url = "/inventory-adjustment/account";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -143,17 +143,21 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(accountData),
     });
-    if (!response.ok) {
-      throw json({ message: "Failed to save the account" }, { status: 500 });
-    }
     if (response.status === 409) {
       return response;
     }
+    if (response.status === 400) {
+      return response;
+    }
 
-    return redirect("/account/customer");
+    if (!response.ok) {
+      throw json({ message: "Failed to save the account" }, { status: 500 });
+    }
+
+    return redirect("/account/inv-adj");
   } else {
     const id = params.id;
-    url = "https://flask-inventory.onrender.com/customer/account/" + id;
+    url = "/inventory-adjustment/account/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {
@@ -171,6 +175,6 @@ export async function action({ request, params }) {
       throw json({ message: "Failed to update the account" }, { status: 500 });
     }
 
-    return redirect("/account/customer");
+    return redirect("/account/inv-adj");
   }
 }

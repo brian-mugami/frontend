@@ -106,12 +106,6 @@ function ReceiptForm({ receiptData, title, method }) {
 
   item_list = tableRows
 
-  let itemsAvailable = false;
-  if (receiptData) {
-    itemsAvailable = (receiptData.sale_items.length > 0) === true;
-  }
-
-
   return (
     <React.Fragment>
       {data && data.errors && (

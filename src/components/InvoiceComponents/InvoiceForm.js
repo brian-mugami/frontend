@@ -19,7 +19,6 @@ import {
 } from "../../data/paymentTypes";
 
 let itemList = [];
-let invoiceBalanced = false;
 let isExpense = false;
 let existingData;
 
@@ -86,12 +85,6 @@ function InvoiceForm({ invoiceData, title, method }) {
     navigate("..");
   }
 
-  const totalSum = tableRows.reduce((acc, row) => acc + row.item_cost, 0);
-  const isInvoiceBalanced = totalSum === invoiceTotal;
-  if (isInvoiceBalanced === true) {
-    invoiceBalanced = true;
-  }
-
   const handleInputChange = (event, index, key) => {
     const value = event.target.value;
     setTableRows((rows) => {
@@ -107,11 +100,6 @@ function InvoiceForm({ invoiceData, title, method }) {
   };
 
   itemList = tableRows;
-
-  let itemsAvailable = false;
-  if (invoiceData) {
-    itemsAvailable = invoiceData.purchase_items.length > 0 === true;
-  }
 
   return (
     <React.Fragment>
@@ -571,10 +559,6 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(InvoiceData),
     });
-    if (!invoiceBalanced) {
-      window.alert("Invoice header amount does not match line amount!!");
-      return redirect("./");
-    }
     if (response.status === 400) {
       return response;
     }
@@ -606,10 +590,6 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(lines),
     });
-    if (!invoiceBalanced) {
-      window.alert("Invoice header amount does not match line amount!!");
-      return redirect("./");
-    }
     if (invoiceLines.status === 400) {
       return invoiceLines;
     }

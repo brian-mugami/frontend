@@ -46,6 +46,9 @@ export async function action({request,params}){
             "Access-Control-Allow-Origin": "*",
         }
     });
+    if (response.status === 400){
+        return response
+    }
     if (!response.ok) {
         throw json(
           { message: 'Could not delete invoice.' },

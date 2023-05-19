@@ -177,7 +177,7 @@ function SideNav() {
                     <MenuItem>
                       <NavLink
                         className="sidebar-nav-link"
-                        to="/account/payment"
+                        to="/account/bank"
                       >
                         Bank Accounts
                       </NavLink>
@@ -185,7 +185,7 @@ function SideNav() {
                     <MenuItem>
                       <NavLink
                         className="sidebar-nav-link"
-                        to="/account/bank"
+                        to="/account/purchase"
                       >
                         Purchase Accounts
                       </NavLink>
@@ -202,6 +202,15 @@ function SideNav() {
                         to="/account/expense"
                       >
                         Expense Accounts
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem>
+                      {" "}
+                      <NavLink
+                        className="sidebar-nav-link"
+                        to="/account/inv-adj"
+                      >
+                        Adjustment Accounts
                       </NavLink>
                     </MenuItem>
                   </MenuList>
