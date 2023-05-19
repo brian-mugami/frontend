@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tremor/react": "^2.7.0",
     "bootstrap": "^5.2.3",
     "install": "^0.13.0",
     "popper.js": "^1.16.1",
@@ -55,5 +56,5 @@
   "devDependencies": {
     "tailwindcss": "^3.2.7"
   },
-  "proxy": "https://flask-inventory.onrender.com"
+  "proxy": "http://127.0.0.1:8000"
 }
