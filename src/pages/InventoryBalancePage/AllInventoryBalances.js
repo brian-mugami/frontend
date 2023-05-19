@@ -51,9 +51,28 @@ async function ItemsLoader(){
     }
 };
 
+async function InvAdjAccountsLoader(){
+    const token = getAuthToken()
+
+    const response = await fetch("/inventory-adjustment/account", {
+        method: "get",
+        headers: {
+            "Authorization": "Bearer "+ token
+        }
+    })
+    if(!response.ok){
+        throw json({message: "The response was not ok"},{status: 500})
+    }else{
+        const resData = await response.json()
+        return resData
+    }
+
+}
+
 export async function loader(){
     return (defer({
         balances:  await InventoryBalancesLoader(),
-        items: await ItemsLoader()
+        items: await ItemsLoader(),
+        adjAccounts: await InvAdjAccountsLoader()
     }))
 }
