@@ -134,7 +134,7 @@ export async function action({ request, params }) {
     account_number: data.get("accNum"),
   };
 
-  let url = "/category/account";
+  let url = "https://flask-inventory.onrender.com/category/account";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -156,7 +156,7 @@ export async function action({ request, params }) {
     return redirect("/account/item");
   } else {
     const id = params.id;
-    url = "/category/account/" + id;
+    url = "https://flask-inventory.onrender.com/category/account/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

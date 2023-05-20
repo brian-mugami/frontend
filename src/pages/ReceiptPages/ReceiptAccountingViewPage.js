@@ -58,12 +58,14 @@ function ReceiptAccountingViewPage() {
 export default ReceiptAccountingViewPage;
 
 async function accountingLoader(id) {
-  let url = "/receipt/";
+  let url = "https://flask-inventory.onrender.com/receipt/";
   const token = getAuthToken();
   const response = await fetch(url + id + "/account", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+
     },
   });
   if (response.status === 400) {

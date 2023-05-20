@@ -15,10 +15,11 @@ export default AllCustomerBalancesPage
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('/customer-balance', {
+    const response = await fetch('https://flask-inventory.onrender.com/customer-balance', {
         method: "get",
         headers: {
-            'Authorization': 'Bearer '+ token
+            'Authorization': 'Bearer '+ token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     if (response.status === 404){

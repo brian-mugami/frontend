@@ -18,10 +18,11 @@ export default InventoryBalancesPage;
 async function InventoryBalancesLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('/inventory-balances', {
+    const response = await fetch('https://flask-inventory.onrender.com/inventory-balances', {
         method: "get",
         headers: {
-            'Authorization': 'Bearer '+ token
+            'Authorization': 'Bearer '+ token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     if (response.status === 404){
@@ -37,10 +38,12 @@ async function InventoryBalancesLoader(){
 async function ItemsLoader(){
     const token = getAuthToken()
 
-    const response = await fetch("/item", {
+    const response = await fetch("https://flask-inventory.onrender.com/item", {
         method: "get",
         headers: {
-            "Authorization": "Bearer "+ token
+            "Authorization": "Bearer "+ token,
+            "Access-Control-Allow-Origin": "*",
+
         }
     })
     if(!response.ok){

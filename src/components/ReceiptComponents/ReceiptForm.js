@@ -390,7 +390,7 @@ export async function action({ request, params }) {
     customer_name: data.get("customer"),
   };
 
-  let url = "/receipt";
+  let url = "https://flask-inventory.onrender.com/receipt";
   if (method === "POST") {
     const response = await fetch(url, {
       method: request.method,
@@ -422,7 +422,7 @@ export async function action({ request, params }) {
         quantity: item.item_quantity,
       })),
     };
-    const receiptLines = await fetch("/sales", {
+    const receiptLines = await fetch("https://flask-inventory.onrender.com/sales", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -447,7 +447,7 @@ export async function action({ request, params }) {
     return redirect("/receipt");
   } else {
     const id = params.id;
-    url = "/receipt/" + id;
+    url = "https://flask-inventory.onrender.com/receipt/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {
@@ -475,11 +475,13 @@ export async function action({ request, params }) {
       })),
     };
     for (let item of existingData.sale_items) {
-      const lineResponse = await fetch("/sales/" + item.id, {
+      const lineResponse = await fetch("https://flask-inventory.onrender.com/sales/" + item.id, {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+
         },
         body: JSON.stringify(receiptUpdateLines),
       });
@@ -496,10 +498,12 @@ export async function action({ request, params }) {
 
 async function customersLoader() {
   const token = getAuthToken();
-  const response = await fetch("/customer", {
+  const response = await fetch("https://flask-inventory.onrender.com/customer", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+
     },
   });
   if (!response.ok) {
@@ -513,10 +517,12 @@ async function customersLoader() {
 async function itemsLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/item", {
+  const response = await fetch("https://flask-inventory.onrender.com/item", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+
     },
   });
   if (!response.ok) {

@@ -29,9 +29,10 @@ import {
   
   async function loadaccount(id) {
     const token = getAuthToken();
-    const response = await fetch("/sales/account/" + id, {
+    const response = await fetch("https://flask-inventory.onrender.com/sales/account/" + id, {
       headers: {
         Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
       },
     });
     if (!response.ok) {

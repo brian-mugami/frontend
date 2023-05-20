@@ -204,7 +204,7 @@ export async function action({ request, params }) {
     customer_bill_to_site: data.get("billto"),
   };
 
-  let url = "/customer";
+  let url = "https://flask-inventory.onrender.com/customer";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,

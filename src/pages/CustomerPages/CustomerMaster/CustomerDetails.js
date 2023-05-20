@@ -16,13 +16,14 @@ function CustomerDetailPage(){
 export default CustomerDetailPage;
 
 export async function loader({request, params}){
-    let url = '/customer/'
+    let url = 'https://flask-inventory.onrender.com/customer/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
         method:"get",
         headers:{
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
 

@@ -22,10 +22,11 @@ export default AllReceiptsPage;
 async function ReceiptLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/receipt", {
+  const response = await fetch("https://flask-inventory.onrender.com/receipt", {
     method: "get",
     headers: {
       "Authorization": "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
     },
   });
   if (!response.ok) {

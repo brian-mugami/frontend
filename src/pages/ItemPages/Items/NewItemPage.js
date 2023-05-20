@@ -18,10 +18,11 @@ export default NewItemPage;
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('/item/category', {
+    const response = await fetch('https://flask-inventory.onrender.com/item/category', {
         method: "get",
         headers: {
-            "Authorization": 'Bearer '+ token
+            "Authorization": 'Bearer '+ token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     if(!response.ok){
