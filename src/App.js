@@ -200,7 +200,6 @@ import SupplierPaymentRoot from "./pages/SupplierPaymentPages/SupplierPaymentRoo
 import AllSupplierPaymentPage, {
   loader as SupplierPaymentsLoader,
 } from "./pages/SupplierPaymentPages/AllSupplierPaymentPage";
-import NewPaymentsPage from "./pages/SupplierPaymentPages/NewPaymentsPage";
 import SupplierPaymentDetailPage, {
   action as SupplierPaymentDeleteAction,
   loader as SupplierPaymentDetailLoader,
@@ -290,6 +289,8 @@ const InvAdjDetailPage = lazy(() =>
 const NewInvAdjAccountPage = lazy(() =>
   import("./pages/InventoryAdjustmentAccountPages/NewInvAdjPage")
 );
+
+const NewSupplierPaymentPage = lazy(()=> import("./pages/SupplierPaymentPages/NewPaymentsPage"))
 
 const router = createBrowserRouter([
   {
@@ -456,7 +457,7 @@ const router = createBrowserRouter([
         loader: SupplierPaymentsLoader,
         children: [
           { index: true, element: <AllSupplierPaymentPage /> },
-          { path: "new", element: <NewPaymentsPage /> },
+          { path: "new", element: <Suspense fallback={<p>Loading...</p>}><NewSupplierPaymentPage/></Suspense> , loader:()=>import("./components/SupplierPaymentComponents/SupplierPaymentSearchForm").then((module)=>module.loader())},
           {
             path: ":id",
             id: "payment",
