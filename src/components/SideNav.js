@@ -60,23 +60,23 @@ function SideNav() {
           }`}
           aria-label="Sidebar"
         >
-          <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-            <NavLink to="/home">
+          <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 " >
+            <NavLink to="/home" onClick={toggleSidebar}>
             <img src={Kd} alt="logo"/>
             </NavLink>
-            <NavLink className="sidebar-nav-link" to="/home">
+            <NavLink className="sidebar-nav-link" to="/home" onClick={toggleSidebar}>
               Dashboard
             </NavLink>
 
-            <NavLink className="sidebar-nav-link" to="/user">
+            <NavLink className="sidebar-nav-link" to="/user" onClick={toggleSidebar}>
               Users
             </NavLink>
 
-            <NavLink className="sidebar-nav-link" to="invoice">
+            <NavLink className="sidebar-nav-link" to="invoice" onClick={toggleSidebar}>
               Invoices
             </NavLink>
 
-            <NavLink className="sidebar-nav-link" to="receipt">
+            <NavLink className="sidebar-nav-link" to="receipt" onClick={toggleSidebar}>
               Receipt
             </NavLink>
 
@@ -86,12 +86,12 @@ function SideNav() {
               </MenuHandler>
               <MenuList>
                 <MenuItem>
-                  <NavLink className="sidebar-nav-link" to="payment">
+                  <NavLink className="sidebar-nav-link" to="payment" onClick={toggleSidebar}>
                     Supplier Payments
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink className="sidebar-nav-link" to="customer-payment">
+                  <NavLink className="sidebar-nav-link" to="customer-payment" onClick={toggleSidebar}>
                     Customer Payments
                   </NavLink>
                 </MenuItem>
@@ -104,22 +104,22 @@ function SideNav() {
               </MenuHandler>
               <MenuList>
                 <MenuItem>
-                  <NavLink className="sidebar-nav-link" to="supplier-balances">
+                  <NavLink className="sidebar-nav-link" to="supplier-balances" onClick={toggleSidebar}>
                     Supplier Balances
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink className="sidebar-nav-link" to="customer-balances">
+                  <NavLink className="sidebar-nav-link" to="customer-balances" onClick={toggleSidebar}>
                     Customer Balances
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink className="sidebar-nav-link" to="inventory-balance">
+                  <NavLink className="sidebar-nav-link" to="inventory-balance" onClick={toggleSidebar}>
                     Inventory Balances
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink className="sidebar-nav-link" to="bank-balances">
+                  <NavLink className="sidebar-nav-link" to="bank-balances" onClick={toggleSidebar}>
                     Bank Balances
                   </NavLink>
                 </MenuItem>
@@ -133,19 +133,19 @@ function SideNav() {
               <MenuList>
                 <MenuItem>
                   {" "}
-                  <NavLink className="sidebar-nav-link" to="customer">
+                  <NavLink className="sidebar-nav-link" to="customer" onClick={toggleSidebar}>
                     Customers
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink className="sidebar-nav-link" to="supplier">
+                  <NavLink className="sidebar-nav-link" to="supplier" onClick={toggleSidebar}>
                     Suppliers
                   </NavLink>
                 </MenuItem>
                 <Menu placement="right-start" offset={15}>
                   <MenuHandler>
                     <MenuItem>
-                      <NavLink className="sidebar-nav-link" to="account">
+                      <NavLink className="sidebar-nav-link" to="account" onClick={toggleSidebar}>
                         Accounts
                       </NavLink>
                     </MenuItem>
@@ -161,7 +161,7 @@ function SideNav() {
                       </NavLink>
                     </MenuItem>
                     <MenuItem>
-                      <NavLink className="sidebar-nav-link" to="/account/item">
+                      <NavLink className="sidebar-nav-link" to="/account/item" onClick={toggleSidebar}>
                         Category Accounts
                       </NavLink>
                     </MenuItem>
@@ -170,6 +170,7 @@ function SideNav() {
                       <NavLink
                         className="sidebar-nav-link"
                         to="/account/customer"
+                        onClick={toggleSidebar}
                       >
                         Customer Accounts
                       </NavLink>
@@ -178,6 +179,7 @@ function SideNav() {
                       <NavLink
                         className="sidebar-nav-link"
                         to="/account/bank"
+                        onClick={toggleSidebar}
                       >
                         Bank Accounts
                       </NavLink>
@@ -186,12 +188,13 @@ function SideNav() {
                       <NavLink
                         className="sidebar-nav-link"
                         to="/account/purchase"
+                        onClick={toggleSidebar}
                       >
                         Purchase Accounts
                       </NavLink>
                     </MenuItem>
                     <MenuItem>
-                      <NavLink className="sidebar-nav-link" to="/account/sales">
+                      <NavLink className="sidebar-nav-link" to="/account/sales" onClick={toggleSidebar}>
                         Sales Accounts
                       </NavLink>
                     </MenuItem>
@@ -200,6 +203,7 @@ function SideNav() {
                       <NavLink
                         className="sidebar-nav-link"
                         to="/account/expense"
+                        onClick={toggleSidebar}
                       >
                         Expense Accounts
                       </NavLink>
@@ -209,6 +213,7 @@ function SideNav() {
                       <NavLink
                         className="sidebar-nav-link"
                         to="/account/inv-adj"
+                        onClick={toggleSidebar}
                       >
                         Adjustment Accounts
                       </NavLink>
@@ -217,7 +222,7 @@ function SideNav() {
                 </Menu>
                 <MenuItem>
                   {" "}
-                  <NavLink className="sidebar-nav-link" to="item">
+                  <NavLink className="sidebar-nav-link" to="item" onClick={toggleSidebar}>
                   Inventory
                   </NavLink>
                 </MenuItem>
