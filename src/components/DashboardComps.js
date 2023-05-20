@@ -13,9 +13,10 @@ import { statisticsChartsData } from "../data/statistics-charts-data";
 import { ordersOverviewData } from "../data/orders-overview-data";
 import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../util/Auth";
+import { defer } from "react-router-dom/dist/umd/react-router-dom.development";
 
 export function DashboardComps() {
-  const data = useLoaderData();
+  const {suppliers, sales} = useLoaderData();
 
   return (
     <div className="flex-wrap">
@@ -26,7 +27,8 @@ export function DashboardComps() {
               key={title}
               {...rest}
               title={title}
-              data={data}
+              suppliers ={suppliers}
+              sales ={sales}
               icon={React.createElement(icon, {
                 className: "w-6 h-6 text-white",
               })}
@@ -121,7 +123,24 @@ export function DashboardComps() {
 
 export default DashboardComps;
 
-export async function countLoader() {
+async function salesLoader(){
+  const token = getAuthToken();
+  const response = await fetch("/transaction/sales", {
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  if (!response.ok) {
+    throw json({ message: "Suppliers Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData)
+    return resData;
+  }
+}
+
+async function countLoader() {
   const token = getAuthToken();
   const response = await fetch("/supplier/count", {
     method: "get",
@@ -130,9 +149,19 @@ export async function countLoader() {
     },
   });
   if (!response.ok) {
-    throw json({ message: "Cant get number of suppliers" }, { status: 500 });
+    throw json({ message: "Sales Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
+    console.log(resData)
     return resData;
   }
 }
+
+export async function dashboardLoader() {
+  return defer({
+    suppliers: await countLoader(),
+    sales: await salesLoader(),
+  });
+}
+
+
