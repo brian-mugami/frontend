@@ -34,6 +34,14 @@ async function loadUsers() {
       { status: 401 }
     );
   }
+  if (!response.ok) {
+    throw json(
+      {
+        message: "Could not fetch users.",
+      },
+      { status: 500 }
+    );
+  }
   const data = await response.json();
   return data;
 }
