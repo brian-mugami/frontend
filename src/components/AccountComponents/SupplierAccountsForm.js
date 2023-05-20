@@ -95,7 +95,6 @@ function SupplierAccountForm({ method, title, account }) {
                 />
               </div>
             </div>
-
           </div>
 
           <div className=" px-4 py-3 pb-10 text-right sm:px-6">
@@ -150,8 +149,6 @@ export async function action({ request, params }) {
     if (!response.ok) {
       throw json({ message: "Failed to save the account" }, { status: 500 });
     }
-
-
 
     return redirect("/account/supplier");
   } else {
