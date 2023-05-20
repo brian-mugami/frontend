@@ -68,7 +68,7 @@ export async function action({request, params}){
     })
 
     if (!response.ok){
-        throw json({message: "Could not update event"}, {status:500})
+        throw json({message: "Could not update user data"}, {status:500})
     }
 
     return redirect("/user")

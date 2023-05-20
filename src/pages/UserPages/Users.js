@@ -17,21 +17,20 @@ export default UsersPage;
 
 async function loadUsers() {
   const response = await fetch("/users");
-  if (!response.ok) {
-    throw json(
-      {
-        message: "Could not fetch users.",
-      },
-      { status: 500 }
-    );
-  }
-
   if (response.status === 401) {
     throw json(
       {
         message: "You are not logged in.",
       },
       { status: 401 }
+    );
+  }
+  if (!response.ok) {
+    throw json(
+      {
+        message: "Could not fetch users.",
+      },
+      { status: 500 }
     );
   }
   const data = await response.json();
