@@ -68,7 +68,7 @@ function SideNav() {
               Dashboard
             </NavLink>
 
-            <NavLink className="sidebar-nav-link" to="/user">
+            <NavLink  className="sidebar-nav-link" to="/user">
               Users
             </NavLink>
 
