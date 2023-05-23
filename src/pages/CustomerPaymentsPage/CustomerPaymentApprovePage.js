@@ -18,7 +18,7 @@ function CustomerPaymentApprovePage() {
   const navigate = useNavigate();
   const isSubmitting = navigation.state === "submitting";
   function cancelHandler() {
-    navigate("/customer-payment");
+    navigate("..");
   }
   return (
     <Modal>
