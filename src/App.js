@@ -290,7 +290,13 @@ const NewInvAdjAccountPage = lazy(() =>
   import("./pages/InventoryAdjustmentAccountPages/NewInvAdjPage")
 );
 
-const NewSupplierPaymentPage = lazy(()=> import("./pages/SupplierPaymentPages/NewPaymentsPage"))
+const NewSupplierPaymentPage = lazy(() =>
+  import("./pages/SupplierPaymentPages/NewPaymentsPage")
+);
+
+const CustomerPaymentRejectPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentRejectPage")
+);
 
 const router = createBrowserRouter([
   {
@@ -426,6 +432,18 @@ const router = createBrowserRouter([
                     "./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"
                   ).then((module) => module.loader(meta)),
               },
+              {
+                path: "reject",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <CustomerPaymentRejectPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import(
+                    "./pages/CustomerPaymentsPage/CustomerPaymentRejectPage"
+                  ).then((module) => module.action(meta)),
+              },
             ],
           },
         ],
@@ -457,7 +475,18 @@ const router = createBrowserRouter([
         loader: SupplierPaymentsLoader,
         children: [
           { index: true, element: <AllSupplierPaymentPage /> },
-          { path: "new", element: <Suspense fallback={<p>Loading...</p>}><NewSupplierPaymentPage/></Suspense> , loader:()=>import("./components/SupplierPaymentComponents/SupplierPaymentSearchForm").then((module)=>module.loader())},
+          {
+            path: "new",
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <NewSupplierPaymentPage />
+              </Suspense>
+            ),
+            loader: () =>
+              import(
+                "./components/SupplierPaymentComponents/SupplierPaymentSearchForm"
+              ).then((module) => module.loader()),
+          },
           {
             path: ":id",
             id: "payment",
