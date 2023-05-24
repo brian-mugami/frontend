@@ -20,7 +20,7 @@ function ReceiptItem({ receipt, id }) {
     const token = getAuthToken();
 
     try {
-      const response = await fetch(`/receipt/download/${id}`, {
+      const response = await fetch(`/receipt/download/test/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
