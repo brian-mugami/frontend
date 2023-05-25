@@ -298,6 +298,10 @@ const CustomerPaymentRejectPage = lazy(() =>
   import("./pages/CustomerPaymentsPage/CustomerPaymentRejectPage")
 );
 
+const InvoiceAttachmentPage = lazy(() =>
+  import("./pages/InvoicePages/InvoiceAttachmentPage")
+);
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -1053,6 +1057,18 @@ const router = createBrowserRouter([
                 ),
                 action: (meta) =>
                   import("./components/InvoiceComponents/InvoiceVoidForm").then(
+                    (module) => module.action(meta)
+                  ),
+              },
+              {
+                path: "attachment",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <InvoiceAttachmentPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import("./pages/InvoicePages/InvoiceAttachmentPage").then(
                     (module) => module.action(meta)
                   ),
               },

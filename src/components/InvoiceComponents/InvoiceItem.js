@@ -94,6 +94,14 @@ function InvoiceItem({ invoice }) {
               </Link>
             </div>
             <div className="pr-5">
+              <Link
+                to="attachment"
+                className="rounded-md bg-red-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Add attachment
+              </Link>
+            </div>
+            <div className="pr-5">
               <button className="btn btn-warning" onClick={cancelHandler}>
                 Back
               </button>
