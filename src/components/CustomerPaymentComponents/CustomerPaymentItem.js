@@ -1,10 +1,15 @@
 import React from "react";
-import { useSubmit, Link, useRouteLoaderData, useNavigate } from "react-router-dom";
+import {
+  useSubmit,
+  Link,
+  useRouteLoaderData,
+  useNavigate,
+} from "react-router-dom";
 
-function CustomerPaymentItem({payment}) {
+function CustomerPaymentItem({ payment }) {
   const token = useRouteLoaderData("root");
   const submit = useSubmit();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function cancelHandler() {
     navigate("..");
@@ -115,7 +120,7 @@ function CustomerPaymentItem({payment}) {
         </table>
       </div>
     </div>
-  )
+  );
 }
 
-export default CustomerPaymentItem
+export default CustomerPaymentItem;

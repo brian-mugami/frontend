@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid } from "@mui/x-data-grid";
 const PAGE_SIZE = 20;
 
 const CustomerList = ({ customers }) => {
@@ -18,10 +18,15 @@ const CustomerList = ({ customers }) => {
 
   const columns = [
     { field: "id", headerName: "ID", hide: true },
-    { field: "customer_name", headerName: "Customer Name", width: 250, renderCell: (params) => (<Link to={`./${params.id}`}>{params.value}</Link>) },
+    {
+      field: "customer_name",
+      headerName: "Customer Name",
+      width: 250,
+      renderCell: (params) => <Link to={`./${params.id}`}>{params.value}</Link>,
+    },
     { field: "customer_number", headerName: "Customer Number", width: 200 },
     { field: "customer_email", headerName: "Customer Email", width: 300 },
-    { field: 'checkbox', headerName: 'Checkbox', width: 100, type: 'checkbox' },
+    { field: "checkbox", headerName: "Checkbox", width: 100, type: "checkbox" },
   ];
 
   const rows = paginatedCustomers.map((customer) => {

@@ -385,66 +385,64 @@ function InvoiceForm({ invoiceData, title, method }) {
                 <th scope="col">Total Cost</th>
               </tr>
             </thead>
-              <tbody>
-                {tableRows.map((row, index) => (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>
-                      <input
-                        name="item_name"
-                        defaultValue={
-                          invoiceData?.purchase_items?.[index]?.item
-                            .item_name || row.item_name
-                        }
-                        list="options"
-                        onChange={(e) =>
-                          handleInputChange(e, index, "item_name")
-                        }
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                      />
-                      <datalist id="options">
-                        {items.map((item) => (
-                          <option key={item.id} value={item.item_name} />
-                        ))}
-                      </datalist>
-                    </td>
-                    <td>
-                      <input
-                        required
-                        type="number"
-                        name="item_quantity"
-                        min="1"
-                        defaultValue={row.item_quantity}
-                        onChange={(e) =>
-                          handleInputChange(e, index, "item_quantity")
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        required
-                        type="number"
-                        min="1"
-                        step="0.01"
-                        defaultValue={row.buying_price}
-                        onChange={(e) =>
-                          handleInputChange(e, index, "buying_price")
-                        }
-                      />
-                    </td>
-                    <td>{row.item_cost}</td>
-                    <td>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => handleRemoveRow(index)}
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+            <tbody>
+              {tableRows.map((row, index) => (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>
+                    <input
+                      name="item_name"
+                      defaultValue={
+                        invoiceData?.purchase_items?.[index]?.item.item_name ||
+                        row.item_name
+                      }
+                      list="options"
+                      onChange={(e) => handleInputChange(e, index, "item_name")}
+                      required
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                    <datalist id="options">
+                      {items.map((item) => (
+                        <option key={item.id} value={item.item_name} />
+                      ))}
+                    </datalist>
+                  </td>
+                  <td>
+                    <input
+                      required
+                      type="number"
+                      name="item_quantity"
+                      min="1"
+                      defaultValue={row.item_quantity}
+                      onChange={(e) =>
+                        handleInputChange(e, index, "item_quantity")
+                      }
+                    />
+                  </td>
+                  <td>
+                    <input
+                      required
+                      type="number"
+                      min="1"
+                      step="0.01"
+                      defaultValue={row.buying_price}
+                      onChange={(e) =>
+                        handleInputChange(e, index, "buying_price")
+                      }
+                    />
+                  </td>
+                  <td>{row.item_cost}</td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleRemoveRow(index)}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </Form>

@@ -7,7 +7,7 @@ function ReceiptDetailPage(){
     const receipt = useRouteLoaderData("receipt-detail")
     return(
         <React.Fragment>
-                    <ReceiptItem receipt={receipt}/>
+                    <ReceiptItem receipt={receipt} id={receipt.id}/>
         </React.Fragment>
     )   
 }
