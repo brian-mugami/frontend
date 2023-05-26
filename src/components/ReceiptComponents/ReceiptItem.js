@@ -1,5 +1,12 @@
+import { Button, Flex } from "@tremor/react";
 import React from "react";
-import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
+import { Link, useNavigate, useRouteLoaderData, useSubmit } from "react-router-dom";
+import {
+
+  PencilIcon,
+} from '@heroicons/react/20/solid'
+import { getAuthToken } from "../../util/Auth";
+
 
 function ReceiptItem({ receipt, id }) {
   const token = useRouteLoaderData("root");
@@ -62,9 +69,12 @@ function ReceiptItem({ receipt, id }) {
             <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
             Edit
           </button>
+          </Link>
+          
           <Link to="void">
             <button className="btn btn-primary">Void this receipt</button>
           </Link>
+          </Flex>
         </menu>
       )}
     </React.Fragment>
