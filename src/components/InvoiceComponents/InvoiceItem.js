@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 import {
+  json,
   useActionData,
   useNavigate,
 } from "react-router-dom/dist/umd/react-router-dom.development";
+import { getAuthToken } from "../../util/Auth";
 
 function InvoiceItem({ invoice }) {
   const token = useRouteLoaderData("root");
@@ -17,7 +19,21 @@ function InvoiceItem({ invoice }) {
       submit(null, { method: "delete" });
     }
   }
-
+  async function downloadHandler(){
+    const token = getAuthToken()
+    const response = await fetch(`/invoice/download/${invoice.id}`,{
+      method:"GET",
+      headers:{
+        Authorization: "Bearer " + token,
+      }
+    })
+    if(response.status===400){
+      window.alert("This invoice has no upload.")
+    }
+    if (!response.ok){
+      throw json({message:"Upload recovery error"}, {status:400})
+    }
+  }
   function cancelHandler() {
     navigate("..");
   }
@@ -88,7 +104,7 @@ function InvoiceItem({ invoice }) {
             <div className="pr-5">
               <Link
                 to="void"
-                className="rounded-md bg-blue-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="rounded-md bg-black-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Void invoice
               </Link>
@@ -100,6 +116,9 @@ function InvoiceItem({ invoice }) {
               >
                 Add attachment
               </Link>
+            </div>
+            <div className="pr-5">
+              <button onClick={downloadHandler}>Download attachment</button>
             </div>
             <div className="pr-5">
               <button className="btn btn-warning" onClick={cancelHandler}>

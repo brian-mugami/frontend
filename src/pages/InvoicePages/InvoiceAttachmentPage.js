@@ -36,7 +36,7 @@ function InvoiceAttachmentPage() {
       if (response.ok) {
         const confirmed = window.confirm("File uploaded successfully! Do you want to go to the invoice page?");
         if (confirmed) {
-          navigate("/invoice");
+          navigate("..");
         }
       } else {
         window.alert("fail");
