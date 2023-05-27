@@ -32,14 +32,16 @@ function InvoiceAttachmentPage() {
         },
         body: formData,
       });
-
+      if(response.status===400){
+        window.alert("Only PDF attachment are allowed!!")
+      }
       if (response.ok) {
         const confirmed = window.confirm("File uploaded successfully! Do you want to go to the invoice page?");
         if (confirmed) {
           navigate("..");
         }
       } else {
-        window.alert("fail");
+        window.alert("failed to upload");
       }
     } catch (error) {
         window.alert("Network error", error)

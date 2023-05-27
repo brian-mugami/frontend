@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
 import {
-  json,
   useActionData,
   useNavigate,
 } from "react-router-dom/dist/umd/react-router-dom.development";
@@ -9,6 +8,7 @@ import { getAuthToken } from "../../util/Auth";
 
 function InvoiceItem({ invoice }) {
   const token = useRouteLoaderData("root");
+  const tokenLoader = getAuthToken()
   const submit = useSubmit();
   const navigate = useNavigate();
   const data = useActionData();
@@ -19,21 +19,34 @@ function InvoiceItem({ invoice }) {
       submit(null, { method: "delete" });
     }
   }
-  async function downloadHandler(){
-    const token = getAuthToken()
-    const response = await fetch(`/invoice/download/${invoice.id}`,{
-      method:"GET",
-      headers:{
-        Authorization: "Bearer " + token,
+  const downloadHandler = () => {
+    fetch(`/invoice/download/${invoice.id}`, {
+      headers: {
+        Authorization : 'Bearer ' + tokenLoader
       }
     })
-    if(response.status===400){
-      window.alert("This invoice has no upload.")
-    }
-    if (!response.ok){
-      throw json({message:"Upload recovery error"}, {status:400})
-    }
-  }
+      .then(response => {
+        if (response.ok) {
+          return response.blob();
+        }
+        if (response.status === 404){
+          window.alert("This invoice has no attachment")
+        };
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `attachment_${invoice.invoice_number}`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => {
+        console.error('Error downloading attachment:', error.message);
+      });
+  };
+
   function cancelHandler() {
     navigate("..");
   }
@@ -59,7 +72,7 @@ function InvoiceItem({ invoice }) {
       </p>
       {invoice.purchase_items.map((item) => (
         <h1>
-          {item.item.item_name} selling price : {item.item.price} buying price :{" "}
+          {item.item.item_name} Selling price : {item.item.price} buying price :{" "}
           {item.buying_price} Quantity ordered : {item.item_quantity}{" "}
         </h1>
       ))}
