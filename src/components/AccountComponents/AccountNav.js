@@ -13,7 +13,7 @@ function AccountNavigation() {
 
         <nav className="accsidebar-nav">
           <NavLink className="sidebar-nav-link" to="/account/supplier">
-            SupplierAccounts
+            Supplier Accounts
           </NavLink>
 
           <NavLink className="sidebar-nav-link" to="/account/item">

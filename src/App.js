@@ -116,7 +116,7 @@ import SupplierDetailPage, {
   loader as SupAccLoader,
 } from "./pages/SupplierPages/SupplierMasterPages/SupplierDetailPage";
 import Dashboard from "./pages/UserPages/Dashboard";
-import { countLoader } from "./components/DashboardComps";
+import { dashboardLoader } from "./components/DashboardComps";
 import ConfirmationPage from "./pages/UserPages/ConfirmationPage";
 import PasswordPage, {
   action as PasswordChangeAction,
@@ -200,7 +200,6 @@ import SupplierPaymentRoot from "./pages/SupplierPaymentPages/SupplierPaymentRoo
 import AllSupplierPaymentPage, {
   loader as SupplierPaymentsLoader,
 } from "./pages/SupplierPaymentPages/AllSupplierPaymentPage";
-import NewPaymentsPage from "./pages/SupplierPaymentPages/NewPaymentsPage";
 import SupplierPaymentDetailPage, {
   action as SupplierPaymentDeleteAction,
   loader as SupplierPaymentDetailLoader,
@@ -289,6 +288,18 @@ const InvAdjDetailPage = lazy(() =>
 
 const NewInvAdjAccountPage = lazy(() =>
   import("./pages/InventoryAdjustmentAccountPages/NewInvAdjPage")
+);
+
+const NewSupplierPaymentPage = lazy(() =>
+  import("./pages/SupplierPaymentPages/NewPaymentsPage")
+);
+
+const CustomerPaymentRejectPage = lazy(() =>
+  import("./pages/CustomerPaymentsPage/CustomerPaymentRejectPage")
+);
+
+const InvoiceAttachmentPage = lazy(() =>
+  import("./pages/InvoicePages/InvoiceAttachmentPage")
 );
 
 const router = createBrowserRouter([
@@ -425,6 +436,18 @@ const router = createBrowserRouter([
                     "./pages/CustomerPaymentsPage/CustomerPaymentAccountingViewPage"
                   ).then((module) => module.loader(meta)),
               },
+              {
+                path: "reject",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <CustomerPaymentRejectPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import(
+                    "./pages/CustomerPaymentsPage/CustomerPaymentRejectPage"
+                  ).then((module) => module.action(meta)),
+              },
             ],
           },
         ],
@@ -456,7 +479,18 @@ const router = createBrowserRouter([
         loader: SupplierPaymentsLoader,
         children: [
           { index: true, element: <AllSupplierPaymentPage /> },
-          { path: "new", element: <NewPaymentsPage /> },
+          {
+            path: "new",
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <NewSupplierPaymentPage />
+              </Suspense>
+            ),
+            loader: () =>
+              import(
+                "./components/SupplierPaymentComponents/SupplierPaymentSearchForm"
+              ).then((module) => module.loader()),
+          },
           {
             path: ":id",
             id: "payment",
@@ -514,7 +548,7 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Dashboard />,
-        loader: countLoader,
+        loader: dashboardLoader,
       },
       {
         path: "account",
@@ -1023,6 +1057,18 @@ const router = createBrowserRouter([
                 ),
                 action: (meta) =>
                   import("./components/InvoiceComponents/InvoiceVoidForm").then(
+                    (module) => module.action(meta)
+                  ),
+              },
+              {
+                path: "attachment",
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <InvoiceAttachmentPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import("./pages/InvoicePages/InvoiceAttachmentPage").then(
                     (module) => module.action(meta)
                   ),
               },

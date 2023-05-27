@@ -4,9 +4,11 @@ import {
   useActionData,
   useNavigate,
 } from "react-router-dom/dist/umd/react-router-dom.development";
+import { getAuthToken } from "../../util/Auth";
 
 function InvoiceItem({ invoice }) {
   const token = useRouteLoaderData("root");
+  const tokenLoader = getAuthToken()
   const submit = useSubmit();
   const navigate = useNavigate();
   const data = useActionData();
@@ -17,6 +19,33 @@ function InvoiceItem({ invoice }) {
       submit(null, { method: "delete" });
     }
   }
+  const downloadHandler = () => {
+    fetch(`/invoice/download/${invoice.id}`, {
+      headers: {
+        Authorization : 'Bearer ' + tokenLoader
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.blob();
+        }
+        if (response.status === 404){
+          window.alert("This invoice has no attachment")
+        };
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `attachment_${invoice.invoice_number}`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => {
+        console.error('Error downloading attachment:', error.message);
+      });
+  };
 
   function cancelHandler() {
     navigate("..");
@@ -43,7 +72,7 @@ function InvoiceItem({ invoice }) {
       </p>
       {invoice.purchase_items.map((item) => (
         <h1>
-          {item.item.item_name} selling price : {item.item.price} buying price :{" "}
+          {item.item.item_name} Selling price : {item.item.price} buying price :{" "}
           {item.buying_price} Quantity ordered : {item.item_quantity}{" "}
         </h1>
       ))}
@@ -88,10 +117,21 @@ function InvoiceItem({ invoice }) {
             <div className="pr-5">
               <Link
                 to="void"
-                className="rounded-md bg-blue-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="rounded-md bg-black-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 Void invoice
               </Link>
+            </div>
+            <div className="pr-5">
+              <Link
+                to="attachment"
+                className="rounded-md bg-red-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Add attachment
+              </Link>
+            </div>
+            <div className="pr-5">
+              <button onClick={downloadHandler}>Download attachment</button>
             </div>
             <div className="pr-5">
               <button className="btn btn-warning" onClick={cancelHandler}>

@@ -12,7 +12,6 @@ function InvoiceList({ invoices, title }) {
   const endIndex = startIndex + PAGE_SIZE;
   const paginatedInvoices = invoices.slice(startIndex, endIndex);
   const data = useActionData();
-  const totalPages = Math.ceil(invoices.length / PAGE_SIZE);
 
   const goToPage = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -48,7 +47,7 @@ function InvoiceList({ invoices, title }) {
     },
     {
       field: "status",
-      headerName: "Payement Status",
+      headerName: "Payment Status",
       width: 200,
     },
     {
@@ -85,6 +84,11 @@ function InvoiceList({ invoices, title }) {
           <div>
             <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
               <Link to={`./${params.row.id}/accounting`}>View</Link>
+            </span>
+          </div>
+          <div>
+            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+              <Link to={`./${params.row.id}/attachment`}>Add Attachment</Link>
             </span>
           </div>
         </div>
