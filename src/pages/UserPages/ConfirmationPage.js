@@ -13,7 +13,3 @@ function ConfirmationPage() {
 }
 
 export default ConfirmationPage
-
-export async function action (){
-  
-}
