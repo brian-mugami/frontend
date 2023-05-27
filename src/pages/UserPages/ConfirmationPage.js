@@ -4,7 +4,6 @@ import PageContent from "../../components/UserComponents/PageContent";
 function ConfirmationPage() {
   return (
     <React.Fragment>
-<<<<<<< HEAD
       <PageContent>
         <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
           <div className="text-center">
@@ -28,12 +27,6 @@ function ConfirmationPage() {
           </div>
         </main>
       </PageContent>
-=======
-        <PageContent title="Confirmation Page!!">
-            <h5>Kindly check  your email to proceed</h5>
-            <p>Resend Email</p>
-        </PageContent>
->>>>>>> origin/mugami_frontend
     </React.Fragment>
   );
 }

@@ -66,15 +66,9 @@ function SideNav() {
                 Dashboard
               </NavLink>
 
-<<<<<<< HEAD
               <NavLink className="sidebar-nav-link" to="/user">
                 Users
               </NavLink>
-=======
-            <NavLink  className="sidebar-nav-link" to="/user">
-              Users
-            </NavLink>
->>>>>>> 19f86aa265a89cc026899de93cc119eca827634f
 
               <NavLink className="sidebar-nav-link" to="invoice">
                 Invoices
