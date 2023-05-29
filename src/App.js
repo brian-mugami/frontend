@@ -230,9 +230,18 @@ import ReceiptPaymentPage, {
   loader as ReceiptPaymentLoader,
 } from "./pages/ReceiptPages/ReceiptPaymentPage";
 import AllCustomerPaymentRoot from "./pages/CustomerPaymentsPage/AllCustomerPaymentRoot";
-import BankBalanceRoot from "./pages/BankBalancePages/BankBalanceRoot";
-import CustomerBalanceRoot from "./pages/CustomerBalancePages/CustomerBalanceRoot";
-import SupplierBalanceRoot from "./pages/SupplierBalancePages/SupplierBalanceRoot";
+
+const SupplierBalanceRoot = lazy(() =>
+  import("./pages/SupplierBalancePages/SupplierBalanceRoot")
+);
+
+const BankBalanceRoot = lazy(() =>
+  import("./pages/SupplierBalancePages/SupplierBalanceRoot")
+);
+
+const CustomerBalanceRoot = lazy(() =>
+  import("./pages/CustomerBalancePages/CustomerBalanceRoot")
+);
 
 const ReceiptPaymentsPage = lazy(() =>
   import("./pages/CustomerPaymentsPage/AllCustomerPayments")
@@ -321,7 +330,11 @@ const router = createBrowserRouter([
             (module) => module.loader()
           ),
         id: "bank-balances",
-        element: <BankBalanceRoot />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <BankBalanceRoot />
+          </Suspense>
+        ),
         children: [
           {
             index: true,
@@ -340,7 +353,12 @@ const router = createBrowserRouter([
           import("./pages/CustomerBalancePages/AllCustomerBalancesPage").then(
             (module) => module.loader()
           ),
-        element: <CustomerBalanceRoot />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            {" "}
+            <CustomerBalanceRoot />
+          </Suspense>
+        ),
         children: [
           {
             index: true,
@@ -359,7 +377,11 @@ const router = createBrowserRouter([
           import("./pages/SupplierBalancePages/AllSupplierBalancesPage").then(
             (module) => module.loader()
           ),
-        element: <SupplierBalanceRoot />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <SupplierBalanceRoot />
+          </Suspense>
+        ),
         children: [
           {
             index: true,
