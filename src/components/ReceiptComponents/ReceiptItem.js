@@ -1,4 +1,4 @@
-import { Button, Flex } from "@tremor/react";
+import { Button, Flex, List, ListItem } from "@tremor/react";
 import React from "react";
 import { Link, useNavigate, useRouteLoaderData, useSubmit } from "react-router-dom";
 import {
@@ -25,7 +25,7 @@ function ReceiptItem({ receipt, id }) {
     const token = getAuthToken();
 
     try {
-      const response = await fetch(`/receipt/download/test/${id}`, {
+      const response = await fetch(`https://flask-inventory.onrender.com/receipt/download/test/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -52,12 +52,37 @@ function ReceiptItem({ receipt, id }) {
 
   return (
     <React.Fragment>
-      <Button size="sm" variant="secondary" onClick={cancelHandler}>
+      <div className="pb-2">
+      <Button size="sm" variant="secondary" onClick={cancelHandler} >
         Back
       </Button>
-
+      </div>
+      <div>
       <h1>{receipt.receipt_number}</h1>
       <time>Date : {receipt.date}</time>
+      <hi>{receipt.sale_type}</hi>
+      </div>
+
+      <div>
+      <p className="pt-2">
+        {" "}
+        <b>Items in Receipt</b>
+      </p>
+      <List>
+        {receipt.sale_items.map((item) => (
+          <ListItem>
+            {item.item.item_name} Selling Price : {item.selling_price} Actual Price : {item.item.price} 
+            Quantity ordered : {item.item_quantity}{" "}
+          </ListItem>
+        ))}
+      </List>
+
+      </div>
+
+
+
+
+
       {token && (
         <menu>
           <Flex justifyContent="end" className="space-x-2">
@@ -74,6 +99,12 @@ function ReceiptItem({ receipt, id }) {
           <Link to="void">
             <button className="btn btn-primary">Void this receipt</button>
           </Link>
+          <button onClick={printReceiptHandler} className="btn btn-dark">
+            Print
+          </button>
+          <button onClick={startDeleteHandler} className="btn btn-danger">
+            Delete
+          </button>
           </Flex>
         </menu>
       )}

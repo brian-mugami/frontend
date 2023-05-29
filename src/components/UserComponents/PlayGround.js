@@ -1,238 +1,216 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
-    Card,
-    Metric,
-    AreaChart ,
-    Text,
-    Title,
-    Flex,
-    BadgeDelta,
-    DeltaType,
-    BarList,
-    Color,
-    Grid,
-  } from "@tremor/react";
-  import PropTypes from "prop-types";
+  Card,
+  Metric,
+  AreaChart,
+  Text,
+  Title,
+  Flex,
+  BadgeDelta,
+  DeltaType,
+  BarList,
+  Color,
+  Grid,
+} from "@tremor/react";
+import PropTypes from "prop-types";
 import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-
-//data for top cards
-const colors: { [key: string]: Color } = {
-    increase: "emerald",
-    moderateIncrease: "emerald",
-    unchanged: "orange",
-    moderateDecrease: "rose",
-    decrease: "rose",
-  };
-  
-  const category: {
-    title: string;
-    metric: string;
-    metricPrev: string;
-    delta: string;
-    deltaType: DeltaType;
-  }[] = [
-    {
-      title: "Sales",
-      metric: "$ 12,699",
-      metricPrev: "$ 9,456",
-      delta: "34.3%",
-      deltaType: "moderateIncrease",
-    },
-    {
-      title: "Profit",
-      metric: "$ 40,598",
-      metricPrev: "$ 45,564",
-      delta: "10.9%",
-      deltaType: "moderateDecrease",
-    },
-    {
-      title: "Customers",
-      metric: "1,072",
-      metricPrev: "856",
-      delta: "25.3%",
-      deltaType: "moderateIncrease",
-    },
-  ];
-
-
- //data for section below the cards
-  const website = [
-    { name: "/home", value: 1230 },
-    { name: "/contact", value: 751 },
-    { name: "/gallery", value: 471 },
-    { name: "/august-discount-offer", value: 280 },
-    { name: "/case-studies", value: 78 },
-  ];
-  
-  const shop = [
-    { name: "/home", value: 453 },
-    { name: "/imprint", value: 351 },
-    { name: "/shop", value: 271 },
-    { name: "/pricing", value: 191 },
-  ];
-  
-  const app = [
-    { name: "/shop", value: 789 },
-    { name: "/product-features", value: 676 },
-    { name: "/about", value: 564 },
-    { name: "/login", value: 234 },
-    { name: "/downloads", value: 191 },
-  ];
-  
-  const datas = [
-    {
-      category: "Website",
-      stat: "10,234",
-      data: website,
-    },
-    {
-      category: "Online Shop",
-      stat: "12,543",
-      data: shop,
-    },
-    {
-      category: "Mobile App",
-      stat: "2,543",
-      data: app,
-    },
-  ];
-  const dataFormatter = (number: number) =>
-  Intl.NumberFormat("us").format(number).toString();
-
-
-  //areachart components
-  const chartdata = [
-    {
-      date: "Jan 22",
-      SemiAnalysis: 2890,
-      "The Pragmatic Engineer": 2338,
-    },
-    {
-      date: "Feb 22",
-      SemiAnalysis: 2756,
-      "The Pragmatic Engineer": 2103,
-    },
-    {
-      date: "Mar 22",
-      SemiAnalysis: 3322,
-      "The Pragmatic Engineer": 2194,
-    },
-    {
-      date: "Apr 22",
-      SemiAnalysis: 3470,
-      "The Pragmatic Engineer": 2108,
-    },
-    {
-      date: "May 22",
-      SemiAnalysis: 3475,
-      "The Pragmatic Engineer": 1812,
-    },
-    {
-      date: "Jun 22",
-      SemiAnalysis: 3129,
-      "The Pragmatic Engineer": 1726,
-    },
-  ];
-  
-  const dataFormatter2 = (number: number) => {
-    return "$ " + Intl.NumberFormat("us").format(number).toString();
-  };
-
-
+import { defer } from "react-router-dom/dist/umd/react-router-dom.development";
 
 function PlayGround() {
+  const { suppliers, sales, purchases, dailySales, dailyPurchases , dailyExpenses} =
+    useLoaderData();
+  const [categories, setCategories] = useState([]);
 
-    const data = useLoaderData();
-
-
+  useEffect(() => {
+    {
+      const updatedCategories = [
+        {
+          title: "Total Sales Amount",
+          metric: sales.Amount,
+          metricPrev: sales.Sales,
+          delta: "25.3%",
+          deltaType: "moderateIncrease",
+        },
+        {
+          title: "Total Purchase Amount",
+          metric: purchases.Amount,
+          metricPrev: purchases.Purchases,
+          delta: "25.3%",
+          deltaType: "moderateIncrease",
+        },
+        {
+          title: "Profit Today",
+          metric: purchases.Amount,
+          metricPrev: purchases.Purchases,
+          delta: "25.3%",
+          deltaType: "moderateIncrease",
+        },
+      ];
+      setCategories(updatedCategories);
+    }
+  }, [purchases, sales]);
 
   return (
     <div>
-    <div>
-    <Grid  class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      {category.map((item) => (
-        <Card key={item.title}>
-          <Text>{item.title}</Text>
-          <Flex
-            justifyContent="start"
-            alignItems="baseline"
-            className="truncate space-x-3"
-          >
-            <Metric>{item.metric}</Metric>
-            <Text className="truncate">from {item.metricPrev}</Text>
-          </Flex>
-          <Flex justifyContent="start" className="space-x-2 mt-4">
-            <BadgeDelta deltaType={item.deltaType} />
-            <Flex justifyContent="start" className="space-x-1 truncate">
-              <Text color={colors[item.deltaType]}>{item.delta}</Text>
-              <Text className="truncate"> to previous month </Text>
-            </Flex>
-          </Flex>
-        </Card>
-      ))}
-    </Grid>
-    </div>
-    <div className="pt-5">
-    <Grid  className=" grid grid-cols-1 md:grid-cols-3 gap-4">
-      {datas.map((item) => (
-        <Card key={item.category}>
-          <Title>{item.category}</Title>
-          <Flex
-            justifyContent="start"
-            alignItems="baseline"
-            className="space-x-2"
-          >
-            <Metric>{item.stat}</Metric>
-            <Text>Total views</Text>
-          </Flex>
-          <Flex className="mt-6">
-            <Text>Pages</Text>
-            <Text className="text-right">Views</Text>
-          </Flex>
-          <BarList
-            data={item.data}
-            valueFormatter={dataFormatter}
-            className="mt-2"
-          />
-        </Card>
-      ))}
-    </Grid>
+      <header className="bg-white shadow"></header>
 
-    </div>
-    <div className="pt-5">
-    <Card>
-    <Title>Newsletter revenue over time (USD)</Title>
-    <AreaChart
-      className="h-72 mt-4"
-      data={chartdata}
-      index="date"
-      categories={["SemiAnalysis", "The Pragmatic Engineer"]}
-      colors={["indigo", "cyan"]}
-      valueFormatter={dataFormatter2}
-    />
-  </Card>
+      <Flex>
+        <Grid numColsSm={2} numColsLg={3} className="gap-6">
+          {categories.map((item) => (
+            <Card key={item.title}>
+              <Flex alignItems="start">
+                <Text>{item.title}</Text>
+                <BadgeDelta deltaType={item.deltaType}>{item.delta}</BadgeDelta>
+              </Flex>
+              <Flex
+                justifyContent="start"
+                alignItems="baseline"
+                className="truncate space-x-3"
+              >
+                <Metric>Ksh.{item.metric}</Metric>
+                <Text className="truncate">Transactions {item.metricPrev}</Text>
+              </Flex>
+            </Card>
+          ))}
+        </Grid>
+      </Flex>
 
-    </div>
+      <div></div>
     </div>
   );
 }
 
 export default PlayGround;
 
-
-export async function countLoader() {
-    const token = getAuthToken();
-    const response = await fetch("/supplier/count", {
+async function salesLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/sales",
+    {
       method: "get",
       headers: {
         Authorization: "Bearer " + token,
       },
-    });
-    if (!response.ok) {
-      throw json({ message: "Cant get number of suppliers" }, { status: 500 });
-    } else {
-      const resData = await response.json();
-      return resData;
     }
+  );
+  if (!response.ok) {
+    throw json({ message: "Suppliers Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
   }
+}
+
+async function dailySalesLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/sales/per_day",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Suppliers Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
+  }
+}
+
+async function dailyExpensesLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/expenses/per_day",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Suppliers Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
+  }
+}
+
+async function purchaseLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/purchase",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Suppliers Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
+  }
+}
+
+async function dailyPurchasesLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/purchases/per_day",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Suppliers Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
+  }
+}
+
+async function countLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/supplier/count",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Sales Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
+  }
+}
+
+export async function dashboardLoader() {
+  return defer({
+    suppliers: await countLoader(),
+    sales: await salesLoader(),
+    purchases: await purchaseLoader(),
+    dailySales: await dailySalesLoader(),
+    dailyPurchases: await dailyPurchasesLoader(),
+    dailyExpenses: await dailyExpensesLoader(),
+  });
+}

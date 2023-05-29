@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import Modal from "../../components/UIComponents/Modal";
 import { getAuthToken } from "../../util/Auth";
 import { useNavigate, useRouteLoaderData } from "react-router-dom/dist/umd/react-router-dom.development";
+import { useNavigation } from "react-router-dom";
 
 function InvoiceAttachmentPage() {
     const invoice = useRouteLoaderData("invoice-detail")
     const navigate = useNavigate()
+    const navigation = useNavigation()
+
+
+
+  const isSubmitting = navigation.state === "submitting"
     
   const [file, setFile] = useState(null);
 
@@ -62,8 +68,8 @@ function InvoiceAttachmentPage() {
             required
           />
           <br />
-          <button className="btn btn-success" type="submit">
-            Submit
+          <button disabled={isSubmitting} className="btn btn-success" type="submit">
+           {isSubmitting ? "submitting" : "submit"}
           </button>
           <button className="btn btn-warning" type="button" onClick={cancelHandler}>
             Cancel

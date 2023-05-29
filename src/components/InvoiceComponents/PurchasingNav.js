@@ -27,7 +27,7 @@ function PurchasingNav() {
         <Breadcrumbs>
           <div className="flex justify">
             <ShoppingCartIcon strokeWidth={1} className="h-6 w-6" />
-            <NavLink to="./new">Make a purchase</NavLink>
+            <NavLink to="./new">purchase</NavLink>
           </div>
         </Breadcrumbs>
       </div>
