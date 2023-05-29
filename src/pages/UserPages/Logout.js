@@ -14,7 +14,7 @@ export async function action({request,params}){
         });
         if (!response.ok) {
             throw json(
-              { message: 'Could not delete jwt.' },
+              { message: 'You are not logged in. Please login!!.' },
               {
                 status: 500,
               }

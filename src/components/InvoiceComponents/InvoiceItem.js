@@ -25,6 +25,7 @@ function classNames(...classes) {
 
 function InvoiceItem({ invoice }) {
   const token = useRouteLoaderData("root");
+  const tokenLoader = getAuthToken()
   const submit = useSubmit();
   const navigate = useNavigate();
   const data = useActionData();
@@ -35,6 +36,33 @@ function InvoiceItem({ invoice }) {
       submit(null, { method: "delete" });
     }
   }
+  const downloadHandler = () => {
+    fetch(`/invoice/download/${invoice.id}`, {
+      headers: {
+        Authorization : 'Bearer ' + tokenLoader
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.blob();
+        }
+        if (response.status === 404){
+          window.alert("This invoice has no attachment")
+        };
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `attachment_${invoice.invoice_number}`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => {
+        console.error('Error downloading attachment:', error.message);
+      });
+  };
 
   function cancelHandler() {
     navigate("..");
@@ -237,6 +265,9 @@ function InvoiceItem({ invoice }) {
               >
                 Add attachment
               </Link>
+            </div>
+            <div className="pr-5">
+              <button onClick={downloadHandler}>Download attachment</button>
             </div>
             <div className="pr-5">
               <button className="btn btn-warning" onClick={cancelHandler}>
