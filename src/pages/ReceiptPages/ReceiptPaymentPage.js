@@ -152,7 +152,7 @@ export async function action({ request, params }) {
 async function accountLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/bank/account", {
+  const response = await fetch("https://flask-inventory.onrender.com/bank/account", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,

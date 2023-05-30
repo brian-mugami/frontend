@@ -31,7 +31,7 @@ function InvoiceAttachmentPage() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`/invoice/upload/${invoice.id}`, {
+      const response = await fetch(`https://flask-inventory.onrender.com/invoice/upload/${invoice.id}`, {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,

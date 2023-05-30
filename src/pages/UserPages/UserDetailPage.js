@@ -16,7 +16,7 @@ export default UserDetailPage;
 export async function loader({params, request}){
 
     const id = params.userId
-    const response = await fetch('/user/' + id)
+    const response = await fetch('https://flask-inventory.onrender.com/user/' + id)
     if (!response.ok){
         throw json(
             {message:'Could not get details of the user'},
