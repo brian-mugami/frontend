@@ -3,11 +3,9 @@ import { NavLink } from "react-router-dom";
 import { TicketIcon } from "@heroicons/react/24/outline";
 import { Breadcrumbs } from "@material-tailwind/react";
 
-function SalesNav(){
-    return(
-
-
-<React.Fragment>
+function SalesNav() {
+  return (
+    <React.Fragment>
       <div className="flex space-x-11 py-5 ">
         <Breadcrumbs>
           <NavLink to="." className="opacity-60">
@@ -34,29 +32,7 @@ function SalesNav(){
         </Breadcrumbs>
       </div>
     </React.Fragment>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    )
+  );
 }
 
 export default SalesNav;
