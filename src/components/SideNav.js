@@ -133,6 +133,10 @@ function SideNav() {
                 </MenuList>
               </Menu>
 
+              <NavLink className="sidebar-nav-link" to="reports">
+                Reports
+              </NavLink>
+
               <Menu>
                 <MenuHandler>
                   <div className="sidebar-nav-link">Edit</div>
@@ -164,7 +168,7 @@ function SideNav() {
                           className="sidebar-nav-link"
                           to="/account/supplier"
                         >
-                          SupplierAccounts
+                          Supplier Accounts
                         </NavLink>
                       </MenuItem>
                       <MenuItem>

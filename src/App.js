@@ -4,9 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
 } from "./pages/UserPages/AuthenticationPage";
-import ErrorPage from "./pages/UserPages/Error";
-import HomePage from "./pages/UserPages/Home";
-import RootLayout from "./pages/UserPages/Root";
 import UsersPage, { loader as UsersLoader } from "./pages/UserPages/Users";
 import UserDetailPage, {
   loader as UserDetailLoader,
@@ -231,9 +228,10 @@ import ReceiptPaymentPage, {
 } from "./pages/ReceiptPages/ReceiptPaymentPage";
 import AllCustomerPaymentRoot from "./pages/CustomerPaymentsPage/AllCustomerPaymentRoot";
 
-const SupplierBalanceRoot = lazy(() =>
-  import("./pages/SupplierBalancePages/SupplierBalanceRoot")
-);
+const ErrorPage = lazy(() => import("./pages/UserPages/Error"));
+
+const HomePage = lazy(() => import("./pages/UserPages/Home"));
+const RootLayout = lazy(() => import("./pages/UserPages/Root"));
 
 const BankBalanceRoot = lazy(() =>
   import("./pages/SupplierBalancePages/SupplierBalanceRoot")
@@ -241,6 +239,10 @@ const BankBalanceRoot = lazy(() =>
 
 const CustomerBalanceRoot = lazy(() =>
   import("./pages/CustomerBalancePages/CustomerBalanceRoot")
+);
+
+const SupplierBalanceRoot = lazy(() =>
+  import("./pages/SupplierBalancePages/SupplierBalanceRoot")
 );
 
 const ReceiptPaymentsPage = lazy(() =>
@@ -311,17 +313,39 @@ const InvoiceAttachmentPage = lazy(() =>
   import("./pages/InvoicePages/InvoiceAttachmentPage")
 );
 
+const ReportsPage = lazy(() => import("./pages/ReportsPage/ReportsListPage"));
+
 const router = createBrowserRouter([
   {
     path: "/",
     loader: tokenLoader,
-    element: <RootLayout />,
-    errorElement: <ErrorPage />,
+    element: (
+      <Suspense fallback={<p>Loading</p>}>
+        <RootLayout />
+      </Suspense>
+    ),
+    errorElement: (
+      <Suspense fallback={<p>Loading</p>}>
+        <ErrorPage />{" "}
+      </Suspense>
+    ),
     id: "root",
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <HomePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "reports",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <ReportsPage />
+          </Suspense>
+        ),
       },
       {
         path: "bank-balances",
