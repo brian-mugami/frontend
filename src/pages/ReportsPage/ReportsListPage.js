@@ -44,7 +44,7 @@ function ReportsList() {
   return (
     <React.Fragment>
       <h1>This is the reports page</h1>
-      <button className="btn btn-primary" disabled={isSubmitting} onClick={handleDownload}>Download Stock Holding Report</button>
+      <button className="btn btn-primary" disabled={isSubmitting} onClick={handleDownload}>{isSubmitting ? "Downloading" : "Download Stock Holding Report"}</button>
     </React.Fragment>
   );
 }
