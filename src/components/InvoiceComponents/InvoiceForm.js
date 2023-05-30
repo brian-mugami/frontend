@@ -303,6 +303,7 @@ function InvoiceForm({ invoiceData, title, method }) {
             <p>
               <label>Date</label>
               <input
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 name="inv_date"
                 type="date"
                 defaultValue={invoiceData ? invoiceData.date : date}
@@ -413,6 +414,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                       type="number"
                       name="item_quantity"
                       min="1"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       defaultValue={row.item_quantity}
                       onChange={(e) =>
                         handleInputChange(e, index, "item_quantity")
@@ -425,6 +427,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                       type="number"
                       min="1"
                       step="0.01"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       defaultValue={row.buying_price}
                       onChange={(e) =>
                         handleInputChange(e, index, "buying_price")
@@ -454,14 +457,16 @@ export default InvoiceForm;
 
 export async function suppliersLoader() {
   const token = getAuthToken();
-  const response = await fetch("https://flask-inventory.onrender.com/supplier", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Access-Control-Allow-Origin": "*",
-
-    },
-  });
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/supplier",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
   if (!response.ok) {
     throw json({ message: "Cant get suppliers" }, { status: 500 });
   } else {
@@ -478,7 +483,6 @@ async function ItemsLoader() {
     headers: {
       Authorization: "Bearer " + token,
       "Access-Control-Allow-Origin": "*",
-
     },
   });
   if (!response.ok) {
@@ -492,14 +496,16 @@ async function ItemsLoader() {
 async function AccountLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("https://flask-inventory.onrender.com/expense/account", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Access-Control-Allow-Origin": "*",
-
-    },
-  });
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/expense/account",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
   if (!response.ok) {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
@@ -579,15 +585,18 @@ export async function action({ request, params }) {
         item_quantity: item.item_quantity,
       })),
     };
-    const invoiceLines = await fetch("https://flask-inventory.onrender.com/purchase", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(lines),
-    });
+    const invoiceLines = await fetch(
+      "https://flask-inventory.onrender.com/purchase",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(lines),
+      }
+    );
     if (invoiceLines.status === 400) {
       return invoiceLines;
     }
@@ -653,16 +662,18 @@ export async function action({ request, params }) {
       })),
     };
     for (let item of existingData.purchase_items) {
-      const lineResponse = await fetch("https://flask-inventory.onrender.com/purchase/" + item.id, {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-
-        },
-        body: JSON.stringify(invoiceUpdateLines),
-      });
+      const lineResponse = await fetch(
+        "https://flask-inventory.onrender.com/purchase/" + item.id,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify(invoiceUpdateLines),
+        }
+      );
       if (lineResponse.status === 400) {
         return lineResponse;
       }

@@ -1,7 +1,12 @@
+import { Button, Flex, List, ListItem } from "@tremor/react";
 import React from "react";
-import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
-import { useNavigate } from "react-router-dom/dist/umd/react-router-dom.development";
+import { Link, useNavigate, useRouteLoaderData, useSubmit } from "react-router-dom";
+import {
+
+  PencilIcon,
+} from '@heroicons/react/20/solid'
 import { getAuthToken } from "../../util/Auth";
+
 
 function ReceiptItem({ receipt, id }) {
   const token = useRouteLoaderData("root");
@@ -20,7 +25,7 @@ function ReceiptItem({ receipt, id }) {
     const token = getAuthToken();
 
     try {
-      const response = await fetch(`/receipt/download/test/${id}`, {
+      const response = await fetch(`https://flask-inventory.onrender.com/receipt/download/test/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -47,25 +52,60 @@ function ReceiptItem({ receipt, id }) {
 
   return (
     <React.Fragment>
+      <div className="pb-2">
+      <Button size="sm" variant="secondary" onClick={cancelHandler} >
+        Back
+      </Button>
+      </div>
+      <div>
       <h1>{receipt.receipt_number}</h1>
       <time>Date : {receipt.date}</time>
+      <hi>{receipt.sale_type}</hi>
+      </div>
+
+      <div>
+      <p className="pt-2">
+        {" "}
+        <b>Items in Receipt</b>
+      </p>
+      <List>
+        {receipt.sale_items.map((item) => (
+          <ListItem>
+            {item.item.item_name} Selling Price : {item.selling_price} Actual Price : {item.item.price} 
+            Quantity ordered : {item.item_quantity}{" "}
+          </ListItem>
+        ))}
+      </List>
+
+      </div>
+
+
+
+
+
       {token && (
         <menu>
-          <Link to="edit">
-            <button className="btn btn-success">Edit</button>
+          <Flex justifyContent="end" className="space-x-2">
+            <Link to="edit">
+            <button
+            type="button"
+            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-4 ring-inset ring-gray-700 hover:bg-gray-50"
+          >
+            <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+            Edit
+          </button>
           </Link>
-          <button onClick={startDeleteHandler} className="btn btn-danger">
-            Delete Receipt
-          </button>
-          <button onClick={cancelHandler} className="btn btn-warning">
-            Back
-          </button>
+          
           <Link to="void">
             <button className="btn btn-primary">Void this receipt</button>
           </Link>
           <button onClick={printReceiptHandler} className="btn btn-dark">
             Print
           </button>
+          <button onClick={startDeleteHandler} className="btn btn-danger">
+            Delete
+          </button>
+          </Flex>
         </menu>
       )}
     </React.Fragment>
