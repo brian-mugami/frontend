@@ -4,9 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
 } from "./pages/UserPages/AuthenticationPage";
-import ErrorPage from "./pages/UserPages/Error";
-import HomePage from "./pages/UserPages/Home";
-import RootLayout from "./pages/UserPages/Root";
 import UsersPage, { loader as UsersLoader } from "./pages/UserPages/Users";
 import UserDetailPage, {
   loader as UserDetailLoader,
@@ -68,9 +65,6 @@ import CategoryDetailPage, {
   loader as CategoryLoader,
 } from "./pages/ItemPages/Categories/CategoryDetailPage";
 import { action as DeleteCatItemAction } from "./pages/ItemPages/Categories/CategoryDetailPage";
-import CategoryEditPage from "./pages/ItemPages/Categories/CategoryEditPage";
-import ItemsRoot from "./pages/ItemPages/ItemsAllRootNav";
-import ItemRoot from "./pages/ItemPages/Items/ItemRoot";
 import AllItemsPage, {
   loader as AllItemsLoader,
 } from "./pages/ItemPages/Items/AllItems";
@@ -210,9 +204,6 @@ import BalanceRoot from "./pages/InventoryBalancePage/BalanceRoot";
 import InventoryBalancesPage, {
   loader as InventoryBalancesLoader,
 } from "./pages/InventoryBalancePage/AllInventoryBalances";
-import InventoryBalanceSearchPage from "./pages/InventoryBalancePage/InventoryBalanceSearchPage";
-import MiscReceiptPage from "./pages/InventoryBalancePage/MiscReceiptPage";
-import MiscIssuePage from "./pages/InventoryBalancePage/MiscIssuePage";
 import { action as MiscReceiptAction } from "./components/InventoryBalancesComponents/MiscReceiptForm";
 import { action as MiscIssueAction } from "./components/InventoryBalancesComponents/MiscIssueForm";
 import ViewInvoiceAccountingPage, {
@@ -229,11 +220,35 @@ import ReceiptPaymentPage, {
   action as ReceiptPaymentAction,
   loader as ReceiptPaymentLoader,
 } from "./pages/ReceiptPages/ReceiptPaymentPage";
-import AllCustomerPaymentRoot from "./pages/CustomerPaymentsPage/AllCustomerPaymentRoot";
 
-const SupplierBalanceRoot = lazy(() =>
-  import("./pages/SupplierBalancePages/SupplierBalanceRoot")
+const CategoryEditPage = lazy(() =>
+  import("./pages/ItemPages/Categories/CategoryEditPage")
 );
+
+const ItemsRoot = lazy(() => import("./pages/ItemPages/ItemsAllRootNav"));
+
+const ItemRoot = lazy(() => import("./pages/ItemPages/Items/ItemRoot"));
+
+const MiscIssuePage = lazy(() =>
+  import("./pages/InventoryBalancePage/MiscIssuePage")
+);
+
+const MiscReceiptPage = lazy(() =>
+  import("./pages/InventoryBalancePage/MiscReceiptPage")
+);
+
+const InventoryBalanceSearchPage = lazy(() =>
+  import("./pages/InventoryBalancePage/InventoryBalanceSearchPage")
+);
+
+const AllCustomerPaymentRoot = lazy(() =>
+  import("./pages/CustomerPaymentsPage/AllCustomerPaymentRoot")
+);
+
+const ErrorPage = lazy(() => import("./pages/UserPages/Error"));
+
+const HomePage = lazy(() => import("./pages/UserPages/Home"));
+const RootLayout = lazy(() => import("./pages/UserPages/Root"));
 
 const BankBalanceRoot = lazy(() =>
   import("./pages/SupplierBalancePages/SupplierBalanceRoot")
@@ -241,6 +256,10 @@ const BankBalanceRoot = lazy(() =>
 
 const CustomerBalanceRoot = lazy(() =>
   import("./pages/CustomerBalancePages/CustomerBalanceRoot")
+);
+
+const SupplierBalanceRoot = lazy(() =>
+  import("./pages/SupplierBalancePages/SupplierBalanceRoot")
 );
 
 const ReceiptPaymentsPage = lazy(() =>
@@ -311,17 +330,39 @@ const InvoiceAttachmentPage = lazy(() =>
   import("./pages/InvoicePages/InvoiceAttachmentPage")
 );
 
+const ReportsPage = lazy(() => import("./pages/ReportsPage/ReportsListPage"));
+
 const router = createBrowserRouter([
   {
     path: "/",
     loader: tokenLoader,
-    element: <RootLayout />,
-    errorElement: <ErrorPage />,
+    element: (
+      <Suspense fallback={<p>Loading</p>}>
+        <RootLayout />
+      </Suspense>
+    ),
+    errorElement: (
+      <Suspense fallback={<p>Loading</p>}>
+        <ErrorPage />{" "}
+      </Suspense>
+    ),
     id: "root",
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <HomePage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "reports",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <ReportsPage />
+          </Suspense>
+        ),
       },
       {
         path: "bank-balances",
@@ -395,7 +436,11 @@ const router = createBrowserRouter([
       },
       {
         path: "customer-payment",
-        element: <AllCustomerPaymentRoot />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <AllCustomerPaymentRoot />
+          </Suspense>
+        ),
         id: "customer-payments",
         loader: () =>
           import("./pages/CustomerPaymentsPage/AllCustomerPayments").then(
@@ -481,15 +526,30 @@ const router = createBrowserRouter([
         loader: InventoryBalancesLoader,
         children: [
           { index: true, element: <InventoryBalancesPage /> },
-          { path: "search", element: <InventoryBalanceSearchPage /> },
+          {
+            path: "search",
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <InventoryBalanceSearchPage />
+              </Suspense>
+            ),
+          },
           {
             path: "receipt",
-            element: <MiscReceiptPage />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <MiscReceiptPage />
+              </Suspense>
+            ),
             action: MiscReceiptAction,
           },
           {
             path: "issue",
-            element: <MiscIssuePage />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <MiscIssuePage />
+              </Suspense>
+            ),
             action: MiscIssueAction,
           },
         ],
@@ -891,7 +951,11 @@ const router = createBrowserRouter([
       },
       {
         path: "item",
-        element: <ItemsRoot />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <ItemsRoot />
+          </Suspense>
+        ),
         children: [
           {
             path: "category",
@@ -918,7 +982,11 @@ const router = createBrowserRouter([
                   },
                   {
                     path: "edit",
-                    element: <CategoryEditPage />,
+                    element: (
+                      <Suspense fallback={<p>Loading...</p>}>
+                        <CategoryEditPage />
+                      </Suspense>
+                    ),
                     action: CategoryManipulateAction,
                     loader: AccountsCategoryLoader,
                   },
@@ -959,7 +1027,11 @@ const router = createBrowserRouter([
           },
           {
             path: "main",
-            element: <ItemRoot />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <ItemRoot />
+              </Suspense>
+            ),
             loader: AllItemsLoader,
             id: "items",
             children: [
