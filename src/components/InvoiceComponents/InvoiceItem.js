@@ -11,9 +11,13 @@ import {
   CheckIcon,
   ChevronDownIcon,
   CurrencyDollarIcon,
-  LinkIcon,
-  MapPinIcon,
+  PaperClipIcon,
+    MapPinIcon,
+    TrashIcon,
+    BanknotesIcon,
+    CalculatorIcon,
   PencilIcon,
+  BookmarkSlashIcon
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { getAuthToken } from "../../util/Auth";
@@ -89,7 +93,7 @@ function InvoiceItem({ invoice }) {
           </h2>
           <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             <div className="mt-2 flex items-center text-sm text-gray-500">
-              <BriefcaseIcon
+              <CalculatorIcon
                 className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                 aria-hidden="true"
               />
@@ -103,7 +107,7 @@ function InvoiceItem({ invoice }) {
               {invoice.destination_type}
             </div>
             <div className="mt-2 flex items-center text-sm text-gray-500">
-              <CurrencyDollarIcon
+              <BanknotesIcon
                 className="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                 aria-hidden="true"
               />
@@ -124,13 +128,27 @@ function InvoiceItem({ invoice }) {
             <Link to="edit">
               <button
                 type="button"
-                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-black hover:bg-gray-50"
               >
                 <PencilIcon
                   className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
                   aria-hidden="true"
                 />
                 Edit
+              </button>
+            </Link>
+          </span>
+          <span className="hidden sm:block">
+            <Link to="attachment">
+              <button
+                type="button"
+                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                <PaperClipIcon
+                  className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                Attach
               </button>
             </Link>
           </span>
@@ -141,7 +159,7 @@ function InvoiceItem({ invoice }) {
                 type="button"
                 className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               >
-                <LinkIcon
+                <BookmarkSlashIcon
                   className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
                   aria-hidden="true"
                 />
@@ -150,19 +168,7 @@ function InvoiceItem({ invoice }) {
             </Link>
           </span>
 
-          <span className="sm:ml-3">
-            <button
-              type="button"
-              onClick={startDeleteHandler}
-              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              <CheckIcon
-                className="-ml-0.5 mr-1.5 h-5 w-5"
-                aria-hidden="true"
-              />
-              Delete
-            </button>
-          </span>
+        
 
           {/* Dropdown */}
           <Menu as="div" className="relative ml-3 sm:hidden">
@@ -255,19 +261,28 @@ function InvoiceItem({ invoice }) {
           </ListItem>
         ))}
       </List>
+      <div className="pt-10">
+
+      <span className="sm:ml-3">
+            <button
+              type="button"
+              onClick={startDeleteHandler}
+              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              <TrashIcon
+                className="-ml-0.5 mr-1.5 h-5 w-5"
+                aria-hidden="true"
+              />
+              Delete
+            </button>
+          </span>
+          </div>
 
       <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start"></div>
       {token && (
         <menu>
           <div className="flex">
-            <div className="pr-5">
-              <Link
-                to="attachment"
-                className="rounded-md bg-red-300  px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Add attachment
-              </Link>
-            </div>
+           
             <div className="pr-5">
               <button onClick={downloadHandler}>Download attachment</button>
             </div>

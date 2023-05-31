@@ -84,9 +84,11 @@ function CustomerPaymentsList({ payments }) {
   ];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 400, width: "100%" }} className="overscroll-contain">
       <h2 className="text-lg font-semibold mb-4">Payments</h2>
       <DataGrid
+      className="overscroll-contain"
+
         rows={paginatedPayments}
         columns={columns}
         pagination

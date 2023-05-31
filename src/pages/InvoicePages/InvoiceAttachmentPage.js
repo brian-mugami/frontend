@@ -59,23 +59,35 @@ function InvoiceAttachmentPage() {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="formFileMultiple" className="form-label">
-            <b>Invoice Attachment</b>
+          <h2 className="text-base font-semibold leading-7 text-gray-900">
+          Invoice attachment
+        </h2>
           </label>
           <input
             name="file"
-            className="form-control"
+            className="form-control "
             type="file"
             id="formFileMultiple"
             onChange={handleFileChange}
             required
           />
           <br />
-          <button disabled={isSubmitting} className="btn btn-success" type="submit">
+          <div className="flex space-x-5">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold  text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
            {isSubmitting ? "submitting" : "submit"}
           </button>
-          <button className="btn btn-warning" type="button" onClick={cancelHandler}>
+          <button
+            onClick={cancelHandler}
+            type="button"
+            className="text-sm font-semibold leading-6 text-gray-900"
+          >
             Cancel
           </button>
+          </div>
         </div>
       </form>
     </Modal>

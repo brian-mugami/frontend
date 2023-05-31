@@ -9,7 +9,7 @@ function SupplierNav() {
       <div className="flex space-x-11 py-5 px-5">
         <Breadcrumbs>
           <NavLink to="." className="opacity-60">
-            <div className="flex">
+            <div className="flex ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"

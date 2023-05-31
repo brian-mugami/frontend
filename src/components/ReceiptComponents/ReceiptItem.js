@@ -4,6 +4,7 @@ import { Link, useNavigate, useRouteLoaderData, useSubmit } from "react-router-d
 import {
 
   PencilIcon,
+  PrinterIcon,
 } from '@heroicons/react/20/solid'
 import { getAuthToken } from "../../util/Auth";
 
@@ -89,7 +90,7 @@ function ReceiptItem({ receipt, id }) {
             <Link to="edit">
             <button
             type="button"
-            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-4 ring-inset ring-gray-700 hover:bg-gray-50"
+            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900  ring-1 ring-inset ring-gray-700 hover:bg-gray-50"
           >
             <PencilIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
             Edit
@@ -99,7 +100,11 @@ function ReceiptItem({ receipt, id }) {
           <Link to="void">
             <button className="btn btn-primary">Void this receipt</button>
           </Link>
-          <button onClick={printReceiptHandler} className="btn btn-dark">
+          <button 
+          onClick={printReceiptHandler} 
+          className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900  ring-1 ring-inset ring-gray-700 hover:bg-gray-50"
+          >
+            <PrinterIcon className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
             Print
           </button>
           <button onClick={startDeleteHandler} className="btn btn-danger">
