@@ -39,7 +39,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_name: "",
         item_quantity: 1,
         buying_price: 1,
-        lot : "",
+        lot: "",
         item_cost: 1,
       }));
     }
@@ -59,7 +59,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_name: " ",
         item_quantity: 0,
         buying_price: parseFloat(0),
-        lot:" ",
+        lot: " ",
         item_cost: parseFloat(0),
       },
     ]);
@@ -72,8 +72,8 @@ function InvoiceForm({ invoiceData, title, method }) {
   function checkExpenseHandler(event) {
     if (event.target.value === "expense") {
       setExpense(true);
-    } else if (event.target.value === "stores"){
-      setExpense(false)
+    } else if (event.target.value === "stores") {
+      setExpense(false);
     }
   }
 
@@ -106,6 +106,7 @@ function InvoiceForm({ invoiceData, title, method }) {
 
   itemList = tableRows;
 
+  const dataAvailable = invoiceData.purchase_items.length > 0
   return (
     <React.Fragment>
       {data && data.errors && (
@@ -334,6 +335,7 @@ function InvoiceForm({ invoiceData, title, method }) {
             <button
               className="btn btn-secondary mb-4 mr-5 "
               onClick={handleAddRow}
+              disabled={dataAvailable}
             >
               <div className="flex ">
                 <svg
@@ -441,8 +443,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                     <input
                       name="lot"
                       defaultValue={
-                        invoiceData?.purchase_items?.[index]?.lot.lot ||
-                        row.lot
+                        invoiceData?.purchase_items?.[index]?.lot.lot || row.lot
                       }
                       list="options1"
                       onChange={(e) => handleInputChange(e, index, "lot")}
@@ -459,6 +460,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                     <button
                       className="btn btn-danger"
                       onClick={() => handleRemoveRow(index)}
+                      disabled={dataAvailable}
                     >
                       Remove
                     </button>
@@ -504,7 +506,7 @@ async function ItemsLoader() {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData)
+    console.log(resData);
     return resData;
   }
 }
@@ -548,7 +550,7 @@ export async function Loader() {
     items: await ItemsLoader(),
     suppliers: await suppliersLoader(),
     expenseAccounts: await AccountLoader(),
-    lots: await LotLoader()
+    lots: await LotLoader(),
   });
 }
 
@@ -687,7 +689,7 @@ export async function action({ request, params }) {
         item_name: item.item_name,
         buying_price: item.buying_price,
         quantity: item.item_quantity,
-        lot:item.lot
+        lot: item.lot,
       })),
     };
     for (let item of existingData.purchase_items) {
