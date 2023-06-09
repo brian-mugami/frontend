@@ -25,6 +25,9 @@ function PlayGround() {
     dailySales,
     dailyPurchases,
     dailyExpenses,
+    inventoryValue,
+    monthlySales,
+    monthlyPurchases,
   } = useLoaderData();
   const [categories, setCategories] = useState([]);
 
@@ -141,20 +144,81 @@ function PlayGround() {
     },
   ];
 
+
+
+
+  const dummyData = [
+    monthlySales.daily_totals.map((dailyItem)=>(
+     {
+      date: dailyItem.day,
+      SemiAnalysis: dailyItem.total_amount ,
+    } 
+
+
+    ))
+  ]
+
+
+
+
+
+
+
+
+
+  const chartdata = [
+    {
+      date: "Jan 22",
+      SemiAnalysis: 2890,
+      "The Pragmatic Engineer": 2338,
+    },
+    {
+      date: "Feb 22",
+      SemiAnalysis: 2756,
+      "The Pragmatic Engineer": 2103,
+    },
+    {
+      date: "Mar 22",
+      SemiAnalysis: 3322,
+      "The Pragmatic Engineer": 2194,
+    },
+    {
+      date: "Apr 22",
+      SemiAnalysis: 3470,
+      "The Pragmatic Engineer": 2108,
+    },
+    {
+      date: "May 22",
+      SemiAnalysis: 3475,
+      "The Pragmatic Engineer": 1812,
+    },
+    {
+      date: "Jun 22",
+      SemiAnalysis: 3129,
+      "The Pragmatic Engineer": 1726,
+    },
+  ];
+
   const data = [
     {
       category: "Weekly Sales",
-      stat: " 10000",
+      stat: isNaN(dailySales.total_sales_week)
+        ? 0
+        : dailySales.total_sales_week,
       data: salesHighlights,
     },
     {
       category: "Weekly Purchases",
-      stat: "12,543",
+      stat: isNaN(dailyPurchases.total_purchases_week)
+        ? 0
+        : dailyPurchases.total_purchases_week,
       data: purchaseHighlights,
     },
     {
       category: "Weekly Expenses",
-      stat: "2,543",
+      stat: isNaN(dailyExpenses.total_expenses_week)
+        ? 0
+        : dailyExpenses.total_expenses_week,
       data: expenseHighlights,
     },
   ];
@@ -164,8 +228,6 @@ function PlayGround() {
 
   return (
     <div>
-      <header className="bg-white shadow"></header>
-
       <Flex>
         <Grid numColsSm={2} numColsLg={3} className="gap-6">
           {categories.map((item) => (
@@ -197,7 +259,7 @@ function PlayGround() {
                 alignItems="baseline"
                 className="space-x-2"
               >
-                <Metric>{item.stat}</Metric>
+                <Metric>{item.stat.toLocaleString()}</Metric>
                 <Text>Total Amount</Text>
               </Flex>
               <Flex className="mt-6">
@@ -213,6 +275,33 @@ function PlayGround() {
           ))}
         </Grid>
       </div>
+
+      <div className="flex pt-4">
+        <div className="flex-start flex-initial ">
+          <Card
+            className="max-w-md mx-auto"
+            decoration="top"
+            decorationColor="indigo"
+          >
+            <Text>Inventory value</Text>
+            <Metric>{inventoryValue.total_value.toLocaleString()}</Metric>
+          </Card>
+        </div>
+       
+      </div>
+      <div className=" pt-4">
+          <Card>
+            <Title>Purchases and Sales monthly comparison</Title>
+            <AreaChart
+              className="h-72 mt-4"
+              data={dummyData}
+              index="date"
+              categories={["SemiAnalysis",]}
+              colors={["indigo", "cyan"]}
+              valueFormatter={dataFormatter}
+            />
+          </Card>
+        </div>
     </div>
   );
 }
@@ -255,7 +344,6 @@ async function dailySalesLoader() {
     throw json({ message: "Sales Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
     return resData;
   }
 }
@@ -275,7 +363,6 @@ async function dailyExpensesLoader() {
     throw json({ message: "Daily Expenses Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
     return resData;
   }
 }
@@ -339,6 +426,71 @@ async function countLoader() {
   }
 }
 
+async function inventoryValueLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/inventory-count",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Inventory Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+
+    return resData;
+  }
+}
+
+async function monthlySalesLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/sales/month",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Monthly sales Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+
+    return resData;
+  }
+}
+
+async function monthlyPurchasesLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/purchase/month",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "Monthly sales Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+
+    return resData;
+  }
+}
+
 export async function dashboardLoader() {
   return defer({
     suppliers: await countLoader(),
@@ -347,5 +499,8 @@ export async function dashboardLoader() {
     dailySales: await dailySalesLoader(),
     dailyPurchases: await dailyPurchasesLoader(),
     dailyExpenses: await dailyExpensesLoader(),
+    monthlySales: await monthlySalesLoader(),
+    monthlyPurchases: await monthlyPurchasesLoader(),
+    inventoryValue: await inventoryValueLoader(),
   });
 }

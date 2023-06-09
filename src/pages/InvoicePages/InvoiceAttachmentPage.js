@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import Modal from "../../components/UIComponents/Modal";
 import { getAuthToken } from "../../util/Auth";
-import { useNavigate, useNavigation, useRouteLoaderData } from "react-router-dom/dist/umd/react-router-dom.development";
+import {
+  useNavigate,
+  useNavigation,
+  useRouteLoaderData,
+} from "react-router-dom/dist/umd/react-router-dom.development";
 
 function InvoiceAttachmentPage() {
-    const invoice = useRouteLoaderData("invoice-detail")
-    const navigate = useNavigate()
-    const navigation = useNavigation()
+  const invoice = useRouteLoaderData("invoice-detail");
+  const navigate = useNavigate();
+  const navigation = useNavigation();
 
-    const isSubmitting = navigation.state === "submitting"
+  const isSubmitting = navigation.state === "submitting";
   const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
 
-  function cancelHandler(){
-    navigate("..")
+  function cancelHandler() {
+    navigate("..");
   }
 
   const handleSubmit = async (event) => {
@@ -27,18 +31,23 @@ function InvoiceAttachmentPage() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`https://flask-inventory.onrender.com/invoice/upload/${invoice.id}`, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-        body: formData,
-      });
-      if(response.status===400){
-        window.alert("Only PDF attachment are allowed!!")
+      const response = await fetch(
+        `https://flask-inventory.onrender.com/invoice/upload/${invoice.id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          body: formData,
+        }
+      );
+      if (response.status === 400) {
+        window.alert("Only PDF attachment are allowed!!");
       }
       if (response.ok) {
-        const confirmed = window.confirm("File uploaded successfully! Do you want to go to the invoice page?");
+        const confirmed = window.confirm(
+          "File uploaded successfully! Do you want to go to the invoice page?"
+        );
         if (confirmed) {
           navigate("..");
         }
@@ -46,7 +55,7 @@ function InvoiceAttachmentPage() {
         window.alert("failed to upload");
       }
     } catch (error) {
-        window.alert("Network error", error)
+      window.alert("Network error", error);
     }
   };
 
@@ -55,9 +64,9 @@ function InvoiceAttachmentPage() {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="formFileMultiple" className="form-label">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
-          Invoice attachment
-        </h2>
+            <h2 className="text-base font-semibold leading-7 text-gray-900">
+              Invoice attachment
+            </h2>
           </label>
           <input
             name="file"
@@ -68,7 +77,11 @@ function InvoiceAttachmentPage() {
             required
           />
           <br />
-          <button className="btn btn-success" type="submit" disabled={isSubmitting}>
+          <button
+            className="btn btn-success"
+            type="submit"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Submitting" : "Submit"}
           </button>
           <button
@@ -78,7 +91,6 @@ function InvoiceAttachmentPage() {
           >
             Cancel
           </button>
-          </div>
         </div>
       </form>
     </Modal>
@@ -86,4 +98,3 @@ function InvoiceAttachmentPage() {
 }
 
 export default InvoiceAttachmentPage;
-
