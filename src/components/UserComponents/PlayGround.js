@@ -151,53 +151,18 @@ function PlayGround() {
     monthlySales.daily_totals.map((dailyItem)=>(
      {
       date: dailyItem.day,
-      SemiAnalysis: dailyItem.total_amount ,
+      PurchasesPerMonth: dailyItem.total_amount ,
     } 
-
 
     ))
   ]
 
 
-
-
-
-
-
-
-
-  const chartdata = [
-    {
-      date: "Jan 22",
-      SemiAnalysis: 2890,
-      "The Pragmatic Engineer": 2338,
-    },
-    {
-      date: "Feb 22",
-      SemiAnalysis: 2756,
-      "The Pragmatic Engineer": 2103,
-    },
-    {
-      date: "Mar 22",
-      SemiAnalysis: 3322,
-      "The Pragmatic Engineer": 2194,
-    },
-    {
-      date: "Apr 22",
-      SemiAnalysis: 3470,
-      "The Pragmatic Engineer": 2108,
-    },
-    {
-      date: "May 22",
-      SemiAnalysis: 3475,
-      "The Pragmatic Engineer": 1812,
-    },
-    {
-      date: "Jun 22",
-      SemiAnalysis: 3129,
-      "The Pragmatic Engineer": 1726,
-    },
-  ];
+  const chartdata = monthlySales.daily_totals.map((salesItem, index) => ({
+    date: salesItem.day,
+    PurchasesPerMonth: monthlyPurchases.daily_totals[index].total_amount,
+    SalesPerMonth: salesItem.total_amount,
+  }));
 
   const data = [
     {
@@ -220,7 +185,7 @@ function PlayGround() {
         ? 0
         : dailyExpenses.total_expenses_week,
       data: expenseHighlights,
-    },
+    }
   ];
 
   const dataFormatter = (number: number) =>
@@ -290,17 +255,18 @@ function PlayGround() {
        
       </div>
       <div className=" pt-4">
-          <Card>
-            <Title>Purchases and Sales monthly comparison</Title>
-            <AreaChart
-              className="h-72 mt-4"
-              data={dummyData}
-              index="date"
-              categories={["SemiAnalysis",]}
-              colors={["indigo", "cyan"]}
-              valueFormatter={dataFormatter}
-            />
-          </Card>
+      <Card>
+    <Title>Monthly data</Title>
+    <AreaChart
+      className="h-72 mt-4"
+      data={chartdata}
+      index="date"
+      categories={["PurchasesPerMonth", "SalesPerMonth"]}
+      colors={["indigo", "cyan"]}
+      valueFormatter={dataFormatter}
+    />
+  </Card>
+          
         </div>
     </div>
   );

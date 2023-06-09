@@ -106,8 +106,8 @@ function InvoiceForm({ invoiceData, title, method }) {
 
   itemList = tableRows;
 
-  const dataAvailable = invoiceData.purchase_items.length > 0
-  return (
+  const dataAvailable = (invoiceData && invoiceData.purchase_items.length > 0) 
+   return (
     <React.Fragment>
       {data && data.errors && (
         <ul>
