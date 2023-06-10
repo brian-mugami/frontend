@@ -106,7 +106,7 @@ function SupplierPaymentItem({ payment }) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {" "}
-                      <Link to="edit">Edit</Link>
+                      {/*<Link to="edit">Edit</Link>*/}
                     </td>
                   </menu>
                 )}

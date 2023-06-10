@@ -6,11 +6,9 @@ function BankBalanceNav() {
     <React.Fragment>
       <div className="nav justify-content-center">
         <NavLink to="." className="nav-link">
-          All Balances
+          All Balances 
         </NavLink>
-        <NavLink to="./search" className="nav-link">
-          Search
-        </NavLink>
+
       </div>
     </React.Fragment>
   )

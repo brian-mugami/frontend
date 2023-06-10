@@ -14,7 +14,7 @@ export default function InventoryBalancesNav() {
     <div className="pb-5">
       <div className="nav justify-content-center">
         <NavLink to="." className="nav-link">
-          All Balances
+          All Balances 
         </NavLink>
 
         <NavLink to="./search" className="nav-link flex">

@@ -31,7 +31,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_name: item.item.item_name,
         item_quantity: parseFloat(item.item_quantity),
         buying_price: parseFloat(item.buying_price),
-        lot: item.lot.lot,
+        lot: item.lot === null ? "" : item.lot.lot,
         item_cost: parseFloat(item.item_cost),
       }));
     } else {
@@ -106,8 +106,8 @@ function InvoiceForm({ invoiceData, title, method }) {
 
   itemList = tableRows;
 
-  const dataAvailable = (invoiceData && invoiceData.purchase_items.length > 0) 
-   return (
+  const dataAvailable = invoiceData && invoiceData.purchase_items.length > 0;
+  return (
     <React.Fragment>
       {data && data.errors && (
         <ul>
@@ -446,7 +446,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                     <input
                       name="lot"
                       defaultValue={
-                        invoiceData?.purchase_items?.[index]?.lot.lot || row.lot
+                       row.lot
                       }
                       list="options1"
                       onChange={(e) => handleInputChange(e, index, "lot")}
