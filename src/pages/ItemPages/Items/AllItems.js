@@ -33,6 +33,7 @@ async function ItemsLoader(){
         throw json({message: "The response was not ok"},{status: 500})
     }else{
         const resData = await response.json()
+        console.log(resData)
         return resData
     }
 };

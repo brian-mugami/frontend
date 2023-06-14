@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 50;
 
 const ItemList = ({ items }) => {
   const [currentPage, setCurrentPage] = useState(1);
