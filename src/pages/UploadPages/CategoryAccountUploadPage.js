@@ -52,27 +52,30 @@ function CategoryAccountUploadPage() {
 
   return (
     <React.Fragment>
+      <div className="pt-10">
       <h1>Category Accounts Upload</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="py-5">
           <input
             type="file"
             accept=".xlsx"
             required
+            className="form-control mt-1 text-sm leading-6 text-gray-600 "
             onChange={handleFileChange}
             name="file"
             id="formFileMultiple"
-            className="form-control"
           />
+          </div>
           <button
-            className="btn btn-success"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             type="submit"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Submitting" : "Submit"}
           </button>
-        </div>
+        
       </form>
+      </div>
     </React.Fragment>
   );
 }
