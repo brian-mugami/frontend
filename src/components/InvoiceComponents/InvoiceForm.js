@@ -31,6 +31,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_name: item.item.item_name,
         item_quantity: parseFloat(item.item_quantity),
         buying_price: parseFloat(item.buying_price),
+        lot: item.lot === null ? "" : item.lot.lot,
         item_cost: parseFloat(item.item_cost),
       }));
     } else {
@@ -38,6 +39,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_name: "",
         item_quantity: 1,
         buying_price: 1,
+        lot: "",
         item_cost: 1,
       }));
     }
@@ -46,7 +48,7 @@ function InvoiceForm({ invoiceData, title, method }) {
   const [invoiceTotal, setInvoiceTotal] = useState(0);
   const navigation = useNavigation();
   const date = new Date().toISOString().slice(0, 10);
-  const { suppliers, items, expenseAccounts,  } = useLoaderData();
+  const { suppliers, items, expenseAccounts, lots } = useLoaderData();
   const data = useActionData();
   const [expense, setExpense] = useState(false);
 
@@ -57,6 +59,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_name: " ",
         item_quantity: 0,
         buying_price: parseFloat(0),
+        lot: " ",
         item_cost: parseFloat(0),
       },
     ]);
@@ -384,6 +387,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                 <th scope="col">Item Name</th>
                 <th scope="col">Item Quantity</th>
                 <th scope="col">Buying Price</th>
+                <th scope="col">Lot</th>
                 <th scope="col">Total Cost</th>
               </tr>
             </thead>
@@ -433,7 +437,22 @@ function InvoiceForm({ invoiceData, title, method }) {
                       }
                     />
                   </td>
-              
+                  <td>
+                    <input
+                      name="lot"
+                      defaultValue={
+                         row.lot
+                      }
+                      list="options1"
+                      onChange={(e) => handleInputChange(e, index, "lot")}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                    <datalist id="options1">
+                      {lots.map((lot) => (
+                        <option key={lot.id} value={lot.lot} />
+                      ))}
+                    </datalist>
+                  </td>
                   <td>{row.item_cost}</td>
                   <td>
                     <button
@@ -593,6 +612,7 @@ export async function action({ request, params }) {
       items_list: itemList.map((item) => ({
         item_name: item.item_name,
         buying_price: item.buying_price,
+        lot: item.lot,
         item_quantity: item.item_quantity,
       })),
     };
@@ -667,6 +687,7 @@ export async function action({ request, params }) {
         item_name: item.item_name,
         buying_price: item.buying_price,
         quantity: item.item_quantity,
+        lot: item.lot,
       })),
     };
     for (let item of existingData.purchase_items) {
