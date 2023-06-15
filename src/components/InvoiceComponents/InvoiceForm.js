@@ -336,7 +336,7 @@ function InvoiceForm({ invoiceData, title, method }) {
             <button
               className="btn btn-secondary mb-4 mr-5 "
               onClick={handleAddRow}
-              disabled={dataAvailable}
+              disabled={invoiceData && (invoiceData.purchase_items.length > 0)}
             >
               <div className="flex ">
                 <svg
@@ -463,7 +463,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                     <button
                       className="btn btn-danger"
                       onClick={() => handleRemoveRow(index)}
-                      disabled={dataAvailable}
+                      disabled={invoiceData && (invoiceData.purchase_items.length > 0)}
                     >
                       Remove
                     </button>

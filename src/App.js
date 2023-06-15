@@ -332,6 +332,16 @@ const InvoiceAttachmentPage = lazy(() =>
 
 const ReportsPage = lazy(() => import("./pages/ReportsPage/ReportsListPage"));
 
+const CategoryAccountUploadPage = lazy(() =>
+  import("./pages/UploadPages/CategoryAccountUploadPage")
+);
+
+const CategoryUploadPage = lazy(() =>
+  import("./pages/UploadPages/CategoryUploadPage")
+);
+
+const ItemUploadPage = lazy(() => import("./pages/UploadPages/ItemUploadPage"));
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -354,7 +364,7 @@ const router = createBrowserRouter([
           <Suspense fallback={<p>Loading...</p>}>
             <HomePage />
           </Suspense>
-        ),
+        )
       },
       {
         path: "reports",
@@ -362,7 +372,32 @@ const router = createBrowserRouter([
           <Suspense fallback={<p>Loading...</p>}>
             <ReportsPage />
           </Suspense>
-        ),
+        )
+      },
+      {
+        path: "upload-itemAccounts",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <CategoryAccountUploadPage />
+          </Suspense>
+        )
+      },
+      {
+        path: "upload-itemCategory",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <CategoryUploadPage />
+          </Suspense>
+        )
+      },
+      ,
+      {
+        path: "upload-item",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <ItemUploadPage />
+          </Suspense>
+        )
       },
       {
         path: "bank-balances",

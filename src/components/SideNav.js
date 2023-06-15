@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, NavLink } from "react-router-dom";
-import {  useRouteLoaderData } from "react-router-dom";
+import { useRouteLoaderData } from "react-router-dom";
 
 import {
   Menu,
@@ -136,6 +136,38 @@ function SideNav() {
               <NavLink className="sidebar-nav-link" to="reports">
                 Reports
               </NavLink>
+
+              <Menu>
+                <MenuHandler>
+                  <div className="sidebar-nav-link">Uploads</div>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem>
+                    <NavLink
+                      className="sidebar-nav-link"
+                      to="upload-itemAccounts"
+                    >
+                      Upload Item Accounts
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <NavLink
+                      className="sidebar-nav-link"
+                      to="upload-itemCategory"
+                    >
+                      Upload Item Categories
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <NavLink
+                      className="sidebar-nav-link"
+                      to="upload-item"
+                    >
+                      Upload Items
+                    </NavLink>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
 
               <Menu>
                 <MenuHandler>
