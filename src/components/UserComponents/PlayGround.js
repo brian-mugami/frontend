@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { UserGroupIcon } from "@heroicons/react/24/outline";
+
 import {
   Card,
   Metric,
@@ -144,19 +146,12 @@ function PlayGround() {
     },
   ];
 
-
-
-
   const dummyData = [
-    monthlySales.daily_totals.map((dailyItem)=>(
-     {
+    monthlySales.daily_totals.map((dailyItem) => ({
       date: dailyItem.day,
-      PurchasesPerMonth: dailyItem.total_amount ,
-    } 
-
-    ))
-  ]
-
+      PurchasesPerMonth: dailyItem.total_amount,
+    })),
+  ];
 
   const chartdata = monthlySales.daily_totals.map((salesItem, index) => ({
     date: salesItem.day,
@@ -185,7 +180,7 @@ function PlayGround() {
         ? 0
         : dailyExpenses.total_expenses_week,
       data: expenseHighlights,
-    }
+    },
   ];
 
   const dataFormatter = (number: number) =>
@@ -193,6 +188,17 @@ function PlayGround() {
 
   return (
     <div>
+      <div className="pb-5">
+      <header className="bg-white  ">
+        <div className="mx-auto max-w-7xl px-4 py-6 flex justify-between sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+            Dashboard
+          </h1>
+         
+        </div>
+      </header>
+      </div>
+
       <Flex>
         <Grid numColsSm={2} numColsLg={3} className="gap-6">
           {categories.map((item) => (
@@ -252,22 +258,20 @@ function PlayGround() {
             <Metric>{inventoryValue.total_value.toLocaleString()}</Metric>
           </Card>
         </div>
-       
       </div>
       <div className=" pt-4">
-      <Card>
-    <Title>Monthly data</Title>
-    <AreaChart
-      className="h-72 mt-4"
-      data={chartdata}
-      index="date"
-      categories={["PurchasesPerMonth", "SalesPerMonth"]}
-      colors={["indigo", "cyan"]}
-      valueFormatter={dataFormatter}
-    />
-  </Card>
-          
-        </div>
+        <Card>
+          <Title>Monthly data</Title>
+          <AreaChart
+            className="h-72 mt-4"
+            data={chartdata}
+            index="date"
+            categories={["PurchasesPerMonth", "SalesPerMonth"]}
+            colors={["indigo", "cyan"]}
+            valueFormatter={dataFormatter}
+          />
+        </Card>
+      </div>
     </div>
   );
 }

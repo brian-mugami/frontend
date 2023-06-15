@@ -9,7 +9,7 @@ function RootLayout() {
     <React.Fragment>
       {token && <SideNav />}
 
-      <div className={token ? "p-4 sm:ml-64" : ""}>
+      <div className={token ? " sm:ml-0 md:ml-0 lg:ml-72" : ""}>
         <Outlet />
       </div>
     </React.Fragment>
