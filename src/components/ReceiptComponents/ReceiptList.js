@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const PAGE_SIZE = 10;
 
@@ -57,16 +57,20 @@ function ReceiptList({ receipts, title }) {
   ];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ height: 500, width: "100%" }}>
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
       <DataGrid
         rows={paginatedReceipts}
         columns={columns}
         pageSize={PAGE_SIZE}
+        rowCount={receipts.length}
         pagination
+        paginationMode="server"
         page={currentPage - 1}
         onPageChange={(params) => setCurrentPage(params.page + 1)}
-        rowCount={receipts.length}
+        components={{
+          Toolbar: GridToolbar,
+        }}
       />
     </div>
   );

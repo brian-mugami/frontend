@@ -6,11 +6,9 @@ const PAGE_SIZE = 10;
 
 function CustomerPaymentsList({ payments }) {
   const [currentPage, setCurrentPage] = useState(1);
-
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
   const paginatedPayments = payments.slice(startIndex, endIndex);
-
   const totalPages = Math.ceil(payments.length / PAGE_SIZE);
 
   const handlePageChange = (params) => {
@@ -87,8 +85,7 @@ function CustomerPaymentsList({ payments }) {
     <div style={{ height: 400, width: "100%" }} className="overscroll-contain">
       <h2 className="text-lg font-semibold mb-4">Payments</h2>
       <DataGrid
-      className="overscroll-contain"
-
+        className="overscroll-contain"
         rows={paginatedPayments}
         columns={columns}
         pagination

@@ -86,7 +86,6 @@ function InvoiceList({ invoices, title }) {
               <Link to={`./${params.row.id}/accounting`}>View</Link>
             </span>
           </div>
-       
         </div>
       ),
     },

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useActionData } from "react-router-dom";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const PAGE_SIZE = 10;
 
@@ -52,7 +52,7 @@ const columns = [
           <Link to={`./${params.value}/approve`}>Approve</Link>
         </span>
         </div>
-        <div>
+        <div className="pr-2">
         <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
           <Link to={`./${params.value}/accounting`}>Accounting</Link>
         </span>
@@ -91,7 +91,7 @@ const SupplierPaymentList = ({ payments }) => {
           </ul>
         )}
         {data && data.message && <p>{data.message}</p>}
-        <div style={{ height: 400, width: "100%" }}>
+        <div style={{ height: 500, width: "100%" }}>
           <DataGrid
             rows={paginatedPayments.map((payment) => ({
               id: payment.id,
@@ -107,7 +107,10 @@ const SupplierPaymentList = ({ payments }) => {
             pageSize={PAGE_SIZE}
             rowCount={payments.length}
             onPageChange={handlePageChange}
-            autoHeight
+            
+            components={{
+              Toolbar: GridToolbar,
+            }}
           />
         </div>
       </div>
