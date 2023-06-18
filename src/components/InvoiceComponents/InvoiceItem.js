@@ -6,11 +6,8 @@ import {
 } from "react-router-dom/dist/umd/react-router-dom.development";
 import { Fragment } from "react";
 import {
-  BriefcaseIcon,
   CalendarIcon,
-  CheckIcon,
   ChevronDownIcon,
-  CurrencyDollarIcon,
   PaperClipIcon,
   MapPinIcon,
   TrashIcon,
@@ -19,12 +16,11 @@ import {
   PencilIcon,
   BookmarkSlashIcon,
   ChevronLeftIcon,
-  LinkIcon,
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { getAuthToken } from "../../util/Auth";
 
-import { Divider, List, ListItem, Title } from "@tremor/react";
+import { Divider, List, ListItem } from "@tremor/react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
