@@ -21,13 +21,13 @@ function CustomerForm({ method, cusData, title, accounts }) {
 
   return (
     <React.Fragment>
-      <div className="hidden sm:block" aria-hidden="true">
-        <div className="py-5">
+      <div>
+        <div className="py-4"> 
           <div className="border-t border-gray-200" />
         </div>
       </div>
 
-      <div className="mt-10 bg-gray-200 sm:mt-0">
+      <div className="mt-10">
         <div className="md:grid  md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
@@ -144,9 +144,9 @@ function CustomerForm({ method, cusData, title, accounts }) {
                       </select>
                     </div>
 
-                    <div className="col-span-6 sm:col-span-4">
+                    <div className="col-span-6 sm:col-span-4 ">
                       <label>Status</label>
-                      <div>
+                      <div className="space-x-2">
                         <label>Active</label>
                         <input type="radio" name="active" value="True" />
                         <label>Inactive</label>

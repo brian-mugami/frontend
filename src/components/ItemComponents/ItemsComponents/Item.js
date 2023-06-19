@@ -1,36 +1,61 @@
 import React from "react";
 import { useSubmit, Link, useRouteLoaderData } from "react-router-dom";
+import { Card, List, ListItem, Title } from "@tremor/react";
 
-function Item({item}){
-    const token = useRouteLoaderData('root')
-    const submit = useSubmit()
+function Item({ item }) {
+  const token = useRouteLoaderData("root");
+  const submit = useSubmit();
 
-    function startDeleteHandler() {
-        const proceed = window.confirm('Are you sure?');
-    
-        if (proceed) {
-          submit(null, { method: 'delete'});
-        }
-      }
+  function startDeleteHandler() {
+    const proceed = window.confirm("Are you sure?");
 
-      return(
-        <React.Fragment>
-            <h3>Item Details</h3>
-            <p>Item name-{item.item_name}</p>
-            <p>Item number-{item.item_number}</p>
-            <p>Item category-{item.category.name}</p>
-            <p>Item price -{item.price}</p>
-            <p>Item Unit -{item.item_unit}</p>
-            <p>Item Unit Type - {item.unit_type}</p>
-            <p>Item Creation Date - {item.date_created}</p>
-            <p>Is Item Active - {item.is_active ? "Active":"Inactive"}</p>
-            {token && <menu>
-                <Link to="edit">Edit</Link>
-                <button onClick={startDeleteHandler}>Delete</button>
-                </menu>}
-        </React.Fragment>)
+    if (proceed) {
+      submit(null, { method: "delete" });
+    }
+  }
 
-
+  return (
+    <React.Fragment>
+      <Card>
+        <Title level={3}>Item Details</Title>
+        <List>
+          <ListItem>
+            <strong>Item name:</strong> {item.item_name}
+          </ListItem>
+          <ListItem>
+            <strong>Item number:</strong> {item.item_number}
+          </ListItem>
+          <ListItem>
+            <strong>Item category:</strong> {item.category.name}
+          </ListItem>
+          <ListItem>
+            <strong>Item price:</strong> {item.price}
+          </ListItem>
+          <ListItem>
+            <strong>Item Unit:</strong> {item.item_unit}
+          </ListItem>
+          <ListItem>
+            <strong>Item Unit Type:</strong> {item.unit_type}
+          </ListItem>
+          <ListItem>
+            <strong>Item Creation Date:</strong> {item.date_created}
+          </ListItem>
+          <ListItem>
+            <strong>Is Item Active:</strong>{" "}
+            {item.is_active ? "Active" : "Inactive"}
+          </ListItem>
+          </List>
+      {token && (
+          <div className="space-x-5">
+        
+        <Link to="edit">Edit</Link>
+        <button onClick={startDeleteHandler}>Delete</button>
+        </div>
+        
+        )}
+      </Card>
+    </React.Fragment>
+  );
 }
 
 export default Item;

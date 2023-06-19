@@ -126,54 +126,48 @@ function InvoiceItem({ invoice }) {
         </div>
 
         <div className="mt-5 flex lg:ml-4 lg:mt-0">
-
           <span className="ml-3 hidden  sm:block">
             <Link to="edit">
-            <button
-              type="button"
-              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <PencilIcon
-                className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
-              Edit
-            </button>
+              <button
+                type="button"
+                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                <PencilIcon
+                  className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                Edit
+              </button>
             </Link>
           </span>
 
-          
-
-
-
-
           <span className="ml-3 hidden sm:block">
-             <Link to="attachment">
-            <button
-              type="button"
-              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <PaperClipIcon
-                className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
-              Attach
-            </button>
+            <Link to="attachment">
+              <button
+                type="button"
+                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                <PaperClipIcon
+                  className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                Attach
+              </button>
             </Link>
           </span>
 
           <span className="ml-3 hidden sm:block">
             <Link to="void">
-            <button
-              type="button"
-              className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            >
-              <BookmarkSlashIcon
-                className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
-              Void
-            </button>
+              <button
+                type="button"
+                className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                <BookmarkSlashIcon
+                  className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                Void
+              </button>
             </Link>
           </span>
 
@@ -213,7 +207,8 @@ function InvoiceItem({ invoice }) {
               <Menu.Items className="absolute right-0 z-10 -mr-1 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
-                    <Link to="edit"
+                    <Link
+                      to="edit"
                       className={classNames(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-700"
@@ -225,7 +220,8 @@ function InvoiceItem({ invoice }) {
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <Link to="attachment"
+                    <Link
+                      to="attachment"
                       className={classNames(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-700"
@@ -237,7 +233,8 @@ function InvoiceItem({ invoice }) {
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <Link to="void"
+                    <Link
+                      to="void"
                       className={classNames(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-700"
@@ -298,24 +295,21 @@ function InvoiceItem({ invoice }) {
       <Divider />
       <b>Payments</b>
       <List>
-      <div className="flex">
-        {invoice.payments.map((payment) => (
-          <ListItem>
+        <div className="flex">
+          {invoice.payments.map((payment) => (
+            <ListItem>
+              <h1>{payment.payment_status}</h1>
 
-            <h1>{payment.payment_status}</h1>
-            
-            <h1>
-              {" "}
-              Amount Paid : {payment.amount} Approval Status :{" "}
-              {payment.approval_status}
-            </h1>
-            
-            <h1> Transaction code : {payment.payment_description}</h1>
+              <h1>
+                {" "}
+                Amount Paid : {payment.amount} Approval Status :{" "}
+                {payment.approval_status}
+              </h1>
+
+              <h1> Transaction code : {payment.payment_description}</h1>
             </ListItem>
-           
-          
-        ))}
-         </div>
+          ))}
+        </div>
       </List>
       <div className="py-10">
         <span className="">

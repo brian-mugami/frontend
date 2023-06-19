@@ -5,8 +5,10 @@ import SupplierPaymentNav from '../../components/SupplierPaymentComponents/Suppl
 function SupplierPaymentRoot() {
   return (
     <React.Fragment>
+      <div className='px-4'>
         <SupplierPaymentNav/>
         <Outlet/>
+        </div>
     </React.Fragment>
   )
 }

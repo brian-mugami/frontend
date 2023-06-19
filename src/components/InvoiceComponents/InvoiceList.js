@@ -8,6 +8,13 @@ const PAGE_SIZE = 10;
 function InvoiceList({ invoices, title }) {
   const [currentPage, setCurrentPage] = React.useState(1);
 
+  const [pinnedColumns, setPinnedColumns] = React.useState({
+    left: ['name'],
+  });
+
+ 
+
+
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
   const paginatedInvoices = invoices.slice(startIndex, endIndex);
@@ -103,6 +110,8 @@ function InvoiceList({ invoices, title }) {
           </ul>
         )}
         {data && data.message && <p>{data.message}</p>}
+
+        
         <DataGrid
           rows={paginatedInvoices}
           columns={columns}

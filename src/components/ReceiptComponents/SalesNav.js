@@ -26,8 +26,8 @@ function SalesNav() {
 
         <Breadcrumbs>
           <div className="flex justify">
-            <TicketIcon strokeWidth={1} className="h-6 w-6" />
-            <NavLink to="./new">Add receipt</NavLink>
+            <TicketIcon strokeWidth={1} className="h-6 w-6 pr-2" />
+            <NavLink to="./new">Add</NavLink>
           </div>
         </Breadcrumbs>
       </div>
