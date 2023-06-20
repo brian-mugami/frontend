@@ -342,6 +342,13 @@ const CategoryUploadPage = lazy(() =>
 
 const ItemUploadPage = lazy(() => import("./pages/UploadPages/ItemUploadPage"));
 
+const ExpensePage = lazy(() =>
+  import("./pages/ExpensesPages/AllExpensesBalancePage")
+);
+
+const InventoryUploadPage = lazy(() =>
+  import("./pages/UploadPages/InventoryUpload")
+);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -364,7 +371,7 @@ const router = createBrowserRouter([
           <Suspense fallback={<p>Loading...</p>}>
             <HomePage />
           </Suspense>
-        )
+        ),
       },
       {
         path: "reports",
@@ -372,7 +379,7 @@ const router = createBrowserRouter([
           <Suspense fallback={<p>Loading...</p>}>
             <ReportsPage />
           </Suspense>
-        )
+        ),
       },
       {
         path: "upload-itemAccounts",
@@ -380,7 +387,14 @@ const router = createBrowserRouter([
           <Suspense fallback={<p>Loading...</p>}>
             <CategoryAccountUploadPage />
           </Suspense>
-        )
+        ),
+      },{
+        path: "upload-inventory",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <InventoryUploadPage/>
+          </Suspense>
+        ),
       },
       {
         path: "upload-itemCategory",
@@ -388,16 +402,27 @@ const router = createBrowserRouter([
           <Suspense fallback={<p>Loading...</p>}>
             <CategoryUploadPage />
           </Suspense>
-        )
+        ),
       },
-      ,
+      {
+        path: "expense-balance",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <ExpensePage />
+          </Suspense>
+        ),
+        loader: () =>
+          import("./pages/ExpensesPages/AllExpensesBalancePage").then(
+            (module) => module.loader()
+          ),
+      },
       {
         path: "upload-item",
         element: (
           <Suspense fallback={<p>Loading...</p>}>
             <ItemUploadPage />
           </Suspense>
-        )
+        ),
       },
       {
         path: "bank-balances",
