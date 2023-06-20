@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { DataGrid } from '@mui/x-data-grid';
-
-const PAGE_SIZE = 50;
+import { DataGrid } from "@mui/x-data-grid";
 
 const ItemList = ({ items }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = items.length; // Set the page size to the number of items
 
-  const startIndex = (currentPage - 1) * PAGE_SIZE;
-  const endIndex = startIndex + PAGE_SIZE;
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
   const paginatedItems = items.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(items.length / PAGE_SIZE);
+  const totalPages = Math.ceil(items.length / pageSize);
 
   const handlePageChange = (params) => {
     setCurrentPage(params.page);
@@ -19,7 +18,12 @@ const ItemList = ({ items }) => {
 
   const columns = [
     { field: "id", headerName: "ID", hide: true },
-    { field: "item_name", headerName: "Item Name", width: 250,  renderCell: (params) => (<Link to={`./${params.id}`}>{params.value}</Link>) },
+    {
+      field: "item_name",
+      headerName: "Item Name",
+      width: 250,
+      renderCell: (params) => <Link to={`./${params.id}`}>{params.value}</Link>,
+    },
     { field: "item_number", headerName: "Item Number", width: 200 },
     { field: "price", headerName: "Price", width: 200 },
   ];
@@ -27,9 +31,9 @@ const ItemList = ({ items }) => {
   const rows = paginatedItems.map((item) => {
     return {
       id: item.id,
-      item_name:item.item_name,
-      item_number:item.item_number,
-      price:item.price,
+      item_name: item.item_name,
+      item_number: item.item_number,
+      price: item.price,
     };
   });
 
@@ -41,7 +45,7 @@ const ItemList = ({ items }) => {
           rows={rows}
           columns={columns}
           pagination
-          pageSize={PAGE_SIZE}
+          pageSize={pageSize}
           rowCount={items.length}
           onPageChange={handlePageChange}
           checkboxSelection

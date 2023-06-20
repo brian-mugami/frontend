@@ -171,7 +171,7 @@ function SideNav() {
 
               <Menu>
                 <MenuHandler>
-                  <div className="sidebar-nav-link">Edit</div>
+                  <div className="sidebar-nav-link">More...</div>
                 </MenuHandler>
                 <MenuList>
                   <MenuItem>
