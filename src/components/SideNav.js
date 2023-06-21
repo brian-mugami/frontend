@@ -126,6 +126,14 @@ function SideNav() {
                     </NavLink>
                   </MenuItem>
                   <MenuItem>
+                    <NavLink
+                      className="sidebar-nav-link"
+                      to="expense-balance"
+                    >
+                      Expense Balances
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem>
                     <NavLink className="sidebar-nav-link" to="bank-balances">
                       Bank Balances
                     </NavLink>
@@ -156,6 +164,14 @@ function SideNav() {
                       to="upload-itemCategory"
                     >
                       Upload Item Categories
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem>
+                    <NavLink
+                      className="sidebar-nav-link"
+                      to="upload-inventory"
+                    >
+                      Upload Inventory
                     </NavLink>
                   </MenuItem>
                   <MenuItem>
