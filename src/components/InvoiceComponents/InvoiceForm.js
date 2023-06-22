@@ -104,7 +104,7 @@ function InvoiceForm({ invoiceData, title, method }) {
     });
   };
 
-  itemList = tableRows;  
+  itemList = tableRows;
   return (
     <React.Fragment>
       {data && data.errors && (
@@ -305,8 +305,11 @@ function InvoiceForm({ invoiceData, title, method }) {
             )}
 
             <p>
-              <label>Date</label>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Date
+              </label>
               <input
+                className="block w-full  rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 name="inv_date"
                 type="date"
                 defaultValue={invoiceData ? invoiceData.date : date}
@@ -333,7 +336,7 @@ function InvoiceForm({ invoiceData, title, method }) {
             <button
               className="btn btn-secondary mb-4 mr-5 "
               onClick={handleAddRow}
-              disabled={invoiceData && (invoiceData.purchase_items.length > 0)}
+              disabled={invoiceData && invoiceData.purchase_items.length > 0}
             >
               <div className="flex ">
                 <svg
@@ -383,7 +386,7 @@ function InvoiceForm({ invoiceData, title, method }) {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Line Number</th>
+                <th scope="col">Line No.</th>
                 <th scope="col">Item Name</th>
                 <th scope="col">Item Quantity</th>
                 <th scope="col">Buying Price</th>
@@ -405,7 +408,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                       list="options"
                       onChange={(e) => handleInputChange(e, index, "item_name")}
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                     <datalist id="options">
                       {items.map((item) => (
@@ -415,6 +418,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                   </td>
                   <td>
                     <input
+                      className="block w-1/2 rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       required
                       type="number"
                       name="item_quantity"
@@ -427,6 +431,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                   </td>
                   <td>
                     <input
+                      className="block w-1/2 rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       required
                       type="number"
                       min="1"
@@ -440,9 +445,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                   <td>
                     <input
                       name="lot"
-                      defaultValue={
-                         row.lot
-                      }
+                      defaultValue={row.lot}
                       list="options1"
                       onChange={(e) => handleInputChange(e, index, "lot")}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -458,7 +461,9 @@ function InvoiceForm({ invoiceData, title, method }) {
                     <button
                       className="btn btn-danger"
                       onClick={() => handleRemoveRow(index)}
-                      disabled={invoiceData && (invoiceData.purchase_items.length > 0)}
+                      disabled={
+                        invoiceData && invoiceData.purchase_items.length > 0
+                      }
                     >
                       Remove
                     </button>
@@ -477,12 +482,15 @@ export default InvoiceForm;
 
 export async function suppliersLoader() {
   const token = getAuthToken();
-  const response = await fetch("https://flask-inventory.onrender.com/supplier", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/supplier",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
   if (!response.ok) {
     throw json({ message: "Cant get suppliers" }, { status: 500 });
   } else {
@@ -512,12 +520,15 @@ async function ItemsLoader() {
 async function LotLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("https://flask-inventory.onrender.com/item/lot", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/item/lot",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
   if (!response.ok) {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
@@ -529,12 +540,15 @@ async function LotLoader() {
 async function AccountLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("https://flask-inventory.onrender.com/expense/account", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/expense/account",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
   if (!response.ok) {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
@@ -616,15 +630,18 @@ export async function action({ request, params }) {
         item_quantity: item.item_quantity,
       })),
     };
-    const invoiceLines = await fetch("https://flask-inventory.onrender.com/purchase", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(lines),
-    });
+    const invoiceLines = await fetch(
+      "https://flask-inventory.onrender.com/purchase",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(lines),
+      }
+    );
     if (invoiceLines.status === 400) {
       return invoiceLines;
     }
@@ -691,14 +708,17 @@ export async function action({ request, params }) {
       })),
     };
     for (let item of existingData.purchase_items) {
-      const lineResponse = await fetch("https://flask-inventory.onrender.com/purchase/" + item.id, {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(invoiceUpdateLines),
-      });
+      const lineResponse = await fetch(
+        "https://flask-inventory.onrender.com/purchase/" + item.id,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(invoiceUpdateLines),
+        }
+      );
       if (lineResponse.status === 400) {
         return lineResponse;
       }
