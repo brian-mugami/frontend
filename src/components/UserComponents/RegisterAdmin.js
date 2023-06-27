@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import Kd from "../../components/assets/ktslogo.png"
 
-export default function AuthForm() {
+export default function AuthAdminForm() {
   const data = useActionData();
   const [searchParams] = useSearchParams();
   const navigation = useNavigation();
@@ -61,7 +61,7 @@ export default function AuthForm() {
                       id="fname"
                       name="fname"
                       type="name"
-                      autoComplete="name"
+                      autoComplete="name1"
                       required
                       className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder="First Name"
@@ -201,7 +201,7 @@ export default function AuthForm() {
                       Password
                     </label>
                     <input
-                      id="password3"
+                      id="password"
                       name="password"
                       type="password"
                       autoComplete="current-password"

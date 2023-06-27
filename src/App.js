@@ -349,6 +349,11 @@ const ExpensePage = lazy(() =>
 const InventoryUploadPage = lazy(() =>
   import("./pages/UploadPages/InventoryUpload")
 );
+
+const AdminRegisterPage = lazy(() =>
+  import("./pages/UserPages/AdminRegisterPage")
+);
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -388,11 +393,12 @@ const router = createBrowserRouter([
             <CategoryAccountUploadPage />
           </Suspense>
         ),
-      },{
+      },
+      {
         path: "upload-inventory",
         element: (
           <Suspense fallback={<p>Loading...</p>}>
-            <InventoryUploadPage/>
+            <InventoryUploadPage />
           </Suspense>
         ),
       },
@@ -679,6 +685,18 @@ const router = createBrowserRouter([
         element: <ConfirmationPage />,
       },
       {
+        path: "auth/login/admin/kindred",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <AdminRegisterPage />
+          </Suspense>
+        ),
+        action:(meta) =>
+        import(
+          "./pages/UserPages/AdminRegisterPage"
+        ).then((module) => module.action(meta))
+      },
+      {
         path: "logout",
         action: LogoutAction,
       },
@@ -688,7 +706,7 @@ const router = createBrowserRouter([
         action: PasswordChangeAction,
       },
       {
-        path: "/home",
+        path: "home",
         element: <Dashboard />,
         loader: dashboardLoader,
       },
