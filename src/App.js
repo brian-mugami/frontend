@@ -528,6 +528,10 @@ const router = createBrowserRouter([
                 <NewReceiptPaymentPage />
               </Suspense>
             ),
+            loader: () =>
+              import(
+                "./components/CustomerPaymentComponents/CustomerSearchPaymentForm"
+              ).then((module) => module.loader()),
           },
           {
             path: ":id",
@@ -691,10 +695,10 @@ const router = createBrowserRouter([
             <AdminRegisterPage />
           </Suspense>
         ),
-        action:(meta) =>
-        import(
-          "./pages/UserPages/AdminRegisterPage"
-        ).then((module) => module.action(meta))
+        action: (meta) =>
+          import("./pages/UserPages/AdminRegisterPage").then((module) =>
+            module.action(meta)
+          ),
       },
       {
         path: "logout",

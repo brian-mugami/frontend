@@ -32,7 +32,7 @@ function NewCustomerPaymentPage() {
     const resData = await response.json();
     setResults(resData);
     if (resData.length === 0) {
-      window.alert("That customer has no  payments!!");
+      window.alert("That customer has no payments!!");
       navigate("./");
     }
     return results;
