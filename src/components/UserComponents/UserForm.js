@@ -57,7 +57,7 @@ export async function action({request, params}){
 
     const id = params.userId
 
-    const response = await fetch('https://flask-inventory.onrender.com/user/'+id, 
+    const response = await fetch('/user/'+id, 
     {method: "Patch",
     headers: {
         'Content-Type': 'application/json',

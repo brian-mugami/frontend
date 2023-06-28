@@ -20,7 +20,7 @@ function SupplierPaymentDetailPage() {
 export default SupplierPaymentDetailPage
 
 async function paymentLoader(id){
-    let url = 'https://flask-inventory.onrender.com/payment/'
+    let url = '/payment/'
     const token = getAuthToken()
     const response = await fetch(url + id, {
         method:"get",
@@ -51,7 +51,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("https://flask-inventory.onrender.com/payment/" + id, {
+    const response = await fetch("/payment/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token,

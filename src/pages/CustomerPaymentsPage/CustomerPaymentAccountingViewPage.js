@@ -70,7 +70,7 @@ export default CustomerPaymentAccountingViewPage;
 
 export async function loader({ params, request }) {
   const id = params.id;
-  let url = "https://flask-inventory.onrender.com/customer/payment/";
+  let url = "/customer/payment/";
   const token = getAuthToken();
   const response = await fetch(url + id + "/account", {
     method: "get",

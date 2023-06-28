@@ -193,7 +193,7 @@ export async function action({ request, params }) {
     category_name: data.get("category"),
   };
 
-  let url = "https://flask-inventory.onrender.com/item";
+  let url = "/item";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -218,7 +218,7 @@ export async function action({ request, params }) {
     return redirect("/item/main");
   } else {
     const id = params.id;
-    url = "https://flask-inventory.onrender.com/item/" + id;
+    url = "/item/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

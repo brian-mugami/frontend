@@ -21,7 +21,7 @@ export default SupplierPage;
 
 async function suppliersLoader(){
     const token = getAuthToken()
-    const response = await fetch("https://flask-inventory.onrender.com/supplier", {
+    const response = await fetch("/supplier", {
         method:"get",
         headers:{
             "Authorization": "Bearer "+ token,
