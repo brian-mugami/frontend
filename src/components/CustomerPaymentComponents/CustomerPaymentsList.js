@@ -27,11 +27,12 @@ const columns = [
     valueGetter: (params) => params.row.receipt.receipt_number || "",
   },
   {
-    field: "approved",
-    headerName: "Approved",
-    width: 200,
-    valueGetter: (params) =>
-      params.row.approved === true ? "approved" : "Not Approved",
+    field: "approvalStatus",
+    headerName: "Approval Status",
+    width: 150,
+    valueGetter: (params) => params.row.approval_status|| "",
+
+   
   },
   {
     field: "paymentDate",

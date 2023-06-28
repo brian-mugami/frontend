@@ -29,6 +29,7 @@ async function AllCustomerPaymentsLoader() {
   }
 
   const resData = await response.json();
+  console.log(resData)
   return resData;
 }
 

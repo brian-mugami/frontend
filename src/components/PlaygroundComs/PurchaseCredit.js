@@ -9,9 +9,9 @@ function PurchaseCredit({invoices}) {
     <Title>Purchase Credits</Title>
     <List>
       {invoices.map((invoice) => (
-        <ListItem key={invoice.city}>
-          <span>{invoice.city}</span>
-          <span>{invoice.rating}</span>
+        <ListItem key={invoice.supplier_name}>
+          <span>{invoice.supplier_name}</span>
+          <span>{invoice.total_balance.toLocaleString()}</span>
         </ListItem>
       ))}
     </List>

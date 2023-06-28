@@ -13,6 +13,8 @@ import {
   BarList,
   Color,
   Grid,
+  List,
+  ListItem,
 } from "@tremor/react";
 import PropTypes from "prop-types";
 import { json, useLoaderData } from "react-router-dom";
@@ -33,7 +35,7 @@ function PlayGround() {
     monthlySales,
     monthlyPurchases,
     purchaseCredit,
-    salesCredit
+    salesCredit,
   } = useLoaderData();
   const [categories, setCategories] = useState([]);
 
@@ -231,9 +233,7 @@ function PlayGround() {
                 alignItems="baseline"
                 className="truncate space-x-3"
               >
-                <Metric >
-                  Ksh.{item.metric}
-                </Metric>
+                <Metric>Ksh.{item.metric}</Metric>
                 <Text className="truncate">Transactions {item.metricPrev}</Text>
               </Flex>
             </Card>
@@ -296,9 +296,7 @@ function PlayGround() {
       <div className="p-4 grid grid-cols-3 gap-4">
         <SalesCredit receipts={salesCredit}/>
         <PurchaseCredit invoices={purchaseCredit}/>
-
       </div>
-
     </div>
   );
 }
@@ -320,7 +318,6 @@ async function salesLoader() {
     throw json({ message: "Sales Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
 
     return resData;
   }
@@ -379,7 +376,6 @@ async function purchaseLoader() {
     throw json({ message: "Purchases Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
 
     return resData;
   }
@@ -400,7 +396,7 @@ async function dailyPurchasesLoader() {
     throw json({ message: "Daily Purchases Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
+
     return resData;
   }
 }
@@ -441,7 +437,6 @@ async function inventoryValueLoader() {
     throw json({ message: "Inventory Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
 
     return resData;
   }
@@ -463,7 +458,6 @@ async function monthlySalesLoader() {
     throw json({ message: "Monthly sales Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
 
     return resData;
   }
@@ -485,12 +479,10 @@ async function monthlyPurchasesLoader() {
     throw json({ message: "Monthly sales Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
 
     return resData;
   }
 }
-
 
 async function purchasesCreditLoader() {
   const token = getAuthToken();
@@ -508,12 +500,10 @@ async function purchasesCreditLoader() {
     throw json({ message: "credit Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
 
-    return resData;
+    return resData.invoices;
   }
 }
-
 
 async function salesCreditLoader() {
   const token = getAuthToken();
@@ -531,13 +521,10 @@ async function salesCreditLoader() {
     throw json({ message: "credit Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
 
-    return resData;
+    return resData.receipts;
   }
 }
-
-
 
 export async function dashboardLoader() {
   return defer({

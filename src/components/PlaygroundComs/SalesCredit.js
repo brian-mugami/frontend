@@ -11,7 +11,7 @@ function SalesCredit( {receipts}) {
       {receipts.map((receipt) => (
         <ListItem key={receipt.customer_name}>
           <span>{receipt.customer_name}</span>
-          <span>{receipt.total_balance}</span>
+          <span>{receipt.total_balance.toLocaleString()}</span>
         </ListItem>
       ))}
     </List>
