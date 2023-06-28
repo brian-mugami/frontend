@@ -18,6 +18,8 @@ import PropTypes from "prop-types";
 import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
 import { defer } from "react-router-dom/dist/umd/react-router-dom.development";
+import SalesCredit from "../PlaygroundComs/SalesCredit";
+import PurchaseCredit from "../PlaygroundComs/PurchaseCredit";
 
 function PlayGround() {
   const {
@@ -30,36 +32,46 @@ function PlayGround() {
     inventoryValue,
     monthlySales,
     monthlyPurchases,
+    purchaseCredit,
+    salesCredit
   } = useLoaderData();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    {
-      const updatedCategories = [
-        {
-          title: "Total Sales Amount",
-          metric: sales.Amount,
-          metricPrev: sales.Sales,
-          delta: "25.3%",
-          deltaType: "moderateIncrease",
-        },
-        {
-          title: "Total Purchase Amount",
-          metric: purchases.Amount,
-          metricPrev: purchases.Purchases,
-          delta: "25.3%",
-          deltaType: "moderateIncrease",
-        },
-        {
-          title: "Profit Today",
-          metric: sales.Amount - purchases.Amount,
-          metricPrev: purchases.Purchases,
-          delta: "25.3%",
-          deltaType: "moderateIncrease",
-        },
-      ];
-      setCategories(updatedCategories);
-    }
+    const updatedCategories = [
+      {
+        title: "Total Sales Amount",
+        metric: sales.Amount.toLocaleString(),
+        metricPrev: sales.Sales.toLocaleString(),
+        delta: sales.Percentage_sales.toFixed(1),
+        deltaType:
+          sales.Percentage_sales < 0 ? "moderateDecrease" : "moderateIncrease",
+      },
+      {
+        title: "Total Purchase Amount",
+        metric: purchases.Amount.toLocaleString(),
+        metricPrev: purchases.Purchases.toLocaleString(),
+        delta: purchases.Percentage_Purchase.toFixed(1),
+        deltaType:
+          purchases.Percentage_Purchase < 0
+            ? "moderateDecrease"
+            : "moderateIncrease",
+      },
+      {
+        title: "Profit Today",
+        metric: (sales.Amount - purchases.Amount).toLocaleString(),
+        metricPrev: purchases.Purchases.toLocaleString(),
+        delta: (
+          ((sales.Amount - purchases.Amount) / purchases.Amount) *
+          100
+        ).toFixed(1),
+        deltaType:
+          sales.Amount - purchases.Amount < 0
+            ? "moderateDecrease"
+            : "moderateIncrease",
+      },
+    ];
+    setCategories(updatedCategories);
   }, [purchases, sales, dailySales]);
 
   const salesHighlights = [
@@ -183,20 +195,25 @@ function PlayGround() {
     },
   ];
 
+  const deltaTypes: { [key: string]: DeltaType } = {
+    average: "unchanged",
+    overperforming: "moderateIncrease",
+    underperforming: "moderateDecrease",
+  };
+
   const dataFormatter = (number: number) =>
     Intl.NumberFormat("us").format(number).toString();
 
   return (
     <div>
       <div className="pb-5">
-      <header className="bg-white  ">
-        <div className="mx-auto max-w-7xl px-4 py-6 flex justify-between sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            Dashboard
-          </h1>
-         
-        </div>
-      </header>
+        <header className="bg-white  ">
+          <div className="mx-auto max-w-7xl px-4 py-6 flex justify-between sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+              Dashboard
+            </h1>
+          </div>
+        </header>
       </div>
 
       <Flex>
@@ -205,14 +222,18 @@ function PlayGround() {
             <Card key={item.title}>
               <Flex alignItems="start">
                 <Text>{item.title}</Text>
-                <BadgeDelta deltaType={item.deltaType}>{item.delta}</BadgeDelta>
+                <BadgeDelta deltaType={item.deltaType}>
+                  {item.delta}%
+                </BadgeDelta>
               </Flex>
               <Flex
                 justifyContent="start"
                 alignItems="baseline"
                 className="truncate space-x-3"
               >
-                <Metric>Ksh.{item.metric}</Metric>
+                <Metric >
+                  Ksh.{item.metric}
+                </Metric>
                 <Text className="truncate">Transactions {item.metricPrev}</Text>
               </Flex>
             </Card>
@@ -272,6 +293,12 @@ function PlayGround() {
           />
         </Card>
       </div>
+      <div className="p-4 grid grid-cols-3 gap-4">
+        <SalesCredit receipts={salesCredit}/>
+        <PurchaseCredit invoices={purchaseCredit}/>
+
+      </div>
+
     </div>
   );
 }
@@ -352,6 +379,8 @@ async function purchaseLoader() {
     throw json({ message: "Purchases Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
+    console.log(resData);
+
     return resData;
   }
 }
@@ -456,10 +485,59 @@ async function monthlyPurchasesLoader() {
     throw json({ message: "Monthly sales Server Error" }, { status: 500 });
   } else {
     const resData = await response.json();
+    console.log(resData);
 
     return resData;
   }
 }
+
+
+async function purchasesCreditLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/purchase/credit",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "credit Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+
+    return resData;
+  }
+}
+
+
+async function salesCreditLoader() {
+  const token = getAuthToken();
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/transaction/sales/credit",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "credit Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData);
+
+    return resData;
+  }
+}
+
+
 
 export async function dashboardLoader() {
   return defer({
@@ -472,5 +550,7 @@ export async function dashboardLoader() {
     monthlySales: await monthlySalesLoader(),
     monthlyPurchases: await monthlyPurchasesLoader(),
     inventoryValue: await inventoryValueLoader(),
+    salesCredit: await salesCreditLoader(),
+    purchaseCredit: await purchasesCreditLoader(),
   });
 }

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
-
 const PAGE_SIZE = 10;
 
 function ReceiptList({ receipts, title }) {
@@ -31,6 +30,7 @@ function ReceiptList({ receipts, title }) {
       field: "customer",
       headerName: "Customer Name",
       width: 200,
+      valueGetter: (params) => params.row.customer.customer_name,
     },
     { field: "amount", headerName: "Receipt Amount", width: 150 },
     { field: "accounted_status", headerName: "Accounting Status", width: 200 },
@@ -78,6 +78,3 @@ function ReceiptList({ receipts, title }) {
 }
 
 export default ReceiptList;
-
-
-

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { defer, json, useLoaderData, Await } from "react-router-dom";
 import UserList from "../../components/UserComponents/Userlist";
+import { getAuthToken } from "../../util/Auth";
 
 function UsersPage() {
   const { users } = useLoaderData();
@@ -16,13 +17,19 @@ function UsersPage() {
 export default UsersPage;
 
 async function loadUsers() {
-  const response = await fetch("https://flask-inventory.onrender.com/users");
-  if (!response.ok) {
+  const token = getAuthToken();
+  const response = await fetch("https://flask-inventory.onrender.com/users", {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  if (response.status === 400) {
     throw json(
       {
-        message: "Could not fetch users.",
+        message: "Only Admin is able to see this page.",
       },
-      { status: 500 }
+      { status: 400 }
     );
   }
 
@@ -43,6 +50,7 @@ async function loadUsers() {
     );
   }
   const data = await response.json();
+  console.log(data);
   return data;
 }
 

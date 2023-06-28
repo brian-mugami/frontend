@@ -25,11 +25,9 @@ const columns = [
   },
   {
     field: "approvalStatus",
-    headerName: "Approved",
+    headerName: "Approval Status",
     width: 150,
-    renderCell: (params) => (
-      <span>{params.value === "pending approval" ? "pending approved" : "Not Approved"}</span>
-    ),
+   
   },
   {
     field: "date",
@@ -97,7 +95,7 @@ const SupplierPaymentList = ({ payments }) => {
               id: payment.id,
               supplierName: payment.invoice.supplier.supplier_name,
               invoiceNumber: payment.invoice.invoice_number,
-              approved: payment.approved,
+              approvalStatus: payment.approval_status,
               date: payment.date,
               invoiceDate: payment.invoice.date,
               actions: payment.id,
