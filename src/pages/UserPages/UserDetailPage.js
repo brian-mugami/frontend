@@ -31,7 +31,7 @@ export async function loader({params, request}){
 export async function action({params, request}){
     const token = getAuthToken()
     const id = params.userId
-    const response = await fetch('https://flask-inventory.onrender.com/user/' + id, {
+    const response = await fetch('/user/' + id, {
         method: request.method,
         headers: {
             'Authorization': "Bearer "+ token,

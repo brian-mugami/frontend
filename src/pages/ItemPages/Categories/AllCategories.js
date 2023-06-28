@@ -21,7 +21,7 @@ export default CategoriesPage;
 
  export async function catLoader(){
     const token = getAuthToken()
-    const response = await fetch("https://flask-inventory.onrender.com/item/category", {
+    const response = await fetch("/item/category", {
         method:"get",
         headers:{
             "Authorization": "Bearer "+ token,

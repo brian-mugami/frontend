@@ -31,10 +31,6 @@ function ConfirmationPage() {
   );
 }
 
-<<<<<<< HEAD
-export default ConfirmationPage
-=======
 export default ConfirmationPage;
 
 export async function action() {}
->>>>>>> origin/master

@@ -18,7 +18,7 @@ export default InvAdjAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('https://flask-inventory.onrender.com/inventory-adjustment/account', {
+    const response = await fetch('/inventory-adjustment/account', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token,

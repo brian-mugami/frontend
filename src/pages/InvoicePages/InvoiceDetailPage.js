@@ -14,7 +14,7 @@ function InvoiceDetailPage(){
 export default InvoiceDetailPage;
 
 export async function loader({request, params}){
-    let url = 'https://flask-inventory.onrender.com/invoice/'
+    let url = '/invoice/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -39,7 +39,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("https://flask-inventory.onrender.com/invoice/" + id, {
+    const response = await fetch("/invoice/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token,

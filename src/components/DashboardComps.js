@@ -142,7 +142,7 @@ async function salesLoader(){
 
 async function countLoader() {
   const token = getAuthToken();
-  const response = await fetch("https://flask-inventory.onrender.com/supplier/count", {
+  const response = await fetch("/supplier/count", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,

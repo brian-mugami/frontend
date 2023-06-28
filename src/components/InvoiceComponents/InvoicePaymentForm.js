@@ -120,7 +120,7 @@ export default InvoicePaymentForm;
 export async function action({ request, params }) {
   const token = getAuthToken();
   const id = params.id;
-  let url = "https://flask-inventory.onrender.com/invoice/payment/" + id;
+  let url = "/invoice/payment/" + id;
   const data = await request.formData();
   const paymentData = {
     amount: data.get("amount"),
@@ -153,7 +153,7 @@ export async function action({ request, params }) {
 async function accountLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("https://flask-inventory.onrender.com/bank/account", {
+  const response = await fetch("/bank/account", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -170,7 +170,7 @@ async function accountLoader() {
 }
 
 async function invoiceLoader(id) {
-  let url = "https://flask-inventory.onrender.com/invoice/";
+  let url = "/invoice/";
   const token = getAuthToken();
   const response = await fetch(url + id, {
     method: "get",

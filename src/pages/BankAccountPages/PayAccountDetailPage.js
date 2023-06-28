@@ -21,7 +21,7 @@ export default PaymentAccountDetailPage;
 
 async function loadaccount(id){
     const token = getAuthToken();
-    const response = await fetch('https://flask-inventory.onrender.com/bank/account/' + id,{
+    const response = await fetch('/bank/account/' + id,{
         headers : {
             'Authorization': 'Bearer ' + token,
             "Access-Control-Allow-Origin": "*",

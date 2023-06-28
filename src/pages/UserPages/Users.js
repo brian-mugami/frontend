@@ -16,7 +16,7 @@ function UsersPage() {
 export default UsersPage;
 
 async function loadUsers() {
-  const response = await fetch("https://flask-inventory.onrender.com/users");
+  const response = await fetch("/users");
   if (!response.ok) {
     throw json(
       {

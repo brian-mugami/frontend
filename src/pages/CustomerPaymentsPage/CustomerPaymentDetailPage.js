@@ -19,7 +19,7 @@ export default CustomerPaymentDetailPage;
 export async function loader({ params, request }) {
   const id = params.id;
   const token = getAuthToken();
-  let url = "https://flask-inventory.onrender.com/customer/payment/";
+  let url = "/customer/payment/";
   const response = await fetch(url + id, {
     method: "GET",
     headers: {

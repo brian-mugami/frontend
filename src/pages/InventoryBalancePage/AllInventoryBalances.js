@@ -18,7 +18,7 @@ export default InventoryBalancesPage;
 async function InventoryBalancesLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('https://flask-inventory.onrender.com/inventory-balances', {
+    const response = await fetch('/inventory-balances', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token,
@@ -38,7 +38,7 @@ async function InventoryBalancesLoader(){
 async function ItemsLoader(){
     const token = getAuthToken()
 
-    const response = await fetch("https://flask-inventory.onrender.com/item", {
+    const response = await fetch("/item", {
         method: "get",
         headers: {
             "Authorization": "Bearer "+ token,

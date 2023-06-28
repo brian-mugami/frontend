@@ -56,7 +56,7 @@ export default InvoiceAccountForm;
 export async function action({ request, params }) {
   const token = getAuthToken();
   const id = params.id;
-  const url = "https://flask-inventory.onrender.com/invoice/account/" + id;
+  const url = "/invoice/account/" + id;
 
   const response = await fetch(url, {
     method: "POST",
