@@ -87,7 +87,6 @@ async function accountingLoader(id) {
     throw json({ message: "Not gotten accounting" }, { status: 404 });
   }
   const resData = await response.json();
-  console.log(resData);
   return resData.accounting[0];
 }
 

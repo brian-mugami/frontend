@@ -77,7 +77,6 @@ async function dailySalesLoader() {
       throw json({ message: "Suppliers Server Error" }, { status: 500 });
     } else {
       const resData = await response.json();
-      console.log(resData);
       return resData;
     }
   }

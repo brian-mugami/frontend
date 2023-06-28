@@ -89,7 +89,6 @@ async function suppliersLoader() {
     throw json({ message: "Cant get suppliers" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
     return resData;
   }
 }
