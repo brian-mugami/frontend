@@ -477,10 +477,12 @@ export default InvoiceForm;
 
 export async function suppliersLoader() {
   const token = getAuthToken();
-  const response = await fetch("/supplier", {
+  const response = await fetch("https://flask-inventory.onrender.com/supplier", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+
     },
   });
   if (!response.ok) {
@@ -494,10 +496,12 @@ export async function suppliersLoader() {
 async function ItemsLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/item", {
+  const response = await fetch("https://flask-inventory.onrender.com/item", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+
     },
   });
   if (!response.ok) {
@@ -529,10 +533,12 @@ async function LotLoader() {
 async function AccountLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/expense/account", {
+  const response = await fetch("https://flask-inventory.onrender.com/expense/account", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+
     },
   });
   if (!response.ok) {
@@ -582,7 +588,7 @@ export async function action({ request, params }) {
       supplier_name: data.get("supplier"),
     };
   }
-  let url = "/invoice";
+  let url = "https://flask-inventory.onrender.com/invoice";
   if (method === "POST") {
     const response = await fetch(url, {
       method: request.method,
@@ -616,7 +622,7 @@ export async function action({ request, params }) {
         item_quantity: item.item_quantity,
       })),
     };
-    const invoiceLines = await fetch("/purchase", {
+    const invoiceLines = await fetch("https://flask-inventory.onrender.com/purchase", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -660,7 +666,7 @@ export async function action({ request, params }) {
       };
     }
     const id = params.id;
-    url = "/invoice/" + id;
+    url = "https://flask-inventory.onrender.com/invoice/" + id;
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
@@ -691,11 +697,13 @@ export async function action({ request, params }) {
       })),
     };
     for (let item of existingData.purchase_items) {
-      const lineResponse = await fetch("/purchase/" + item.id, {
+      const lineResponse = await fetch("https://flask-inventory.onrender.com/purchase/" + item.id, {
         method: "PUT",
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+
         },
         body: JSON.stringify(invoiceUpdateLines),
       });

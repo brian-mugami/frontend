@@ -1,8 +1,7 @@
 import React from "react";
-import { useLoaderData, json, Link } from "react-router-dom";
+import { useLoaderData, json } from "react-router-dom";
 import SupplierForm from "../../../components/SupplierComponents/SupplierForm";
 import { getAuthToken } from "../../../util/Auth";
-import { Breadcrumbs } from "@material-tailwind/react";
 
 function NewSupplierPage() {
   const accounts = useLoaderData();
@@ -21,10 +20,12 @@ export default NewSupplierPage;
 export async function loader() {
   const token = getAuthToken();
 
-  const response = await fetch("/supplier/account", {
+  const response = await fetch("https://flask-inventory.onrender.com/supplier/account", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+
     },
   });
   if (!response.ok) {

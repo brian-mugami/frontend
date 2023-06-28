@@ -16,13 +16,14 @@ function ItemDetailPage(){
 export default ItemDetailPage;
 
 export async function loader({request, params}){
-    let url = '/item/'
+    let url = 'https://flask-inventory.onrender.com/item/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
         method:"get",
         headers:{
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
 
@@ -39,10 +40,13 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("/item/" + id, {
+    const response = await fetch("https://flask-inventory.onrender.com/item/" + id, {
         method: request.method,
         headers : {
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token,
+            "Access-Control-Allow-Origin": "*",
+
+            
         }
     });
     if (!response.ok) {

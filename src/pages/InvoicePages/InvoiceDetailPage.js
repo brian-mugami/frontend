@@ -14,13 +14,14 @@ function InvoiceDetailPage(){
 export default InvoiceDetailPage;
 
 export async function loader({request, params}){
-    let url = '/invoice/'
+    let url = 'https://flask-inventory.onrender.com/invoice/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
         method:"get",
         headers:{
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
         }
     })
     
@@ -38,10 +39,11 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("/invoice/" + id, {
+    const response = await fetch("https://flask-inventory.onrender.com/invoice/" + id, {
         method: request.method,
         headers : {
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token,
+            "Access-Control-Allow-Origin": "*",
         }
     });
     if (response.status === 400){

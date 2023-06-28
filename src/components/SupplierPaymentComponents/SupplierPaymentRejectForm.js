@@ -49,7 +49,7 @@ export default SupplierPaymentRejectForm;
 export async function action({ request, params }) {
     const token = getAuthToken();
     const id = params.id;
-    let url = "/payment/reject/" + id;
+    let url = "https://flask-inventory.onrender.com/payment/reject/" + id;
     const data = await request.formData()
 
     const rejectData = {

@@ -16,13 +16,15 @@ function SupplierDetailPage(){
 export default SupplierDetailPage;
 
 export async function loader({request, params}){
-    let url = '/supplier/'
+    let url = 'https://flask-inventory.onrender.com/supplier/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
         method:"get",
         headers:{
-            "Authorization": "Bearer " + token
+            "Authorization": "Bearer " + token,
+            "Access-Control-Allow-Origin": "*",
+
         }
     })
 

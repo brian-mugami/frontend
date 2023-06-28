@@ -1,14 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import {
   Tabs,
   TabsHeader,
-  TabsBody,
   Tab,
-  TabPanel,
 } from "@material-tailwind/react";
-import { useState } from "react";
 
 function ItemNavigation() {
   const data = [
@@ -18,14 +15,14 @@ function ItemNavigation() {
       desc: "./main",
     },
     {
-      label: "ITEM CATEGORIES",
-      value: "ITEM CATEGORIES",
+      label: "CATEGORIES",
+      value: "CATEGORIES",
       desc: "./category",
     },
 
     {
-      label: "ITEM LOTS",
-      value: "ITEM LOTS",
+      label: "LOTS",
+      value: "LOTS",
       desc: "./lot",
     },
   ];

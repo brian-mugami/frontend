@@ -25,6 +25,8 @@ export const currencyTypes = [
     { id: 2,currency_type: "USD"},
 ]
 
+
+
 export const unitTypes = [
     { id: 1,unit_type: "M"},
     { id: 2,unit_type: "cm"},

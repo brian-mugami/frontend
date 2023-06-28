@@ -16,7 +16,7 @@ function UsersPage() {
 export default UsersPage;
 
 async function loadUsers() {
-  const response = await fetch("/users");
+  const response = await fetch("https://flask-inventory.onrender.com/users");
   if (!response.ok) {
     throw json(
       {
@@ -32,6 +32,14 @@ async function loadUsers() {
         message: "You are not logged in.",
       },
       { status: 401 }
+    );
+  }
+  if (!response.ok) {
+    throw json(
+      {
+        message: "Could not fetch users.",
+      },
+      { status: 500 }
     );
   }
   const data = await response.json();
