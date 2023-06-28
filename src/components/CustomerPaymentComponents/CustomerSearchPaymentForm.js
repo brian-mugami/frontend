@@ -59,7 +59,7 @@ export default CustomerSearchPaymentForm;
 
 async function customersLoader(){
   const token = getAuthToken()
-  const response = await fetch("/customer", {
+  const response = await fetch("https://inentory-test.onrender.com/customer", {
       method:"get",
       headers:{
           "Authorization": "Bearer "+ token
