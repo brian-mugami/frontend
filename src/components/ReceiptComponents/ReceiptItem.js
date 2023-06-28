@@ -50,7 +50,7 @@ function ReceiptItem({ receipt, id }) {
 
     try {
       const response = await fetch(
-        `https://flask-inventory.onrender.com/receipt/download/test/${id}`,
+        `https://inentory-test.onrender.com/receipt/download/test/${id}`,
         {
           method: "GET",
           headers: {

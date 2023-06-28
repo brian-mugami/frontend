@@ -13,7 +13,7 @@ function NewPaymentsPage() {
     const token = getAuthToken();
     setSupName(supplierName);
     const response = await fetch(
-      "https://flask-inventory.onrender.com/payment/search/?supplier_name=" + supplierName,
+      "https://inentory-test.onrender.com/payment/search/?supplier_name=" + supplierName,
       {
         method: "GET",
         headers: {

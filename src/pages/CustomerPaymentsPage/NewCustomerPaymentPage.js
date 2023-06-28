@@ -13,7 +13,7 @@ function NewCustomerPaymentPage() {
     const token = getAuthToken();
     setCusName(customerName);
     const response = await fetch(
-      "https://flask-inventory.onrender.com/customer/payment/search/?customer_name=" + customerName,
+      "https://inentory-test.onrender.com/customer/payment/search/?customer_name=" + customerName,
       {
         method: "get",
         headers: {

@@ -21,7 +21,7 @@ export async function action({request, params}){
         password2: formdata.get("password2"),
     }
 
-    const response = await fetch('https://flask-inventory.onrender.com/user/password', 
+    const response = await fetch('https://inentory-test.onrender.com/user/password', 
     {method: request.method,
     headers: {
         'Content-Type': 'application/json',

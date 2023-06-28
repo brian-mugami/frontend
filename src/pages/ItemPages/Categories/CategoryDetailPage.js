@@ -16,7 +16,7 @@ function CategoryDetailPage(){
 export default CategoryDetailPage;
 
 export async function loader({request, params}){
-    let url = 'https://flask-inventory.onrender.com/item/category/'
+    let url = 'https://inentory-test.onrender.com/item/category/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -41,7 +41,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("https://flask-inventory.onrender.com/item/category/" + id, {
+    const response = await fetch("https://inentory-test.onrender.com/item/category/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token,

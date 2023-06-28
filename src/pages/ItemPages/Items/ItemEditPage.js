@@ -18,7 +18,7 @@ export default ItemEditPage;
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('https://flask-inventory.onrender.com/item/category', {
+    const response = await fetch('https://inentory-test.onrender.com/item/category', {
         method: "get",
         headers: {
             "Authorization": 'Bearer '+ token,

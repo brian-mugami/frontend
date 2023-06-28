@@ -16,7 +16,7 @@ function CustomerDetailPage(){
 export default CustomerDetailPage;
 
 export async function loader({request, params}){
-    let url = 'https://flask-inventory.onrender.com/customer/'
+    let url = 'https://inentory-test.onrender.com/customer/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {

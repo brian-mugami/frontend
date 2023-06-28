@@ -58,7 +58,7 @@ export default CustomerPaymentApprovePage;
 export async function action({ request, params }) {
     const token = getAuthToken();
     const id = params.id;
-    let url = "https://flask-inventory.onrender.com/customer/payment/approve/" + id;
+    let url = "https://inentory-test.onrender.com/customer/payment/approve/" + id;
   
     const response = await fetch(url, {
       method: "POST",

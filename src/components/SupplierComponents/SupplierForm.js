@@ -190,7 +190,7 @@ export async function action({ request, params }) {
     is_active: data.get("active"),
   };
 
-  let url = "https://flask-inventory.onrender.com/supplier";
+  let url = "https://inentory-test.onrender.com/supplier";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -217,7 +217,7 @@ export async function action({ request, params }) {
     return redirect("/supplier");
   } else {
     const id = params.id;
-    url = "https://flask-inventory.onrender.com/supplier/" + id;
+    url = "https://inentory-test.onrender.com/supplier/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

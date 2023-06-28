@@ -8,7 +8,7 @@ function InventoryBalanceSearchPage() {
   const [balances, setBalances] = useState("");
   async function onSearchHandler(searchItem) {
     const token = getAuthToken();
-    const response = await fetch("https://flask-inventory.onrender.com/balance/search/?item_name=" + searchItem, {
+    const response = await fetch("https://inentory-test.onrender.com/balance/search/?item_name=" + searchItem, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,

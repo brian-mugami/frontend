@@ -306,7 +306,7 @@ export default PlayGround;
 async function salesLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales",
+    "https://inentory-test.onrender.com/transaction/sales",
     {
       method: "get",
       headers: {
@@ -326,7 +326,7 @@ async function salesLoader() {
 async function dailySalesLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales/per_day",
+    "https://inentory-test.onrender.com/transaction/sales/per_day",
     {
       method: "get",
       headers: {
@@ -345,7 +345,7 @@ async function dailySalesLoader() {
 async function dailyExpensesLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/expenses/per_day",
+    "https://inentory-test.onrender.com/transaction/expenses/per_day",
     {
       method: "get",
       headers: {
@@ -364,7 +364,7 @@ async function dailyExpensesLoader() {
 async function purchaseLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchase",
+    "https://inentory-test.onrender.com/transaction/purchase",
     {
       method: "get",
       headers: {
@@ -384,7 +384,7 @@ async function purchaseLoader() {
 async function dailyPurchasesLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchases/per_day",
+    "https://inentory-test.onrender.com/transaction/purchases/per_day",
     {
       method: "get",
       headers: {
@@ -404,7 +404,7 @@ async function dailyPurchasesLoader() {
 async function countLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/supplier/count",
+    "https://inentory-test.onrender.com/supplier/count",
     {
       method: "get",
       headers: {
@@ -424,7 +424,7 @@ async function countLoader() {
 async function inventoryValueLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/inventory-count",
+    "https://inentory-test.onrender.com/transaction/inventory-count",
     {
       method: "get",
       headers: {
@@ -445,7 +445,7 @@ async function inventoryValueLoader() {
 async function monthlySalesLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales/month",
+    "https://inentory-test.onrender.com/transaction/sales/month",
     {
       method: "get",
       headers: {
@@ -466,7 +466,7 @@ async function monthlySalesLoader() {
 async function monthlyPurchasesLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchase/month",
+    "https://inentory-test.onrender.com/transaction/purchase/month",
     {
       method: "get",
       headers: {
@@ -487,7 +487,7 @@ async function monthlyPurchasesLoader() {
 async function purchasesCreditLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchase/credit",
+    "https://inentory-test.onrender.com/transaction/purchase/credit",
     {
       method: "get",
       headers: {
@@ -508,7 +508,7 @@ async function purchasesCreditLoader() {
 async function salesCreditLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales/credit",
+    "https://inentory-test.onrender.com/transaction/sales/credit",
     {
       method: "get",
       headers: {

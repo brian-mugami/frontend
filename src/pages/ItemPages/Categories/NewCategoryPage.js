@@ -18,7 +18,7 @@ export default CreateCategoryPage;
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('https://flask-inventory.onrender.com/category/account', {
+    const response = await fetch('https://inentory-test.onrender.com/category/account', {
         method: "get",
         headers: {
             "Authorization": 'Bearer '+ token,

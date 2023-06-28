@@ -41,7 +41,7 @@ function InvoiceItem({ invoice }) {
   }
   const downloadHandler = () => {
     fetch(
-      `https://flask-inventory.onrender.com/invoice/download/${invoice.id}`,
+      `https://inentory-test.onrender.com/invoice/download/${invoice.id}`,
       {
         headers: {
           Authorization: "Bearer " + tokenLoader,
