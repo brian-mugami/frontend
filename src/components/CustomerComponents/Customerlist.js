@@ -22,7 +22,7 @@ const CustomerList = ({ customers }) => {
       field: "customer_name",
       headerName: "Customer Name",
       width: 250,
-      renderCell: (params) => <Link to={`./${params.id}`}>{params.value}</Link>,
+      renderCell: (params) => <Link to={`./${params  .id}`}>{params.value}</Link>,
     },
     { field: "customer_number", headerName: "Customer Number", width: 200 },
     { field: "customer_email", headerName: "Customer Email", width: 300 },
