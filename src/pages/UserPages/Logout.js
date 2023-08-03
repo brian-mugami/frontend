@@ -6,7 +6,7 @@ export async function action({request,params}){
     const prompt = window.confirm("Are you sure you want to logout...")
 
     if (prompt) {
-        const response = await fetch("https://flask-inventory.onrender.com/logout", {
+        const response = await fetch("/logout", {
             method: "delete",
             headers : {
                 'Authorization': 'Bearer ' + token

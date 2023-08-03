@@ -109,9 +109,6 @@ import SupplierDetailPage, {
   action as supDeleteAction,
   loader as SupAccLoader,
 } from "./pages/SupplierPages/SupplierMasterPages/SupplierDetailPage";
-import Dashboard from "./pages/UserPages/Dashboard";
-import { dashboardLoader } from "./components/UserComponents/PlayGround";
-import ConfirmationPage from "./pages/UserPages/ConfirmationPage";
 import PasswordPage, {
   action as PasswordChangeAction,
 } from "./pages/UserPages/PasswordResetPage";
@@ -220,6 +217,16 @@ import ReceiptPaymentPage, {
   action as ReceiptPaymentAction,
   loader as ReceiptPaymentLoader,
 } from "./pages/ReceiptPages/ReceiptPaymentPage";
+
+const ConfirmationsPage = lazy(() =>
+  import("./pages/UserPages/Dashboard")
+);
+
+
+const DashboardPage = lazy(() =>
+  import("./pages/UserPages/Dashboard")
+);
+
 
 const CategoryEditPage = lazy(() =>
   import("./pages/ItemPages/Categories/CategoryEditPage")
@@ -357,7 +364,10 @@ const AdminRegisterPage = lazy(() =>
 const router = createBrowserRouter([
   {
     path: "/",
-    loader: tokenLoader,
+    loader: () =>
+    import("./util/Auth").then(
+      (module) => module.dashboardLoader()
+    ),
     element: (
       <Suspense fallback={<p>Loading</p>}>
         <RootLayout />
@@ -686,7 +696,11 @@ const router = createBrowserRouter([
       },
       {
         path: "Confirmation",
-        element: <ConfirmationPage />,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <ConfirmationsPage />
+          </Suspense>
+        ),
       },
       {
         path: "auth/login/admin/kindred",
@@ -711,8 +725,11 @@ const router = createBrowserRouter([
       },
       {
         path: "home",
-        element: <Dashboard />,
-        loader: dashboardLoader,
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <DashboardPage />
+          </Suspense>
+        ),
       },
       {
         path: "account",

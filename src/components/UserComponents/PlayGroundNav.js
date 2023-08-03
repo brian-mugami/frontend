@@ -65,7 +65,7 @@ export default function PlayGround() {
 async function dailySalesLoader() {
     const token = getAuthToken();
     const response = await fetch(
-      "https://flask-inventory.onrender.com/transaction/sales/per_day",
+      "/transaction/sales/per_day",
       {
         method: "get",
         headers: {

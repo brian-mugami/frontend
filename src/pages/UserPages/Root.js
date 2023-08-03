@@ -3,7 +3,7 @@ import { Outlet, useRouteLoaderData } from "react-router-dom";
 import SideNav from "../../components/SideNav";
 
 function RootLayout() {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
 
   return (
     <React.Fragment>

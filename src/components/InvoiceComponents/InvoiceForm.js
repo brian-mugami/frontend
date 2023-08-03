@@ -490,7 +490,7 @@ export default InvoiceForm;
 export async function suppliersLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/supplier",
+    "/supplier",
     {
       method: "get",
       headers: {
@@ -509,7 +509,7 @@ export async function suppliersLoader() {
 async function ItemsLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("https://flask-inventory.onrender.com/item", {
+  const response = await fetch("/item", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -527,7 +527,7 @@ async function LotLoader() {
   const token = getAuthToken();
 
   const response = await fetch(
-    "https://flask-inventory.onrender.com/item/lot",
+    "/item/lot",
     {
       method: "get",
       headers: {
@@ -547,7 +547,7 @@ async function AccountLoader() {
   const token = getAuthToken();
 
   const response = await fetch(
-    "https://flask-inventory.onrender.com/expense/account",
+    "/expense/account",
     {
       method: "get",
       headers: {
@@ -602,7 +602,7 @@ export async function action({ request, params }) {
       supplier_name: data.get("supplier"),
     };
   }
-  let url = "https://flask-inventory.onrender.com/invoice";
+  let url = "/invoice";
   if (method === "POST") {
     const response = await fetch(url, {
       method: request.method,
@@ -637,7 +637,7 @@ export async function action({ request, params }) {
       })),
     };
     const invoiceLines = await fetch(
-      "https://flask-inventory.onrender.com/purchase",
+      "/purchase",
       {
         method: "POST",
         headers: {
@@ -683,7 +683,7 @@ export async function action({ request, params }) {
       };
     }
     const id = params.id;
-    url = "https://flask-inventory.onrender.com/invoice/" + id;
+    url = "/invoice/" + id;
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
@@ -715,7 +715,7 @@ export async function action({ request, params }) {
     };
     for (let item of existingData.purchase_items) {
       const lineResponse = await fetch(
-        "https://flask-inventory.onrender.com/purchase/" + item.id,
+        "/purchase/" + item.id,
         {
           method: "PUT",
           headers: {

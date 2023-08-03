@@ -204,7 +204,7 @@ export async function action({ request, params }) {
     customer_bill_to_site: data.get("billto"),
   };
 
-  let url = "https://flask-inventory.onrender.com/customer";
+  let url = "/customer";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -231,7 +231,7 @@ export async function action({ request, params }) {
     return redirect("/customer");
   } else {
     const id = params.id;
-    url = "https://flask-inventory.onrender.com/customer/" + id;
+    url = "/customer/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

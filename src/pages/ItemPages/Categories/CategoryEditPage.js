@@ -16,7 +16,7 @@ function CategoryEditPage(){
 export default CategoryEditPage;
 
 export async function loader({params}){
-    let url = 'https://flask-inventory.onrender.com/item/category/'
+    let url = '/item/category/'
     const id = params.id
     const token = getAuthToken()
     const response = await fetch(url + id, {

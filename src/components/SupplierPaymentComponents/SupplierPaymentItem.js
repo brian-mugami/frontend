@@ -2,7 +2,7 @@ import React from "react";
 import { useSubmit, Link, useRouteLoaderData, useNavigate } from "react-router-dom";
 
 function SupplierPaymentItem({ payment }) {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const submit = useSubmit();
   const navigate = useNavigate()
 

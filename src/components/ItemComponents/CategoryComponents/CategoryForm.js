@@ -119,7 +119,7 @@ export async function action({ request, params }) {
     name: data.get("catname"),
     account_name: data.get("account"),
   };
-  let url = "https://flask-inventory.onrender.com/item/category";
+  let url = "/item/category";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
@@ -138,7 +138,7 @@ export async function action({ request, params }) {
     return redirect("/item/category");
   } else {
     const id = params.id;
-    url = "https://flask-inventory.onrender.com/item/category/" + id;
+    url = "/item/category/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {

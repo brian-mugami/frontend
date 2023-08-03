@@ -27,7 +27,7 @@ function classNames(...classes) {
 }
 
 function InvoiceItem({ invoice }) {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const tokenLoader = getAuthToken();
   const submit = useSubmit();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ function InvoiceItem({ invoice }) {
   }
   const downloadHandler = () => {
     fetch(
-      `https://flask-inventory.onrender.com/invoice/download/${invoice.id}`,
+      `/invoice/download/${invoice.id}`,
       {
         headers: {
           Authorization: "Bearer " + tokenLoader,

@@ -123,6 +123,50 @@ export function DashboardComps() {
 
 export default DashboardComps;
 
+<<<<<<< HEAD
+async function salesLoader(){
+  const token = getAuthToken();
+  const response = await fetch("/transaction/sales", {
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+  if (!response.ok) {
+    throw json({ message: "Suppliers Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData)
+    return resData;
+  }
+}
 
+async function countLoader() {
+  const token = getAuthToken();
+  const response = await fetch("/supplier/count", {
+    method: "get",
+    headers: {
+      Authorization: "Bearer " + token,
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+  if (!response.ok) {
+    throw json({ message: "Sales Server Error" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    console.log(resData)
+    return resData;
+  }
+}
+
+export async function dashboardLoader() {
+  return defer({
+    suppliers: await countLoader(),
+    sales: await salesLoader(),
+  });
+}
+=======
+
+>>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
 
 

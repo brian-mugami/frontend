@@ -68,7 +68,7 @@ export default ReceiptVoidPage
 export async function action({ request, params }) {
     const token = getAuthToken();
     const id = params.id;
-    const url = "https://flask-inventory.onrender.com/receipt/void/" + id;
+    const url = "/receipt/void/" + id;
   
     const data = await request.formData()
   

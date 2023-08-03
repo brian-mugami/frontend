@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 function CustomerPaymentItem({ payment }) {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const submit = useSubmit();
   const navigate = useNavigate();
 
