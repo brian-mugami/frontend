@@ -1,5 +1,6 @@
 import React from "react";
 import { useSubmit, Link, useRouteLoaderData } from "react-router-dom";
+import { Card, List, ListItem, Title } from "@tremor/react";
 
 function CategoryItem({ category }) {
   const token = useRouteLoaderData("root");
@@ -15,24 +16,30 @@ function CategoryItem({ category }) {
 
   return (
     <React.Fragment>
-      <h3>Category Details</h3>
-      <p>category name-{category.name}</p>
-      <p>
-        category account-{category.account.account_name} -{" "}
-        {category.account.account_number}
-      </p>
-      items in category
+      <Card>
+        <Title level={3}>Category Details</Title>
+        <List>
+          <ListItem>
+            <strong>Category name:</strong> {category.name}
+          </ListItem>
+          <ListItem>
+            <strong>Category account:</strong>{" "}
+            {category.account.account_name} - {category.account.account_number}
+          </ListItem>
+        </List>
+      {/*<p>Items in category:</p>
       <ul>
-        {category.items.map((item) => (
-          <li key={item.id}>{item.item_name}</li>
+      {category.items.map((item) => (
+        <ListItem key={item.id}>{item.item_name}</ListItem>
         ))}
-      </ul>
+      </ul>*/}
       {token && (
-        <menu>
+        <div className="space-x-5">
           <Link to="edit">Edit</Link>
           <button onClick={startDeleteHandler}>Delete</button>
-        </menu>
+        </div>
       )}
+      </Card>
     </React.Fragment>
   );
 }

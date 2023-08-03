@@ -110,7 +110,7 @@ import SupplierDetailPage, {
   loader as SupAccLoader,
 } from "./pages/SupplierPages/SupplierMasterPages/SupplierDetailPage";
 import Dashboard from "./pages/UserPages/Dashboard";
-import { dashboardLoader } from "./components/DashboardComps";
+import { dashboardLoader } from "./components/UserComponents/PlayGround";
 import ConfirmationPage from "./pages/UserPages/ConfirmationPage";
 import PasswordPage, {
   action as PasswordChangeAction,

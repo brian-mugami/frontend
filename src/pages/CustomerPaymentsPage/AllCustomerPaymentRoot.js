@@ -5,8 +5,10 @@ import CustomerPaymentNav from '../../components/CustomerPaymentComponents/Custo
 function AllCustomerPaymentRoot() {
   return (
     <React.Fragment>
+      <div className='px-4'>
         <CustomerPaymentNav/>
         <Outlet/>
+        </div>
     </React.Fragment>
   )
 }

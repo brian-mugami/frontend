@@ -57,7 +57,7 @@ import {
   export async function action({ request, params }) {
     const token = getAuthToken();
     const id = params.id;
-    const response = await fetch("/expense/account/" + id, {
+    const response = await fetch("https://flask-inventory.onrender.com/expense/account/" + id, {
       method: request.method,
       headers: {
         Authorization: "Bearer " + token,

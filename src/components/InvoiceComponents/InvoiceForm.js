@@ -31,7 +31,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_name: item.item.item_name,
         item_quantity: parseFloat(item.item_quantity),
         buying_price: parseFloat(item.buying_price),
-        lot: item.lot.lot,
+        lot: item.lot === null ? "" : item.lot.lot,
         item_cost: parseFloat(item.item_cost),
       }));
     } else {
@@ -104,7 +104,7 @@ function InvoiceForm({ invoiceData, title, method }) {
     });
   };
 
-  itemList = tableRows;  
+  itemList = tableRows;
   return (
     <React.Fragment>
       {data && data.errors && (
@@ -305,8 +305,11 @@ function InvoiceForm({ invoiceData, title, method }) {
             )}
 
             <p>
-              <label>Date</label>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Date
+              </label>
               <input
+                className="block w-full  rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 name="inv_date"
                 type="date"
                 defaultValue={invoiceData ? invoiceData.date : date}
@@ -314,26 +317,14 @@ function InvoiceForm({ invoiceData, title, method }) {
             </p>
           </div>
 
-          <div className=" px-4 py-3 pb-10 text-right sm:px-6">
-            <button
-              type="button"
-              onClick={cancelHandler}
-              disabled={isSubmitting}
-              className="inline-flex justify-center rounded-md bg-indigo-600 mr-5 py-2 px-3 text-sm font-semibold text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            >
-              Cancel
-            </button>
-            <button className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-              {isSubmitting ? "Submitting..." : "Save"}
-            </button>
-          </div>
+          
         </div>
         <div className="pt-5 ">
           <div className="">
             <button
               className="btn btn-secondary mb-4 mr-5 "
               onClick={handleAddRow}
-              disabled={invoiceData && (invoiceData.purchase_items.length > 0)}
+              disabled={invoiceData && invoiceData.purchase_items.length > 0}
             >
               <div className="flex ">
                 <svg
@@ -383,7 +374,7 @@ function InvoiceForm({ invoiceData, title, method }) {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Line Number</th>
+                <th scope="col">Line No.</th>
                 <th scope="col">Item Name</th>
                 <th scope="col">Item Quantity</th>
                 <th scope="col">Buying Price</th>
@@ -405,7 +396,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                       list="options"
                       onChange={(e) => handleInputChange(e, index, "item_name")}
                       required
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                     <datalist id="options">
                       {items.map((item) => (
@@ -415,6 +406,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                   </td>
                   <td>
                     <input
+                      className="block w-1/2 rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       required
                       type="number"
                       name="item_quantity"
@@ -427,6 +419,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                   </td>
                   <td>
                     <input
+                      className="block w-1/2 rounded-md border-0 py-1.5 text-gray-900  ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       required
                       type="number"
                       min="1"
@@ -440,9 +433,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                   <td>
                     <input
                       name="lot"
-                      defaultValue={
-                        invoiceData?.purchase_items?.[index]?.lot.lot || row.lot
-                      }
+                      defaultValue={row.lot}
                       list="options1"
                       onChange={(e) => handleInputChange(e, index, "lot")}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -458,7 +449,9 @@ function InvoiceForm({ invoiceData, title, method }) {
                     <button
                       className="btn btn-danger"
                       onClick={() => handleRemoveRow(index)}
-                      disabled={invoiceData && (invoiceData.purchase_items.length > 0)}
+                      disabled={
+                        invoiceData && invoiceData.purchase_items.length > 0
+                      }
                     >
                       Remove
                     </button>
@@ -467,6 +460,25 @@ function InvoiceForm({ invoiceData, title, method }) {
               ))}
             </tbody>
           </table>
+
+
+          <div className=" px-4 py-10 text-right sm:px-6">
+            <button
+              type="button"
+              onClick={cancelHandler}
+              disabled={isSubmitting}
+              className="inline-flex justify-center rounded-md bg-indigo-600 mr-5 py-2 px-3 text-sm font-semibold text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              Cancel
+            </button>
+            <button className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+              {isSubmitting ? "Submitting..." : "Save"}
+            </button>
+          </div>
+
+
+
+
         </div>
       </Form>
     </React.Fragment>
@@ -477,6 +489,7 @@ export default InvoiceForm;
 
 export async function suppliersLoader() {
   const token = getAuthToken();
+<<<<<<< HEAD
   const response = await fetch("/supplier", {
     method: "get",
     headers: {
@@ -485,6 +498,17 @@ export async function suppliersLoader() {
 
     },
   });
+=======
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/supplier",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+>>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
   if (!response.ok) {
     throw json({ message: "Cant get suppliers" }, { status: 500 });
   } else {
@@ -500,15 +524,12 @@ async function ItemsLoader() {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
-      "Access-Control-Allow-Origin": "*",
-
     },
   });
   if (!response.ok) {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
     const resData = await response.json();
-    console.log(resData);
     return resData;
   }
 }
@@ -516,12 +537,15 @@ async function ItemsLoader() {
 async function LotLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("/item/lot", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/item/lot",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
   if (!response.ok) {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
@@ -533,6 +557,7 @@ async function LotLoader() {
 async function AccountLoader() {
   const token = getAuthToken();
 
+<<<<<<< HEAD
   const response = await fetch("/expense/account", {
     method: "get",
     headers: {
@@ -541,6 +566,17 @@ async function AccountLoader() {
 
     },
   });
+=======
+  const response = await fetch(
+    "https://flask-inventory.onrender.com/expense/account",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+>>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
   if (!response.ok) {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
@@ -622,6 +658,7 @@ export async function action({ request, params }) {
         item_quantity: item.item_quantity,
       })),
     };
+<<<<<<< HEAD
     const invoiceLines = await fetch("/purchase", {
       method: "POST",
       headers: {
@@ -631,6 +668,20 @@ export async function action({ request, params }) {
       },
       body: JSON.stringify(lines),
     });
+=======
+    const invoiceLines = await fetch(
+      "https://flask-inventory.onrender.com/purchase",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(lines),
+      }
+    );
+>>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
     if (invoiceLines.status === 400) {
       return invoiceLines;
     }
@@ -697,6 +748,7 @@ export async function action({ request, params }) {
       })),
     };
     for (let item of existingData.purchase_items) {
+<<<<<<< HEAD
       const lineResponse = await fetch("/purchase/" + item.id, {
         method: "PUT",
         headers: {
@@ -707,6 +759,19 @@ export async function action({ request, params }) {
         },
         body: JSON.stringify(invoiceUpdateLines),
       });
+=======
+      const lineResponse = await fetch(
+        "https://flask-inventory.onrender.com/purchase/" + item.id,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(invoiceUpdateLines),
+        }
+      );
+>>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
       if (lineResponse.status === 400) {
         return lineResponse;
       }

@@ -4,6 +4,8 @@ import {
   useNavigate,
   useNavigation,
 } from "react-router-dom/dist/umd/react-router-dom.development";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ItemUploadPage() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -31,48 +33,52 @@ function ItemUploadPage() {
         },
         body: formData,
       });
+
       if (response.status === 400) {
-        window.alert(response.message);
-      }
-      if (response.status === 500) {
-        window.alert(response.message);
-      }
-      if (response.ok) {
+        toast.error("Error: Bad request");
+      } else if (response.status === 500) {
+        toast.error("Error: Internal server error");
+      } else if (response.ok) {
+        toast.success("Items uploaded successfully!!");
         const confirmed = window.confirm("Items uploaded successfully!!");
         if (confirmed) {
           navigate("/home");
         }
       } else {
-        window.alert("failed to upload");
+        toast.error("Error: Failed to upload");
       }
     } catch (error) {
-      window.alert("Network error", error);
+      toast.error("Network error");
     }
   };
 
   return (
     <React.Fragment>
-      <h1>Item Upload</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="file"
-            accept=".xlsx"
-            required
-            onChange={handleFileChange}
-            name="file"
-            id="formFileMultiple"
-            className="form-control"
-          />
+      <ToastContainer />
+      <div className="pt-10">
+        <h1>Item Upload</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="py-4">
+            <input
+              type="file"
+              accept=".xlsx"
+              required
+              onChange={handleFileChange}
+              name="file"
+              id="formFileMultiple"
+              className="form-control mt-1 text-sm leading-6 text-gray-600 "
+            />
+          </div>
           <button
-            className="btn btn-success"
+            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             type="submit"
             disabled={isSubmitting}
+            onClick={handleSubmit}
           >
             {isSubmitting ? "Submitting" : "Submit"}
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </React.Fragment>
   );
 }

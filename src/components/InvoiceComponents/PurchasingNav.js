@@ -1,12 +1,12 @@
-import { Breadcrumbs } from "@material-tailwind/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { Breadcrumbs } from "@material-tailwind/react";
 
 function PurchasingNav() {
   return (
     <React.Fragment>
-      <div className="flex space-x-11 py-5 px-5">
+      <div className="flex space-x-11 py-5 ">
         <Breadcrumbs>
           <NavLink to="." className="opacity-60">
             <div className="flex">
@@ -27,7 +27,7 @@ function PurchasingNav() {
         <Breadcrumbs>
           <div className="flex justify">
             <ShoppingCartIcon strokeWidth={1} className="h-6 w-6" />
-            <NavLink to="./new">Make a purchase</NavLink>
+            <NavLink to="./new">Purchase</NavLink>
           </div>
         </Breadcrumbs>
       </div>

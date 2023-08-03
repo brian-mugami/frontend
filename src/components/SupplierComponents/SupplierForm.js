@@ -50,7 +50,7 @@ function SupplierForm({ method, supData, accounts }) {
             {data && data.message && <p>{data.message}</p>}
             <Form method={method}>
               <div className="overflow-hidden shadow sm:rounded-md">
-                <div className="px-4 py-5 sm:p-6">
+                <div className="px-4 sm:px-2 py-5 ">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -99,7 +99,7 @@ function SupplierForm({ method, supData, accounts }) {
                       </label>
                       <select
                         name="account"
-                        autoComplete="country-name"
+                        placeholder="Select Account"
                         required
                         defaultValue={
                           supData ? supData.account.account_name : ""
@@ -131,13 +131,12 @@ function SupplierForm({ method, supData, accounts }) {
                       />
                     </div>
 
-                    <div>
+                    <div className="col-span-6 sm:col-span-4">
                       <label>Status</label>
-                      <div className="flex space-x-5">
-                        <div className="flex">
+                      <div className=" space-x-2">
+                        
                           <label>Active</label>
                           <input type="radio" name="active" value="True" />
-                        </div>
                         <label>Inactive</label>
                         <input type="radio" name="active" value="False" />
                       </div>

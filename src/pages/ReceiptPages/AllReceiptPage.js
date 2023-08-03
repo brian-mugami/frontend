@@ -33,9 +33,8 @@ async function ReceiptLoader() {
     throw json({ message: "Could not fetch receipts" }, { status: 500 });
   } else {
     const resData = await response.json();
-    if (resData.status === 401) {
-      throw json({ message: "You are not authorized" }, { status: 401 });
-    }
+    console.log(resData)
+
     return resData;
   }
 }

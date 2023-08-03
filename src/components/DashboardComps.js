@@ -123,6 +123,7 @@ export function DashboardComps() {
 
 export default DashboardComps;
 
+<<<<<<< HEAD
 async function salesLoader(){
   const token = getAuthToken();
   const response = await fetch("/transaction/sales", {
@@ -164,5 +165,8 @@ export async function dashboardLoader() {
     sales: await salesLoader(),
   });
 }
+=======
+
+>>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
 
 

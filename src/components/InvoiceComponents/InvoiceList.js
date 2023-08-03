@@ -8,6 +8,13 @@ const PAGE_SIZE = 10;
 function InvoiceList({ invoices, title }) {
   const [currentPage, setCurrentPage] = React.useState(1);
 
+  const [pinnedColumns, setPinnedColumns] = React.useState({
+    left: ['name'],
+  });
+
+ 
+
+
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
   const paginatedInvoices = invoices.slice(startIndex, endIndex);
@@ -86,11 +93,6 @@ function InvoiceList({ invoices, title }) {
               <Link to={`./${params.row.id}/accounting`}>View</Link>
             </span>
           </div>
-          <div>
-            <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-              <Link to={`./${params.row.id}/attachment`}>Add Attachment</Link>
-            </span>
-          </div>
         </div>
       ),
     },
@@ -108,6 +110,8 @@ function InvoiceList({ invoices, title }) {
           </ul>
         )}
         {data && data.message && <p>{data.message}</p>}
+
+        
         <DataGrid
           rows={paginatedInvoices}
           columns={columns}

@@ -1,15 +1,15 @@
 import { Breadcrumbs } from "@material-tailwind/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 function SupplierPaymentNav() {
   return (
     <React.Fragment>
-      <div className="flex space-x-11 py-5 px-5">
+      <div className="flex space-x-11 py-5 pr-5">
         <Breadcrumbs>
           <NavLink to="." className="opacity-60">
-            <div className="flex">
+            <div className="flex ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"
@@ -25,9 +25,14 @@ function SupplierPaymentNav() {
         </Breadcrumbs>
 
         <Breadcrumbs>
-          <div className="flex justify">
-            <PlusCircleIcon strokeWidth={3} className="h-6 w-6" />
-            <NavLink to="./new">Create New Payment</NavLink>
+          <div className="flex ">
+            <div className="pr-1">
+            <PlusIcon strokeWidth={2} className="h-5 w-5" />
+            </div>
+
+            <div>
+            <NavLink to="./new">Create</NavLink>
+            </div>
           </div>
         </Breadcrumbs>
       </div>

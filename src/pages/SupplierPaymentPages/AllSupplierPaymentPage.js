@@ -35,6 +35,7 @@ async function AllPaymentsLoader(){
         throw json({message:"Cant get payments"}, {status:500})
     }else{
         const resData = await response.json()
+        console.log(resData)
         return resData
     };
 }
