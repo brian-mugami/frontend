@@ -197,13 +197,13 @@ function PlayGround() {
     },
   ];
 
-  const deltaTypes: { [key: string]: DeltaType } = {
+  const deltaTypes = {
     average: "unchanged",
     overperforming: "moderateIncrease",
     underperforming: "moderateDecrease",
   };
 
-  const dataFormatter = (number: number) =>
+  const dataFormatter = (number) =>
     Intl.NumberFormat("us").format(number).toString();
 
   return (
