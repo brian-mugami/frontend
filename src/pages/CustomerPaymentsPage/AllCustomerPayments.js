@@ -16,7 +16,7 @@ export default AllCustomerPayments;
 
 async function AllCustomerPaymentsLoader() {
   const token = getAuthToken();
-  const response = await fetch("/customer/payment", {
+  const response = await fetch("https://flask-inventory.onrender.com/customer/payment", {
     method: "GET",
     headers: {
       Authorization: "Bearer " + token,

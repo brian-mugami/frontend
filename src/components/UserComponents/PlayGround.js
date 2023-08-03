@@ -242,9 +242,9 @@ function PlayGround() {
             <Card key={item.title}>
               <Flex alignItems="start">
                 <Text>{item.title}</Text>
-              <BadgeDelta   deltaType={item.deltaType}>
+              {/* <BadgeDelta   deltaType={item.deltaType}>
                   {item.delta}%
-                </BadgeDelta>
+                </BadgeDelta> */}
               </Flex>
               <Flex
                 justifyContent="start"

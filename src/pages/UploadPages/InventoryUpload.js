@@ -22,7 +22,7 @@ function InventoryUpload() {
       formData.append("file", selectedFile);
   
       try {
-        const response = await fetch("/inventory/upload", {
+        const response = await fetch("https://flask-inventory.onrender.com/inventory/upload", {
           method: "POST",
           headers: {
             Authorization: "Bearer " + token,

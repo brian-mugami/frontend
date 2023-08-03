@@ -24,7 +24,7 @@ function CategoryAccountUploadPage() {
     formData.append("file", selectedFile);
 
     try {
-      const response = await fetch("/category/account/upload", {
+      const response = await fetch("https://flask-inventory.onrender.com/category/account/upload", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,

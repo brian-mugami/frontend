@@ -17,7 +17,7 @@ export default AllExpensesBalancePage
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('/expenses', {
+    const response = await fetch('https://flask-inventory.onrender.com/expenses', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token

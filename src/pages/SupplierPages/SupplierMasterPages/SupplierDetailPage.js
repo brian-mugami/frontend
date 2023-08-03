@@ -16,7 +16,7 @@ function SupplierDetailPage(){
 export default SupplierDetailPage;
 
 export async function loader({request, params}){
-    let url = '/supplier/'
+    let url = 'https://flask-inventory.onrender.com/supplier/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -41,7 +41,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("/supplier/" + id, {
+    const response = await fetch("https://flask-inventory.onrender.com/supplier/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token

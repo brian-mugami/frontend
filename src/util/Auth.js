@@ -37,7 +37,7 @@ export function checkToken() {
 
 async function salesLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/sales", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/sales", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -57,7 +57,7 @@ async function salesLoader() {
 
 async function dailySalesLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/sales/per_day", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/sales/per_day", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -76,7 +76,7 @@ async function dailySalesLoader() {
 
 async function dailyExpensesLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/expenses/per_day", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/expenses/per_day", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -95,7 +95,7 @@ async function dailyExpensesLoader() {
 
 async function purchaseLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/purchase", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/purchase", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -115,7 +115,7 @@ async function purchaseLoader() {
 
 async function dailyPurchasesLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/purchases/per_day", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/purchases/per_day", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -135,7 +135,7 @@ async function dailyPurchasesLoader() {
 
 async function countLoader() {
   const token = getAuthToken();
-  const response = await fetch("/supplier/count", {
+  const response = await fetch("https://flask-inventory.onrender.com/supplier/count", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -155,7 +155,7 @@ async function countLoader() {
 
 async function inventoryValueLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/inventory-count", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/inventory-count", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -176,7 +176,7 @@ async function inventoryValueLoader() {
 
 async function monthlySalesLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/sales/month", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/sales/month", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -197,7 +197,7 @@ async function monthlySalesLoader() {
 
 async function monthlyPurchasesLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/purchase/month", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/purchase/month", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -218,7 +218,7 @@ async function monthlyPurchasesLoader() {
 
 async function purchasesCreditLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/purchase/credit", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/purchase/credit", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -239,7 +239,7 @@ async function purchasesCreditLoader() {
 
 async function salesCreditLoader() {
   const token = getAuthToken();
-  const response = await fetch("/transaction/sales/credit", {
+  const response = await fetch("https://flask-inventory.onrender.com/transaction/sales/credit", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -260,7 +260,7 @@ async function salesCreditLoader() {
 
 async function currentUserLoader() {
   const token = getAuthToken();
-  const response = await fetch("/current-user", {
+  const response = await fetch("https://flask-inventory.onrender.com/current-user", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,

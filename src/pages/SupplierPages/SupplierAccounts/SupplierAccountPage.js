@@ -19,7 +19,7 @@ export default SupplierAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('/supplier/account', {
+    const response = await fetch('https://flask-inventory.onrender.com/supplier/account', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token,

@@ -210,7 +210,7 @@ export async function action({ request, params }) {
     payment_type: data.get("payType"),
   };
 
-  let url = "/supplier";
+  let url = "https://flask-inventory.onrender.com/supplier";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,
