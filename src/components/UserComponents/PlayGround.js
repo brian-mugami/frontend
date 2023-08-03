@@ -37,28 +37,48 @@ function PlayGround() {
     purchaseCredit,
     salesCredit,
   } = useLoaderData();
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const updatedCategories = [
       {
         title: "Total Sales Amount",
-        metric: sales.Amount.toLocaleString(),
-        metricPrev: sales.Sales.toLocaleString(),
-        delta: sales.Percentage_sales.toFixed(1),
+        metric: sales && sales.Amount ? sales.Amount.toLocaleString() : "N/A",
+        metricPrev: sales && sales.Sales ? sales.Sales.toLocaleString() : "N/A",
+        delta:
+          sales && sales.Percentage_sales
+            ? sales.Percentage_sales.toFixed(1)
+            : "N/A",
         deltaType:
-          sales.Percentage_sales < 0 ? "moderateDecrease" : "moderateIncrease",
+          sales && sales.Percentage_sales
+            ? sales.Percentage_sales < 0
+              ? "moderateDecrease"
+              : "moderateIncrease"
+            : "N/A",
       },
       {
         title: "Total Purchase Amount",
-        metric: purchases.Amount.toLocaleString(),
-        metricPrev: purchases.Purchases.toLocaleString(),
-        delta: purchases.Percentage_Purchase.toFixed(1),
+        metric:
+          purchases && purchases.Amount
+            ? purchases.Amount.toLocaleString()
+            : "N/A",
+        metricPrev:
+          purchases && purchases.Purchases
+            ? purchases.Purchases.toLocaleString()
+            : "N/A",
+        delta:
+          purchases && purchases.Percentage_Purchase !== undefined
+            ? purchases.Percentage_Purchase.toFixed(1)
+            : "N/A",
         deltaType:
-          purchases.Percentage_Purchase < 0
-            ? "moderateDecrease"
-            : "moderateIncrease",
+          purchases && purchases.Percentage_Purchase
+            ? purchases.Percentage_Purchase < 0
+              ? "moderateDecrease"
+              : "moderateIncrease"
+            : "N/A",
       },
+
       {
         title: "Profit Today",
         metric: (sales.Amount - purchases.Amount).toLocaleString(),
@@ -224,7 +244,7 @@ function PlayGround() {
             <Card key={item.title}>
               <Flex alignItems="start">
                 <Text>{item.title}</Text>
-                <BadgeDelta deltaType={item.deltaType}>
+              <BadgeDelta   deltaType={item.deltaType}>
                   {item.delta}%
                 </BadgeDelta>
               </Flex>
@@ -233,7 +253,11 @@ function PlayGround() {
                 alignItems="baseline"
                 className="truncate space-x-3"
               >
-                <Metric>Ksh.{item.metric}</Metric>
+                <Metric>
+                  {item && item.metric
+                    ? `Ksh.${item.metric.toLocaleString()}`
+                    : "N/A"}
+                </Metric>
                 <Text className="truncate">Transactions {item.metricPrev}</Text>
               </Flex>
             </Card>
@@ -294,8 +318,8 @@ function PlayGround() {
         </Card>
       </div>
       <div className="p-4 grid grid-cols-3 gap-4">
-        <SalesCredit receipts={salesCredit}/>
-        <PurchaseCredit invoices={purchaseCredit}/>
+        <SalesCredit receipts={salesCredit} />
+        <PurchaseCredit invoices={purchaseCredit} />
       </div>
     </div>
   );
