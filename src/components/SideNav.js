@@ -18,7 +18,7 @@ function SideNav() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const token = useRouteLoaderData("root");
+  const { token, user } = useRouteLoaderData("root");
 
   return (
     <div>
@@ -44,8 +44,8 @@ function SideNav() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                clip-rule="evenodd"
-                fill-rule="evenodd"
+                clipRule="evenodd"
+                fillRule="evenodd"
                 d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
               ></path>
             </svg>
@@ -58,7 +58,10 @@ function SideNav() {
             }`}
             aria-label="Sidebar"
           >
-            <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800" onClick={toggleSidebar}>
+            <div
+              className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800"
+              onClick={toggleSidebar}
+            >
               <NavLink to="/home">
                 <img src={Kd} alt="logo" />
               </NavLink>
@@ -66,9 +69,11 @@ function SideNav() {
                 Dashboard
               </NavLink>
 
-              <NavLink className="sidebar-nav-link" to="/user">
-                Users
-              </NavLink>
+              {user && user.is_admin === true && (
+                <NavLink className="sidebar-nav-link" to="/user">
+                  Users
+                </NavLink>
+              )}
 
               <NavLink className="sidebar-nav-link" to="invoice">
                 Invoices
@@ -126,10 +131,7 @@ function SideNav() {
                     </NavLink>
                   </MenuItem>
                   <MenuItem>
-                    <NavLink
-                      className="sidebar-nav-link"
-                      to="expense-balance"
-                    >
+                    <NavLink className="sidebar-nav-link" to="expense-balance">
                       Expense Balances
                     </NavLink>
                   </MenuItem>
@@ -145,45 +147,44 @@ function SideNav() {
                 Reports
               </NavLink>
 
-              <Menu>
-                <MenuHandler>
-                  <div className="sidebar-nav-link">Uploads</div>
-                </MenuHandler>
-                <MenuList>
-                  <MenuItem>
-                    <NavLink
-                      className="sidebar-nav-link"
-                      to="upload-itemAccounts"
-                    >
-                      Upload Item Accounts
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem>
-                    <NavLink
-                      className="sidebar-nav-link"
-                      to="upload-itemCategory"
-                    >
-                      Upload Item Categories
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem>
-                    <NavLink
-                      className="sidebar-nav-link"
-                      to="upload-inventory"
-                    >
-                      Upload Inventory
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem>
-                    <NavLink
-                      className="sidebar-nav-link"
-                      to="upload-item"
-                    >
-                      Upload Items
-                    </NavLink>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+              {user && user.is_admin && (
+                <Menu>
+                  <MenuHandler>
+                    <div className="sidebar-nav-link">Uploads</div>
+                  </MenuHandler>
+                  <MenuList>
+                    <MenuItem>
+                      <NavLink
+                        className="sidebar-nav-link"
+                        to="upload-itemAccounts"
+                      >
+                        Upload Item Accounts
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem>
+                      <NavLink
+                        className="sidebar-nav-link"
+                        to="upload-itemCategory"
+                      >
+                        Upload Item Categories
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem>
+                      <NavLink
+                        className="sidebar-nav-link"
+                        to="upload-inventory"
+                      >
+                        Upload Inventory
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem>
+                      <NavLink className="sidebar-nav-link" to="upload-item">
+                        Upload Items
+                      </NavLink>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              )}
 
               <Menu>
                 <MenuHandler>
@@ -289,7 +290,7 @@ function SideNav() {
                 </MenuList>
               </Menu>
 
-              <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
+              <ul className="pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
                 <li>
                   <Form action="logout" method="post">
                     <button className="btn btn-danger">Logout</button>

@@ -12,7 +12,7 @@ const navigation = [
 ];
 
 export default function HomePage() {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (

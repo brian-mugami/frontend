@@ -32,7 +32,7 @@ function InvoiceAttachmentPage() {
 
     try {
       const response = await fetch(
-        `https://flask-inventory.onrender.com/invoice/upload/${invoice.id}`,
+        `/invoice/upload/${invoice.id}`,
         {
           method: "POST",
           headers: {

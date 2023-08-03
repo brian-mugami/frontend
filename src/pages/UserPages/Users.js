@@ -17,19 +17,14 @@ function UsersPage() {
 export default UsersPage;
 
 async function loadUsers() {
-<<<<<<< HEAD
-  const response = await fetch("/users");
-  if (!response.ok) {
-=======
   const token = getAuthToken();
-  const response = await fetch("https://flask-inventory.onrender.com/users", {
+  const response = await fetch("/users", {
     headers: {
       Authorization: "Bearer " + token,
     },
   });
 
   if (response.status === 400) {
->>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
     throw json(
       {
         message: "Only Admin is able to see this page.",

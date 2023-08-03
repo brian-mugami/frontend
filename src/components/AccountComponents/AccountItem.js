@@ -2,7 +2,7 @@ import React from "react";
 import { useRouteLoaderData, Link, useSubmit } from "react-router-dom";
 
 function Accountitem({ account, title }) {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const submit = useSubmit();
 
   function startDeleteHandler() {

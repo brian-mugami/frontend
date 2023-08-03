@@ -489,18 +489,8 @@ export default InvoiceForm;
 
 export async function suppliersLoader() {
   const token = getAuthToken();
-<<<<<<< HEAD
-  const response = await fetch("/supplier", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Access-Control-Allow-Origin": "*",
-
-    },
-  });
-=======
   const response = await fetch(
-    "https://flask-inventory.onrender.com/supplier",
+    "/supplier",
     {
       method: "get",
       headers: {
@@ -508,7 +498,6 @@ export async function suppliersLoader() {
       },
     }
   );
->>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
   if (!response.ok) {
     throw json({ message: "Cant get suppliers" }, { status: 500 });
   } else {
@@ -538,7 +527,7 @@ async function LotLoader() {
   const token = getAuthToken();
 
   const response = await fetch(
-    "https://flask-inventory.onrender.com/item/lot",
+    "/item/lot",
     {
       method: "get",
       headers: {
@@ -557,18 +546,8 @@ async function LotLoader() {
 async function AccountLoader() {
   const token = getAuthToken();
 
-<<<<<<< HEAD
-  const response = await fetch("/expense/account", {
-    method: "get",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Access-Control-Allow-Origin": "*",
-
-    },
-  });
-=======
   const response = await fetch(
-    "https://flask-inventory.onrender.com/expense/account",
+    "/expense/account",
     {
       method: "get",
       headers: {
@@ -576,7 +555,6 @@ async function AccountLoader() {
       },
     }
   );
->>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
   if (!response.ok) {
     throw json({ message: "The response was not ok" }, { status: 500 });
   } else {
@@ -658,19 +636,8 @@ export async function action({ request, params }) {
         item_quantity: item.item_quantity,
       })),
     };
-<<<<<<< HEAD
-    const invoiceLines = await fetch("/purchase", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify(lines),
-    });
-=======
     const invoiceLines = await fetch(
-      "https://flask-inventory.onrender.com/purchase",
+      "/purchase",
       {
         method: "POST",
         headers: {
@@ -681,7 +648,6 @@ export async function action({ request, params }) {
         body: JSON.stringify(lines),
       }
     );
->>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
     if (invoiceLines.status === 400) {
       return invoiceLines;
     }
@@ -748,20 +714,8 @@ export async function action({ request, params }) {
       })),
     };
     for (let item of existingData.purchase_items) {
-<<<<<<< HEAD
-      const lineResponse = await fetch("/purchase/" + item.id, {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-
-        },
-        body: JSON.stringify(invoiceUpdateLines),
-      });
-=======
       const lineResponse = await fetch(
-        "https://flask-inventory.onrender.com/purchase/" + item.id,
+        "/purchase/" + item.id,
         {
           method: "PUT",
           headers: {
@@ -771,7 +725,6 @@ export async function action({ request, params }) {
           body: JSON.stringify(invoiceUpdateLines),
         }
       );
->>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
       if (lineResponse.status === 400) {
         return lineResponse;
       }

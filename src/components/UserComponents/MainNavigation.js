@@ -4,7 +4,7 @@ import image from "../assets/intel.png";
 import classes from "./MainNavigation.css";
 
 function MainNavigation() {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   return (
     <header className="nav">
       <nav>

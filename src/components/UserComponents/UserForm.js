@@ -102,23 +102,14 @@ export async function action({ request, params }) {
 
   const id = params.userId;
 
-<<<<<<< HEAD
-    const response = await fetch('/user/'+id, 
-    {method: "Patch",
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer " + token,
-        'Access-Control-Allow-Origin': '*'
-=======
   const response = await fetch(
-    "https://flask-inventory.onrender.com/user/" + id,
+    "/user/" + id,
     {
       method: "Patch",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
         "Access-Control-Allow-Origin": "*",
->>>>>>> 38590accd60be56c6e387dcbc56555bd8d893a49
       },
       body: JSON.stringify(Userdata),
     }

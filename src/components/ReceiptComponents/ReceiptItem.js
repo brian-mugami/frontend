@@ -33,7 +33,7 @@ function classNames(...classes) {
 }
 
 function ReceiptItem({ receipt, id }) {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const submit = useSubmit();
   const navigate = useNavigate();
 
@@ -50,7 +50,7 @@ function ReceiptItem({ receipt, id }) {
 
     try {
       const response = await fetch(
-        `https://flask-inventory.onrender.com/receipt/download/test/${id}`,
+        `/receipt/download/test/${id}`,
         {
           method: "GET",
           headers: {

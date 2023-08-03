@@ -30,7 +30,7 @@ function ErrorPage() {
     status = 400;
   }
 
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
 
 
   return (

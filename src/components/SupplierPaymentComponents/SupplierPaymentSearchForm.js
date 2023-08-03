@@ -77,7 +77,7 @@ export default SupplierPaymentSearchForm;
 async function suppliersLoader() {
   const token = getAuthToken();
   const response = await fetch(
-    "https://flask-inventory.onrender.com/supplier",
+    "/supplier",
     {
       method: "get",
       headers: {

@@ -59,7 +59,7 @@ export default function SideBarNav() {
       </Sidebar>
       <main>
         <button className="btn btn-dark" onClick={() => collapseSidebar()}>
-          <i class="bi bi-x-octagon"></i>
+          <i className="bi bi-x-octagon"></i>
         </button>
       </main>
     </div>

@@ -13,7 +13,7 @@ import {
 } from "@tremor/react";
 
 function UserList({ users }) {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const submit = useSubmit();
 
   function startDeleteHandler() {

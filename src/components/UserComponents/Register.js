@@ -16,11 +16,11 @@ export default function AuthForm() {
 
   const isSubmitting = navigation.state === "submitting";
   const isLogin = searchParams.get("mode") === "login";
-
+  const signUpAdmin = searchParams.get("mode") === "sign-up-admin-user"
   return (
     <>
       <div className="forms">
-        {!isLogin && (
+        {signUpAdmin && (
           <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-8">
               <div>
@@ -40,15 +40,6 @@ export default function AuthForm() {
                   </ul>
                 )}
                 {data && data.message && <p>{data.message}</p>}
-                <p className="mt-2 text-center text-sm text-gray-600">
-                  Or{" "}
-                  <Link
-                    to={`?mode=${isLogin ? "register" : "login"}`}
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    {isLogin ? "Register" : "Login"}
-                  </Link>
-                </p>
               </div>
               <Form className="mt-8 space-y-6" method="POST">
                 <input type="hidden" name="remember" defaultValue="true" />
@@ -169,15 +160,6 @@ export default function AuthForm() {
                   </ul>
                 )}
                 {data && data.message && <p>{data.message}</p>}
-                <p className="mt-2 text-center text-sm text-gray-600">
-                  Or{" "}
-                  <Link
-                    to={`?mode=${isLogin ? "register" : "login"}`}
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    {isLogin ? "Register" : "Login"}
-                  </Link>
-                </p>
               </div>
               <Form className="mt-8 space-y-6" method="POST">
                 <input type="hidden" name="remember" defaultValue="true" />

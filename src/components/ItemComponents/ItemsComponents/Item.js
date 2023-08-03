@@ -3,7 +3,7 @@ import { useSubmit, Link, useRouteLoaderData } from "react-router-dom";
 import { Card, List, ListItem, Title } from "@tremor/react";
 
 function Item({ item }) {
-  const token = useRouteLoaderData("root");
+  const {token} = useRouteLoaderData("root");
   const submit = useSubmit();
 
   function startDeleteHandler() {

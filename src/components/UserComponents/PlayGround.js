@@ -19,13 +19,14 @@ import {
 import PropTypes from "prop-types";
 import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { defer } from "react-router-dom/dist/umd/react-router-dom.development";
+import { defer, useRouteLoaderData } from "react-router-dom/dist/umd/react-router-dom.development";
 import SalesCredit from "../PlaygroundComs/SalesCredit";
 import PurchaseCredit from "../PlaygroundComs/PurchaseCredit";
 
 function PlayGround() {
   const {
     suppliers,
+    user,
     sales,
     purchases,
     dailySales,
@@ -36,24 +37,34 @@ function PlayGround() {
     monthlyPurchases,
     purchaseCredit,
     salesCredit,
-  } = useLoaderData();
+  } = useRouteLoaderData("root");
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const updatedCategories = [
       {
         title: "Total Sales Amount",
-        metric: sales.Amount.toLocaleString(),
-        metricPrev: sales.Sales.toLocaleString(),
-        delta: sales.Percentage_sales.toFixed(1),
+        metric: sales && sales.Amount ? sales.Amount.toLocaleString() : 0,
+        metricPrev: sales && sales.Sales ? sales.Sales.toLocaleString() : 0,
+        delta:
+          sales && sales.Percentage_sales
+            ? sales.Percentage_sales.toFixed(1)
+            : 0,
         deltaType:
           sales.Percentage_sales < 0 ? "moderateDecrease" : "moderateIncrease",
       },
       {
         title: "Total Purchase Amount",
-        metric: purchases.Amount.toLocaleString(),
-        metricPrev: purchases.Purchases.toLocaleString(),
-        delta: purchases.Percentage_Purchase.toFixed(1),
+        metric:
+          purchases && purchases.Amount ? purchases.Amount.toLocaleString() : 0,
+        metricPrev:
+          purchases && purchases.Purchases
+            ? purchases.Purchases.toLocaleString()
+            : 0,
+        delta:
+          purchases && purchases.Percentage_Purchase
+            ? purchases.Percentage_Purchase.toFixed(1)
+            : 0,
         deltaType:
           purchases.Percentage_Purchase < 0
             ? "moderateDecrease"
@@ -251,7 +262,7 @@ function PlayGround() {
                 alignItems="baseline"
                 className="space-x-2"
               >
-                <Metric>{item.stat.toLocaleString()}</Metric>
+                <Metric>{item && item.stat.toLocaleString()}</Metric>
                 <Text>Total Amount</Text>
               </Flex>
               <Flex className="mt-6">
@@ -276,7 +287,11 @@ function PlayGround() {
             decorationColor="indigo"
           >
             <Text>Inventory value</Text>
-            <Metric>{inventoryValue.total_value.toLocaleString()}</Metric>
+            <Metric>
+              {inventoryValue && inventoryValue.total_value
+                ? inventoryValue.total_value.toLocaleString()
+                : 0}
+            </Metric>
           </Card>
         </div>
       </div>
@@ -294,250 +309,11 @@ function PlayGround() {
         </Card>
       </div>
       <div className="p-4 grid grid-cols-3 gap-4">
-        <SalesCredit receipts={salesCredit}/>
-        <PurchaseCredit invoices={purchaseCredit}/>
+        <SalesCredit receipts={salesCredit} />
+        <PurchaseCredit invoices={purchaseCredit} />
       </div>
     </div>
   );
 }
 
 export default PlayGround;
-
-async function salesLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Sales Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData;
-  }
-}
-
-async function dailySalesLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales/per_day",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Sales Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-    return resData;
-  }
-}
-
-async function dailyExpensesLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/expenses/per_day",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Daily Expenses Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-    return resData;
-  }
-}
-
-async function purchaseLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchase",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Purchases Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData;
-  }
-}
-
-async function dailyPurchasesLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchases/per_day",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Daily Purchases Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData;
-  }
-}
-
-async function countLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/supplier/count",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Sales Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-    return resData;
-  }
-}
-
-async function inventoryValueLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/inventory-count",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Inventory Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData;
-  }
-}
-
-async function monthlySalesLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales/month",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Monthly sales Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData;
-  }
-}
-
-async function monthlyPurchasesLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchase/month",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "Monthly sales Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData;
-  }
-}
-
-async function purchasesCreditLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/purchase/credit",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "credit Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData.invoices;
-  }
-}
-
-async function salesCreditLoader() {
-  const token = getAuthToken();
-  const response = await fetch(
-    "https://flask-inventory.onrender.com/transaction/sales/credit",
-    {
-      method: "get",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  );
-  if (!response.ok) {
-    throw json({ message: "credit Server Error" }, { status: 500 });
-  } else {
-    const resData = await response.json();
-
-    return resData.receipts;
-  }
-}
-
-export async function dashboardLoader() {
-  return defer({
-    suppliers: await countLoader(),
-    sales: await salesLoader(),
-    purchases: await purchaseLoader(),
-    dailySales: await dailySalesLoader(),
-    dailyPurchases: await dailyPurchasesLoader(),
-    dailyExpenses: await dailyExpensesLoader(),
-    monthlySales: await monthlySalesLoader(),
-    monthlyPurchases: await monthlyPurchasesLoader(),
-    inventoryValue: await inventoryValueLoader(),
-    salesCredit: await salesCreditLoader(),
-    purchaseCredit: await purchasesCreditLoader(),
-  });
-}

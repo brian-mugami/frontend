@@ -231,7 +231,7 @@ export async function action({ request, params }) {
     return redirect("/customer");
   } else {
     const id = params.id;
-    url = "https://flask-inventory.onrender.com/customer/" + id;
+    url = "/customer/" + id;
     const response = await fetch(url, {
       method: method,
       headers: {
