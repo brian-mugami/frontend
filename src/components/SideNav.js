@@ -10,6 +10,7 @@ import {
 } from "@material-tailwind/react";
 import "../components/SideNav.css";
 import Kd from "../components/assets/ktslogo.png";
+import { getAuthToken } from "../util/Auth";
 
 function SideNav() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,7 +19,8 @@ function SideNav() {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const { token, user } = useRouteLoaderData("root");
+  const {user, token} = useRouteLoaderData("root");
+
 
   return (
     <div>
@@ -69,11 +71,11 @@ function SideNav() {
                 Dashboard
               </NavLink>
 
-              {user && user.is_admin === true && (
+              {user && user.is_admin === true ? (
                 <NavLink className="sidebar-nav-link" to="/user">
                   Users
                 </NavLink>
-              )}
+              ): null}
 
               <NavLink className="sidebar-nav-link" to="invoice">
                 Invoices

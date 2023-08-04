@@ -2,6 +2,7 @@ import React from "react";
 import { useRouteError, isRouteErrorResponse, Link } from "react-router-dom";
 import SideNav from "../../components/SideNav";
 import { Outlet, useRouteLoaderData } from "react-router-dom";
+import { getAuthToken } from "../../util/Auth";
 
 
 function ErrorPage() {
@@ -30,7 +31,7 @@ function ErrorPage() {
     status = 400;
   }
 
-  const {token} = useRouteLoaderData("root");
+  const token= getAuthToken();
 
 
   return (

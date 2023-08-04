@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AuthenticationPage, {
   action as AuthAction,
 } from "./pages/UserPages/AuthenticationPage";
-import UsersPage, { loader as UsersLoader } from "./pages/UserPages/Users";
 import UserDetailPage, {
   loader as UserDetailLoader,
   action as DeleteAction,
@@ -218,19 +217,15 @@ import ReceiptPaymentPage, {
   loader as ReceiptPaymentLoader,
 } from "./pages/ReceiptPages/ReceiptPaymentPage";
 
-const ConfirmationsPage = lazy(() =>
-  import("./pages/UserPages/Dashboard")
-);
+const ConfirmationsPage = lazy(() => import("./pages/UserPages/Dashboard"));
 
-
-const DashboardPage = lazy(() =>
-  import("./pages/UserPages/Dashboard")
-);
-
+const DashboardPage = lazy(() => import("./pages/UserPages/Dashboard"));
 
 const CategoryEditPage = lazy(() =>
   import("./pages/ItemPages/Categories/CategoryEditPage")
 );
+
+const UsersPage = lazy(() => import("./pages/UserPages/Users"));
 
 const ItemsRoot = lazy(() => import("./pages/ItemPages/ItemsAllRootNav"));
 
@@ -251,6 +246,8 @@ const InventoryBalanceSearchPage = lazy(() =>
 const AllCustomerPaymentRoot = lazy(() =>
   import("./pages/CustomerPaymentsPage/AllCustomerPaymentRoot")
 );
+
+const AllUsersRoot = lazy(() => import("./pages/UserPages/UserRootPage"));
 
 const ErrorPage = lazy(() => import("./pages/UserPages/Error"));
 
@@ -365,9 +362,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     loader: () =>
-    import("./util/Auth").then(
-      (module) => module.dashboardLoader()
-    ),
+      import("./util/Auth").then((module) => module.dashboardLoader()),
     element: (
       <Suspense fallback={<p>Loading</p>}>
         <RootLayout />
@@ -1360,8 +1355,24 @@ const router = createBrowserRouter([
       },
       {
         path: "user",
+        element: (
+          <Suspense fallback={<p>Loading....</p>}>
+            <AllUsersRoot />
+          </Suspense>
+        ),
         children: [
-          { index: true, element: <UsersPage />, loader: UsersLoader },
+          {
+            index: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <UsersPage />
+              </Suspense>
+            ),
+            loader:() =>
+            import("./pages/UserPages/Users").then(
+              (module) => module.loadUsers()
+            ),
+          },
           {
             path: ":userId",
             id: "user-detail",

@@ -9,7 +9,7 @@ export async function action({ request }) {
   const searchParams = new URL(request.url).searchParams;
   const mode = searchParams.get("mode") || "login";
 
-  if (mode !== "login" && mode !== "register") {
+  if (mode !== "login" && mode !== "sign-up-admin-user") {
     throw json({ message: "Route not found." }, { status: 404 });
   }
   const data = await request.formData();
@@ -36,11 +36,17 @@ export async function action({ request }) {
       },
       body: JSON.stringify(loginData),
     });
-    if (!response) {
-      return json({ message: "Could not authenticate user" }, { status: 500 });
-    }
     if (response.status === 401) {
       return response;
+    }
+    if (response.status === 400) {
+      return response;
+    }
+    if (response.status === 500) {
+      return response;
+    }
+    if (!response) {
+      return json({ message: "Could not authenticate user" }, { status: 500 });
     }
 
     const resData = await response.json();
@@ -57,7 +63,7 @@ export async function action({ request }) {
     return redirect("/home");
   }
 
-  if (mode === "register") {
+  if (mode === "sign-up-admin-user") {
     const response = await fetch("/register", {
       method: "POST",
       headers: {
@@ -77,7 +83,7 @@ export async function action({ request }) {
       throw json({ message: "Could not register user" }, { status: 500 });
     }
 
-    return redirect("/Confirmation");
+    return redirect("/auth?mode=login");
   }
 }
 

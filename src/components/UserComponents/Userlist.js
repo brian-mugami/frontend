@@ -32,7 +32,6 @@ function UserList({ users }) {
           <Table className="mt-5">
             <TableHead>
               <TableRow>
-                <TableHeaderCell>User Name</TableHeaderCell>
                 <TableHeaderCell>Email</TableHeaderCell>
                 <TableHeaderCell>Date Registered</TableHeaderCell>
                 <TableHeaderCell>Role</TableHeaderCell>
@@ -43,10 +42,11 @@ function UserList({ users }) {
             <TableBody>
               {users.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.first_name}</TableCell>
+                  <Link to={`./${user.id}`}>
                   <TableCell>
                     <Text>{user.email}</Text>
                   </TableCell>
+                  </Link>
                   <TableCell>
                     <Text>{user.date_registered}</Text>
                   </TableCell>
