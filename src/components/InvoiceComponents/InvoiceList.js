@@ -2,10 +2,40 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useActionData } from "react-router";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import {
+  Icon,
+  Table,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableHeaderCell,
+  TableBody,
+  BadgeDelta,
+  Title,
+  Flex,
+  Select,
+  SelectItem,
+  MultiSelect,
+  MultiSelectItem,
+  DeltaType,
+} from "@tremor/react";
+import { InformationCircleIcon } from  "@heroicons/react/24/outline";
+import { useState } from "react";
 
 const PAGE_SIZE = 10;
 
+
+
+
+
+
 function InvoiceList({ invoices, title }) {
+
+
+
+
+
+
   const [currentPage, setCurrentPage] = React.useState(1);
 
   const [pinnedColumns, setPinnedColumns] = React.useState({
@@ -99,7 +129,21 @@ function InvoiceList({ invoices, title }) {
   ];
 
   return (
-    <div style={{ height: 600, width: "100%" }}>
+    <div >
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
       <h2 className="text-lg font-semibold mb-4">invoices</h2>
       <div className="shadow border rounded-md">
         {data && data.errors && (
