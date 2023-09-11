@@ -1,0 +1,32 @@
+/* YourComponent.css */
+
+.motion-effect {
+    animation: movePath 4s linear infinite, changeColors 4s infinite;
+    transform-origin: center;
+    transition: transform 0.5s ease-out;
+  }
+  
+  @keyframes movePath {
+    0% {
+      transform: translateX(-200px);
+    }
+    25% {
+        transform: translateX(0);
+      }
+    50% {
+        transform: translateX(250px);
+      }
+    75% {
+        transform: translateX(0);
+      }
+    100% {
+      transform: translateX(-200px); /* Adjust the amount of movement as desired */
+    }
+  }
+  
+  @keyframes changeColors {
+    0%, 100% {
+      fill: url(#gradient);
+    }
+  }
+  
