@@ -3,12 +3,13 @@ import { getAuthToken } from "../../util/Auth";
 import UserItem from "../../components/UserComponents/UserItem";
 import React from "react";
 
-function UserDetailPage(){
-    const user = useRouteLoaderData('user-detail') 
-    return(
+function UserDetailPage() {
+  const user = useRouteLoaderData("user-detail");
+  return (
     <React.Fragment>
-    <UserItem user = {user}/>
-    </React.Fragment>)
+      <UserItem user={user} />
+    </React.Fragment>
+  );
 }
 
 export default UserDetailPage;

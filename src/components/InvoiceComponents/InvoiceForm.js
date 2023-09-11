@@ -48,7 +48,7 @@ function InvoiceForm({ invoiceData, title, method }) {
   const [invoiceTotal, setInvoiceTotal] = useState(0);
   const navigation = useNavigation();
   const date = new Date().toISOString().slice(0, 10);
-  const { suppliers, items, expenseAccounts, lots } = useLoaderData();
+  const { suppliers, items, expenseAccounts, lots, tax } = useLoaderData();
   const data = useActionData();
   const [expense, setExpense] = useState(false);
 
@@ -60,6 +60,7 @@ function InvoiceForm({ invoiceData, title, method }) {
         item_quantity: 0,
         buying_price: parseFloat(0),
         lot: " ",
+        tax:1, 
         item_cost: parseFloat(0),
       },
     ]);
@@ -105,6 +106,7 @@ function InvoiceForm({ invoiceData, title, method }) {
   };
 
   itemList = tableRows;
+  
   return (
     <React.Fragment>
       {data && data.errors && (
@@ -379,6 +381,7 @@ function InvoiceForm({ invoiceData, title, method }) {
                 <th scope="col">Item Quantity</th>
                 <th scope="col">Buying Price</th>
                 <th scope="col">Lot</th>
+                <th scope="col">Tax</th>
                 <th scope="col">Total Cost</th>
               </tr>
             </thead>
@@ -441,6 +444,20 @@ function InvoiceForm({ invoiceData, title, method }) {
                     <datalist id="options1">
                       {lots.map((lot) => (
                         <option key={lot.id} value={lot.lot} />
+                      ))}
+                    </datalist>
+                  </td>
+                  <td>
+                    <input
+                      name="tax"
+                      defaultValue={row.tax}
+                      list="options2"
+                      onChange={(e) => handleInputChange(e, index, "tax")}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    />
+                    <datalist id="options2">
+                      {tax.map((t) => (
+                        <option key={t.id} value={t.tax_type} />
                       ))}
                     </datalist>
                   </td>
@@ -563,12 +580,33 @@ async function AccountLoader() {
   }
 }
 
+async function TaxLoader() {
+  const token = getAuthToken();
+
+  const response = await fetch(
+    "/tax",
+    {
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw json({ message: "The response was not ok" }, { status: 500 });
+  } else {
+    const resData = await response.json();
+    return resData;
+  }
+}
+
 export async function Loader() {
   return defer({
     items: await ItemsLoader(),
     suppliers: await suppliersLoader(),
     expenseAccounts: await AccountLoader(),
     lots: await LotLoader(),
+    tax: await TaxLoader(),
   });
 }
 

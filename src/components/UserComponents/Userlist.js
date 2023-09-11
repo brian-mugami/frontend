@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
-import { Card, List, ListItem, Title } from "@tremor/react";
+import { Link } from "react-router-dom";
+import { Card, Title } from "@tremor/react";
 import {
   Table,
   TableHead,
@@ -13,17 +13,6 @@ import {
 } from "@tremor/react";
 
 function UserList({ users }) {
-  const {token} = useRouteLoaderData("root");
-  const submit = useSubmit();
-
-  function startDeleteHandler() {
-    const proceed = window.confirm("Are you sure?");
-
-    if (proceed) {
-      submit(null, { method: "delete" });
-    }
-  }
-
   return (
     <React.Fragment>
       <div className="pt-10">
@@ -32,21 +21,20 @@ function UserList({ users }) {
           <Table className="mt-5">
             <TableHead>
               <TableRow>
-                <TableHeaderCell>User Name</TableHeaderCell>
                 <TableHeaderCell>Email</TableHeaderCell>
                 <TableHeaderCell>Date Registered</TableHeaderCell>
                 <TableHeaderCell>Role</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
               {users.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.first_name}</TableCell>
-                  <TableCell>
-                    <Text>{user.email}</Text>
-                  </TableCell>
+                  <Link to={`./${user.id}`}>
+                    <TableCell>
+                      <Text>{user.email}</Text>
+                    </TableCell>
+                  </Link>
                   <TableCell>
                     <Text>{user.date_registered}</Text>
                   </TableCell>
@@ -58,10 +46,6 @@ function UserList({ users }) {
                       <Link to={`${user.id}/edit`}>
                         <Badge size="md">Edit</Badge>
                       </Link>
-
-                      <Badge onClick={startDeleteHandler} size="md">
-                        Remove
-                      </Badge>
                     </div>
                   </TableCell>
                 </TableRow>

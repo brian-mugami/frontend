@@ -9,7 +9,7 @@ export async function action({ request }) {
   const searchParams = new URL(request.url).searchParams;
   const mode = searchParams.get("mode") || "login";
 
-  if (mode !== "login" && mode !== "register") {
+  if (mode !== "login" && mode !== "sign-up-admin-user") {
     throw json({ message: "Route not found." }, { status: 404 });
   }
   const data = await request.formData();
@@ -35,12 +35,19 @@ export async function action({ request }) {
       },
       body: JSON.stringify(loginData),
     });
-    if (!response) {
-      return json({ message: "Could not authenticate user" }, { status: 500 });
-    }
     if (response.status === 401) {
       return response;
     }
+    if (response.status === 500) {
+      return response;
+    }
+    if (response.status === 400) {
+      return response;
+    }
+    if (!response) {
+      return json({ message: "Could not authenticate user" }, { status: 500 });
+    }
+
 
     const resData = await response.json();
     const access_token = resData.access_token;
@@ -56,8 +63,8 @@ export async function action({ request }) {
     return redirect("/home");
   }
 
-  if (mode === "register") {
-    const response = await fetch("https://inventory-accounting.onrender.com/register/user/admin", {
+  if (mode === "sign-up-admin-user") {
+    const response = await fetch("/register/user/admin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +74,12 @@ export async function action({ request }) {
     if (response.status === 409) {
       return response;
     }
-
+    if (response.status === 400) {
+      return response;
+    }
+    if (response.status === 500) {
+      return response;
+    }
     if (response.status === 417) {
       return response;
     }
@@ -75,7 +87,7 @@ export async function action({ request }) {
       throw json({ message: "Could not register user" }, { status: 500 });
     }
 
-    return redirect("/auth/login/admin/kindred?mode=login");
+    return redirect("/auth?mode=login");
   }
 }
 

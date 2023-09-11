@@ -1,22 +1,17 @@
-import { Suspense } from "react";
-import { defer, json, useLoaderData, Await } from "react-router-dom";
+import { defer, json, useLoaderData} from "react-router-dom";
 import UserList from "../../components/UserComponents/Userlist";
 import { getAuthToken } from "../../util/Auth";
 
 function UsersPage() {
-  const { users } = useLoaderData();
+  const users  = useLoaderData();
   return (
-    <Suspense fallback={<p style={{ textAlign: "center" }}>Loading....</p>}>
-      <Await resolve={users}>
-        {(loadedUsers) => <UserList users={loadedUsers} />}
-      </Await>
-    </Suspense>
+        <UserList users={users} />
   );
 }
 
 export default UsersPage;
 
-async function loadUsers() {
+export async function loadUsers() {
   const token = getAuthToken();
   const response = await fetch("https://inventory-accounting.onrender.com/users", {
     headers: {
