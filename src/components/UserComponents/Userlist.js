@@ -1,6 +1,6 @@
 import React from "react";
-import { Link, useRouteLoaderData, useSubmit } from "react-router-dom";
-import { Card, List, ListItem, Title } from "@tremor/react";
+import { Link } from "react-router-dom";
+import { Card, Title } from "@tremor/react";
 import {
   Table,
   TableHead,
@@ -13,17 +13,6 @@ import {
 } from "@tremor/react";
 
 function UserList({ users }) {
-  const {token} = useRouteLoaderData("root");
-  const submit = useSubmit();
-
-  function startDeleteHandler() {
-    const proceed = window.confirm("Are you sure?");
-
-    if (proceed) {
-      submit(null, { method: "delete" });
-    }
-  }
-
   return (
     <React.Fragment>
       <div className="pt-10">
@@ -35,7 +24,6 @@ function UserList({ users }) {
                 <TableHeaderCell>Email</TableHeaderCell>
                 <TableHeaderCell>Date Registered</TableHeaderCell>
                 <TableHeaderCell>Role</TableHeaderCell>
-                <TableHeaderCell>Actions</TableHeaderCell>
               </TableRow>
             </TableHead>
 
@@ -43,9 +31,9 @@ function UserList({ users }) {
               {users.map((user) => (
                 <TableRow key={user.id}>
                   <Link to={`./${user.id}`}>
-                  <TableCell>
-                    <Text>{user.email}</Text>
-                  </TableCell>
+                    <TableCell>
+                      <Text>{user.email}</Text>
+                    </TableCell>
                   </Link>
                   <TableCell>
                     <Text>{user.date_registered}</Text>
@@ -58,10 +46,6 @@ function UserList({ users }) {
                       <Link to={`${user.id}/edit`}>
                         <Badge size="md">Edit</Badge>
                       </Link>
-
-                      <Badge onClick={startDeleteHandler} size="md">
-                        Remove
-                      </Badge>
                     </div>
                   </TableCell>
                 </TableRow>

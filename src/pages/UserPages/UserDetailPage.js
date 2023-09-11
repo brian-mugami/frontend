@@ -46,7 +46,7 @@ export async function action({ params, request }) {
     },
   });
   if (!response.ok) {
-    throw json({ message: "Could not delete user" }, { status: 500 });
+    throw json({ message: "Could not manipulate user." }, { status: 500 });
   }
   return redirect("/user");
 }

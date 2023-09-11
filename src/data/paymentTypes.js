@@ -25,6 +25,11 @@ export const currencyTypes = [
     { id: 2,currency_type: "USD"},
 ]
 
+export const userTypes = [
+    { id: 2,userType: "admin", value:"true"},
+    { id: 2,userType: "user", value:"false"},
+]
+
 
 
 export const unitTypes = [

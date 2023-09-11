@@ -1,16 +1,6 @@
 import React, { lazy, Suspense } from "react";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AuthenticationPage, {
-  action as AuthAction,
-} from "./pages/UserPages/AuthenticationPage";
-import UserDetailPage, {
-  loader as UserDetailLoader,
-  action as DeleteAction,
-} from "./pages/UserPages/UserDetailPage";
-import { tokenLoader } from "./util/Auth";
-import EditUserPage from "./pages/UserPages/EditUser";
-import { action as UserManipulateAction } from "./components/UserComponents/UserForm";
 import { action as LogoutAction } from "./pages/UserPages/Logout";
 import AccountRoot from "./pages/AccountPages/AccountsRoot";
 import SupplierAccountsPage, {
@@ -231,6 +221,10 @@ const ItemsRoot = lazy(() => import("./pages/ItemPages/ItemsAllRootNav"));
 
 const ItemRoot = lazy(() => import("./pages/ItemPages/Items/ItemRoot"));
 
+const EditUserPage = lazy(() => import("./pages/UserPages/EditUser"));
+
+const UserDetailPage = lazy(() => import("./pages/UserPages/UserDetailPage"));
+
 const MiscIssuePage = lazy(() =>
   import("./pages/InventoryBalancePage/MiscIssuePage")
 );
@@ -305,6 +299,8 @@ const ReceiptVoidPage = lazy(() =>
 const AllAccountRoot = lazy(() =>
   import("./pages/AccountPages/SubAccountRoot")
 );
+
+const NewUserPage = lazy(() => import("./pages/UserPages/NewUserPage"));
 
 const AllInvAdjAccount = lazy(() =>
   import("./pages/InventoryAdjustmentAccountPages/AllInvAdjAccountPage")
@@ -686,19 +682,6 @@ const router = createBrowserRouter([
       },
       {
         path: "auth",
-        element: <AuthenticationPage />,
-        action: AuthAction,
-      },
-      {
-        path: "Confirmation",
-        element: (
-          <Suspense fallback={<p>Loading...</p>}>
-            <ConfirmationsPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: "auth/login/admin/kindred",
         element: (
           <Suspense fallback={<p>Loading...</p>}>
             <AdminRegisterPage />
@@ -708,6 +691,14 @@ const router = createBrowserRouter([
           import("./pages/UserPages/AdminRegisterPage").then((module) =>
             module.action(meta)
           ),
+      },
+      {
+        path: "Confirmation",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <ConfirmationsPage />
+          </Suspense>
+        ),
       },
       {
         path: "logout",
@@ -1368,25 +1359,50 @@ const router = createBrowserRouter([
                 <UsersPage />
               </Suspense>
             ),
-            loader:() =>
-            import("./pages/UserPages/Users").then(
-              (module) => module.loadUsers()
-            ),
+            loader: () =>
+              import("./pages/UserPages/Users").then((module) =>
+                module.loadUsers()
+              ),
+          },
+          {
+            path: "new",
+            element: <Suspense fallback={<p>Loading...</p>}><NewUserPage/></Suspense>,
+            action: (meta) =>
+              import("./components/UserComponents/NewUserForm").then((module) =>
+                module.action(meta)
+              ),
           },
           {
             path: ":userId",
             id: "user-detail",
-            loader: UserDetailLoader,
+            loader: (meta) =>
+              import("./pages/UserPages/UserDetailPage").then((module) =>
+                module.loader(meta)
+              ),
             children: [
               {
                 index: true,
-                element: <UserDetailPage />,
-                action: DeleteAction,
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <UserDetailPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import("./pages/UserPages/UserDetailPage").then((module) =>
+                    module.action(meta)
+                  ),
               },
               {
                 path: "edit",
-                element: <EditUserPage />,
-                action: UserManipulateAction,
+                element: (
+                  <Suspense fallback={<p>Loading...</p>}>
+                    <EditUserPage />
+                  </Suspense>
+                ),
+                action: (meta) =>
+                  import("./components/UserComponents/NewUserForm").then(
+                    (module) => module.action(meta)
+                  ),
               },
             ],
           },
