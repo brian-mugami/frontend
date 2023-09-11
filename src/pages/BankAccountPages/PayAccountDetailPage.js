@@ -8,7 +8,12 @@ const {account} = useRouteLoaderData('payment-account-detail')
 
     return(
         <React.Fragment>
-            <Suspense fallback={<p style={{ textAlign: 'center' }}>Loading...</p>}>
+            <Suspense fallback={<button type="button" class="bg-indigo-500 ..." disabled>
+  <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+   
+  </svg>
+  Processing...
+</button>}>
                 <Await resolve={account}>
                     {(loadedaccount)=><Accountitem account={loadedaccount} title="bank"/>}
                 </Await>

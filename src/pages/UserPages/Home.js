@@ -10,8 +10,8 @@ import Pricing from "./Pricing";
 import screenshot from "../../components/assets/screenshot.png";
 import LandingPageCards from "../../components/LayoutComponents/LandingPageCards";
 import PricingTable from "../../components/LayoutComponents/PricingTable";
-import LandingPageChart from "../../components/LayoutComponents/LandingPageChart";
 import "./Home.css";
+import LandingPageChart from "../../components/LayoutComponents/LandingPageChart";
 
 const navigation = [
   { name: "Pricing", href: <Pricing /> },
