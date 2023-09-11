@@ -227,7 +227,7 @@ function PlayGround() {
   return (
     <div>
       <div className="pb-5">
-        <header className="bg-white  ">
+        <header className="  ">
           <div className="mx-auto max-w-7xl px-4 py-6 flex justify-between sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               Dashboard
@@ -237,14 +237,12 @@ function PlayGround() {
       </div>
 
       <Flex>
-        <Grid numColsSm={2} numColsLg={3} className="gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-4">
           {categories.map((item) => (
             <Card key={item.title}>
               <Flex alignItems="start">
                 <Text>{item.title}</Text>
-              {/* <BadgeDelta   deltaType={item.deltaType}>
-                  {item.delta}%
-                </BadgeDelta> */}
+            
               </Flex>
               <Flex
                 justifyContent="start"
@@ -260,11 +258,27 @@ function PlayGround() {
               </Flex>
             </Card>
           ))}
-        </Grid>
+          <div className="flex pt-4">
+        <div className="flex-start flex-initial ">
+          <Card
+            className="max-w-md mx-auto"
+            decoration="top"
+            decorationColor="indigo"
+          >
+            <Text>Inventory value</Text>
+            <Metric>
+              {inventoryValue && inventoryValue.total_value
+                ? inventoryValue.total_value.toLocaleString()
+                : 0}
+            </Metric>
+          </Card>
+        </div>
+      </div>
+        </div>
       </Flex>
 
       <div className="pt-10">
-        <Grid numColsSm={2} numColsLg={3} className="gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4">
           {data.map((item) => (
             <Card key={item.category}>
               <Title>{item.category}</Title>
@@ -287,25 +301,10 @@ function PlayGround() {
               />
             </Card>
           ))}
-        </Grid>
-      </div>
-
-      <div className="flex pt-4">
-        <div className="flex-start flex-initial ">
-          <Card
-            className="max-w-md mx-auto"
-            decoration="top"
-            decorationColor="indigo"
-          >
-            <Text>Inventory value</Text>
-            <Metric>
-              {inventoryValue && inventoryValue.total_value
-                ? inventoryValue.total_value.toLocaleString()
-                : 0}
-            </Metric>
-          </Card>
         </div>
       </div>
+
+      
       <div className=" pt-4">
         <Card>
           <Title>Monthly data</Title>

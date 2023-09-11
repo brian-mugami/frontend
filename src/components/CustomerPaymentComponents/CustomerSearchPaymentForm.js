@@ -59,7 +59,7 @@ export default CustomerSearchPaymentForm;
 
 async function customersLoader(){
   const token = getAuthToken()
-  const response = await fetch("https://flask-inventory.onrender.com/customer", {
+  const response = await fetch("https://inventory-accounting.onrender.com/customer", {
       method:"get",
       headers:{
           "Authorization": "Bearer "+ token

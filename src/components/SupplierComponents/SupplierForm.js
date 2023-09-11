@@ -190,7 +190,7 @@ export async function action({ request, params }) {
     is_active: data.get("active"),
   };
 
-  let url = "https://flask-inventory.onrender.com/supplier";
+  let url = "https://inventory-accounting.onrender.com/supplier";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,

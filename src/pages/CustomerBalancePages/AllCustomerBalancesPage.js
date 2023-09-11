@@ -15,7 +15,7 @@ export default AllCustomerBalancesPage
 export async function loader(){
     const token = getAuthToken()
    
-    const response = await fetch('https://flask-inventory.onrender.com/customer-balance', {
+    const response = await fetch('https://inventory-accounting.onrender.com/customer-balance', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token,

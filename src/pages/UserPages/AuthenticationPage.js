@@ -28,7 +28,7 @@ export async function action({ request }) {
   };
 
   if (mode === "login") {
-    const response = await fetch("https://flask-inventory.onrender.com/login", {
+    const response = await fetch("https://inventory-accounting.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export async function action({ request }) {
   }
 
   if (mode === "register") {
-    const response = await fetch("https://flask-inventory.onrender.com/register", {
+    const response = await fetch("https://inventory-accounting.onrender.com/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

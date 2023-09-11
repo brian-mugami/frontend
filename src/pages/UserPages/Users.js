@@ -18,7 +18,7 @@ export default UsersPage;
 
 async function loadUsers() {
   const token = getAuthToken();
-  const response = await fetch("https://flask-inventory.onrender.com/users", {
+  const response = await fetch("https://inventory-accounting.onrender.com/users", {
     headers: {
       Authorization: "Bearer " + token,
     },

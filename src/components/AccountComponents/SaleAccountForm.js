@@ -155,7 +155,7 @@ export async function action({ request, params }) {
     account_type: data.get("payType"),
   };
 
-  let url = "https://flask-inventory.onrender.com/sales/account";
+  let url = "https://inventory-accounting.onrender.com/sales/account";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,

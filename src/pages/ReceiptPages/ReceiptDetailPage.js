@@ -14,7 +14,7 @@ function ReceiptDetailPage(){
 export default ReceiptDetailPage;
 
 export async function loader({request, params}){
-    let url = 'https://flask-inventory.onrender.com/receipt/'
+    let url = 'https://inventory-accounting.onrender.com/receipt/'
     const token = getAuthToken()
     const id = params.id
     const response = await fetch(url + id, {
@@ -39,7 +39,7 @@ export async function action({request,params}){
     const token = getAuthToken();
 
     const id = params.id;
-    const response = await fetch("https://flask-inventory.onrender.com/receipt/" + id, {
+    const response = await fetch("https://inventory-accounting.onrender.com/receipt/" + id, {
         method: request.method,
         headers : {
             'Authorization': 'Bearer ' + token

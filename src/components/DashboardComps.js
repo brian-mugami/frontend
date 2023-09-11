@@ -126,7 +126,7 @@ export default DashboardComps;
 <<<<<<< HEAD
 async function salesLoader(){
   const token = getAuthToken();
-  const response = await fetch("https://flask-inventory.onrender.com/transaction/sales", {
+  const response = await fetch("https://inventory-accounting.onrender.com/transaction/sales", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -143,7 +143,7 @@ async function salesLoader(){
 
 async function countLoader() {
   const token = getAuthToken();
-  const response = await fetch("https://flask-inventory.onrender.com/supplier/count", {
+  const response = await fetch("https://inventory-accounting.onrender.com/supplier/count", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,

@@ -509,7 +509,7 @@ export async function suppliersLoader() {
 async function ItemsLoader() {
   const token = getAuthToken();
 
-  const response = await fetch("https://flask-inventory.onrender.com/item", {
+  const response = await fetch("https://inventory-accounting.onrender.com/item", {
     method: "get",
     headers: {
       Authorization: "Bearer " + token,
@@ -602,7 +602,7 @@ export async function action({ request, params }) {
       supplier_name: data.get("supplier"),
     };
   }
-  let url = "https://flask-inventory.onrender.com/invoice";
+  let url = "https://inventory-accounting.onrender.com/invoice";
   if (method === "POST") {
     const response = await fetch(url, {
       method: request.method,

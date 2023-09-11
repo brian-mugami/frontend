@@ -18,7 +18,7 @@ export default PaymentAccountsPage;
 async function AccountLoader(){
     const token = getAuthToken()
    
-    const response = await fetch('https://flask-inventory.onrender.com/bank/account', {
+    const response = await fetch('https://inventory-accounting.onrender.com/bank/account', {
         method: "get",
         headers: {
             'Authorization': 'Bearer '+ token,

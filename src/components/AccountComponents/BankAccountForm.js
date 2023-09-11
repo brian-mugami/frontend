@@ -132,7 +132,7 @@ export async function action({ request, params }) {
     account_number: data.get("accNum"),
   };
 
-  let url = "https://flask-inventory.onrender.com/bank/account";
+  let url = "https://inventory-accounting.onrender.com/bank/account";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,

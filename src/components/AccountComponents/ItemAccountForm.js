@@ -134,7 +134,7 @@ export async function action({ request, params }) {
     account_number: data.get("accNum"),
   };
 
-  let url = "https://flask-inventory.onrender.com/category/account";
+  let url = "https://inventory-accounting.onrender.com/category/account";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,

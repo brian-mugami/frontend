@@ -119,7 +119,7 @@ export async function action({ request, params }) {
     name: data.get("catname"),
     account_name: data.get("account"),
   };
-  let url = "https://flask-inventory.onrender.com/item/category";
+  let url = "https://inventory-accounting.onrender.com/item/category";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,

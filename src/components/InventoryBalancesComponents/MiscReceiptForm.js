@@ -117,7 +117,7 @@ export async function action({ request, param }) {
     account_name: data.get("account_name"),
   };
 
-  const response = await fetch("https://flask-inventory.onrender.com/inventory-balances", {
+  const response = await fetch("https://inventory-accounting.onrender.com/inventory-balances", {
     method: method,
     headers: {
       "content-type": "application/json",

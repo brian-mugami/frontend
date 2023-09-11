@@ -54,7 +54,7 @@ export async function action({request,params}){
         reason : data.get("reason")
     }
 
-    const response = await fetch('https://flask-inventory.onrender.com/customer/payment/reject/'+id, {
+    const response = await fetch('https://inventory-accounting.onrender.com/customer/payment/reject/'+id, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

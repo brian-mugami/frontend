@@ -57,7 +57,8 @@ const chartdata = [
   
   ];
   
- 
+  const dataFormatter = (number: number) => `${Intl.NumberFormat("us").format(number).toString()}%`;
+
 
 function LandingPageChart() {
   const [modifiedChartData, setModifiedChartData] = useState(chartdata);
@@ -90,6 +91,7 @@ function LandingPageChart() {
         index="year"
         categories={["Export Growth Rate", "Import Growth Rate"]}
         colors={["red", "gray"]}
+        valueFormatter={dataFormatter}
        
         yAxisWidth={40}
       />

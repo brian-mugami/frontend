@@ -15,7 +15,7 @@ function ReportsList() {
   };
 
   const handleDownload = () => {
-    fetch("https://flask-inventory.onrender.com/stockholding", {headers})
+    fetch("https://inventory-accounting.onrender.com/stockholding", {headers})
       .then((response) => {
         if (response.ok) {
           return response.blob();

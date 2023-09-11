@@ -193,7 +193,7 @@ export async function action({ request, params }) {
     category_name: data.get("category"),
   };
 
-  let url = "https://flask-inventory.onrender.com/item";
+  let url = "https://inventory-accounting.onrender.com/item";
   if (method === "POST") {
     const response = await fetch(url, {
       method: method,

@@ -26,7 +26,7 @@ function ItemUploadPage() {
     formData.append("file", selectedFile);
 
     try {
-      const response = await fetch("https://flask-inventory.onrender.com/item/upload", {
+      const response = await fetch("https://inventory-accounting.onrender.com/item/upload", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,
