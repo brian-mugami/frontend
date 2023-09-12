@@ -36,7 +36,7 @@ function LandingPageChart() {
   return (
     <div>
         <Card>
-    <Title>Respomsive data analytics tools(1970 to 2021)</Title>
+    <Title>Responsive data analytics tools</Title>
     <LineChart
       className="mt-6"
       data={chartdata}

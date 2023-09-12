@@ -19,7 +19,10 @@ import {
 import PropTypes from "prop-types";
 import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../util/Auth";
-import { defer, useRouteLoaderData } from "react-router-dom/dist/umd/react-router-dom.development";
+import {
+  defer,
+  useRouteLoaderData,
+} from "react-router-dom/dist/umd/react-router-dom.development";
 import SalesCredit from "../PlaygroundComs/SalesCredit";
 import PurchaseCredit from "../PlaygroundComs/PurchaseCredit";
 
@@ -237,12 +240,11 @@ function PlayGround() {
       </div>
 
       <Flex>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-x-4 gap-y-4 lg:gap-y-0 mx-4">
           {categories.map((item) => (
-            <Card key={item.title}>
+            <Card decoration="top" decorationColor="indigo" key={item.title}>
               <Flex alignItems="start">
                 <Text>{item.title}</Text>
-            
               </Flex>
               <Flex
                 justifyContent="start"
@@ -259,30 +261,31 @@ function PlayGround() {
             </Card>
           ))}
           <div className="flex pt-4">
-        <div className="flex-start flex-initial ">
-          <Card
-            className="max-w-md mx-auto"
-            decoration="top"
-            decorationColor="indigo"
-          >
-            <Text>Inventory value</Text>
-            <Metric>
-              {inventoryValue && inventoryValue.total_value
-                ? inventoryValue.total_value.toLocaleString()
-                : 0}
-            </Metric>
-          </Card>
-        </div>
-      </div>
+            <Card decoration="top" decorationColor="indigo">
+              <Flex alignItems="start">
+                <Text>Inventory value</Text>
+              </Flex>
+              <Flex
+                justifyContent="start"
+                alignItems="baseline"
+                className="truncate space-x-3"
+              >
+                <Metric>
+                  {inventoryValue && inventoryValue.total_value
+                    ? inventoryValue.total_value.toLocaleString()
+                    : 0}
+                </Metric>
+                <Text className="truncate">Transactions </Text>
+              </Flex>
+            </Card>
+          </div>
         </div>
       </Flex>
 
-      <div>
-     
-      </div>
+      <div></div>
 
       <div className="pt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-4 lg:gap-y-0 lg:gap-x-4 mx-4">
           {data.map((item) => (
             <Card key={item.category}>
               <Title>{item.category}</Title>
@@ -308,8 +311,7 @@ function PlayGround() {
         </div>
       </div>
 
-      
-      <div className=" pt-4">
+      <div className=" pt-4 mx-4">
         <Card>
           <Title>Monthly data</Title>
           <AreaChart
@@ -322,7 +324,7 @@ function PlayGround() {
           />
         </Card>
       </div>
-      <div className="p-4 grid grid-cols-3 gap-4">
+      <div className="p-4 grid grid-cols-1 lg:grid-cols-2 gap-y-4">
         <SalesCredit receipts={salesCredit} />
         <PurchaseCredit invoices={purchaseCredit} />
       </div>

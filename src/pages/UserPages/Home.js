@@ -6,15 +6,13 @@ import { useRouteLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { TabList, Tab, TabGroup, TabPanels, TabPanel } from "@tremor/react";
 import Kd from "../../components/assets/ktslogo.png";
-import Pricing from "./Pricing";
 import screenshot from "../../components/assets/screenshot.png";
 import LandingPageCards from "../../components/LayoutComponents/LandingPageCards";
-import PricingTable from "../../components/LayoutComponents/PricingTable";
 import "./Home.css";
 import LandingPageChart from "../../components/LayoutComponents/LandingPageChart";
 
 const navigation = [
-  { name: "Pricing", href: <Pricing /> },
+  { name: "Pricing", href: "" },
   { name: "Features", href: "#" },
 ];
 const includedFeatures = [
@@ -30,32 +28,29 @@ export default function HomePage() {
 
   return (
     <div className="isolate bg-white">
-       <div className="absolute overflow-hidden blur-3xl">
-      <svg
-        className="motion-effect"
-        viewBox="0 0 1155 678"
-      >
-        <path
-          fill="url(#gradient)"
-          fillOpacity=".3"
-          d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-        />
-        <defs>
-          <linearGradient
-            id="gradient"
-            x1="1155.49"
-            x2="-78.208"
-            y1=".177"
-            y2="474.645"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#9089FC" />
-            <stop offset={1} stopColor="#FF80B5" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-      
+      <div className="absolute overflow-hidden blur-3xl">
+        <svg className="motion-effect" viewBox="0 0 1155 678">
+          <path
+            fill="url(#gradient)"
+            fillOpacity=".3"
+            d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
+          />
+          <defs>
+            <linearGradient
+              id="gradient"
+              x1="1155.49"
+              x2="-78.208"
+              y1=".177"
+              y2="474.645"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#9089FC" />
+              <stop offset={1} stopColor="#FF80B5" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
       <div className="px-6 pt-6 lg:px-8">
         <nav className="flex items-center justify-between" aria-label="Global">
           <div className="flex lg:flex-1">
@@ -172,10 +167,11 @@ export default function HomePage() {
               <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl sm:text-center">
                   <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                  Financial Freedom, Simplified.
+                    Financial Freedom, Simplified.
                   </h2>
                   <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Simplify money management with tools that empower you to take control of your money and pave the way to prosperity.
+                    Simplify money management with tools that empower you to
+                    take control of your money and pave the way to prosperity.
                   </p>
                 </div>
                 <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
@@ -184,7 +180,9 @@ export default function HomePage() {
                       What's included in the subscription?
                     </h3>
                     <p className="mt-6 text-base leading-7 text-gray-600">
-                    Kindred Inventory System is the inventory management platform for the 21st century, get tailored support and suggestions to grow your earning potential.
+                      Kindred Inventory System is the inventory management
+                      platform for the 21st century, get tailored support and
+                      suggestions to grow your earning potential.
                     </p>
                     <div className="mt-10 flex items-center gap-x-4">
                       <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">
@@ -211,11 +209,11 @@ export default function HomePage() {
                     <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
                       <div className="mx-auto max-w-xs px-8">
                         <p className="text-base font-semibold text-gray-600">
-                         Easy Payement
+                          Easy Payement
                         </p>
                         <div className="pt-4 justify-center items-center">
                           <TabGroup>
-                            <TabList  className="justify-center items-center border-none">
+                            <TabList className="justify-center items-center border-none">
                               <Tab>On premise</Tab>
                               <Tab>On cloud</Tab>
                             </TabList>
@@ -252,7 +250,8 @@ export default function HomePage() {
                         </a>
                         <p className="mt-6 text-xs leading-5 text-gray-600">
                           Invoices and receipts available for easy company
-                          reimbursement.Note that On premise option requires additional costs for Hardware.
+                          reimbursement.Note that On premise option requires
+                          additional costs for Hardware.
                         </p>
                       </div>
                     </div>
@@ -262,29 +261,34 @@ export default function HomePage() {
             </div>
           </div>
           <div className="section" id="contact">
-      <div className="text-center max-w-[600px] mx-auto">
-        <div className="sm:text-3xl text-2xl font-bold mb-5">
-          Subscribe Newsletter
-        </div>
-        <p className="text-sm leading-7 text-gray">
-        Subscribe to our newsletter and never miss out on the latest inventory management tips, financial insights, and exclusive offers. Join our community of business owners and professionals who are taking their inventory and financial management to the next level.        </p>
-        <motion.form
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          transition={{ duration: 0.3 }}
-          className="mt-5"
-        >
-          <input
-            type="text"
-            placeholder="Enter your email address"
-            className="sm:p-3 p-2 border-gray-200 text-sm shadow-md sm:w-72 w-60"
-          />
-          <button className="text-sm text-white bg-Teal sm:p-3 p-2 bg-indigo-600 shadow-md font-bold">
-            Subscribe
-          </button>
-        </motion.form>
-      </div>
-    </div>
+            <div className="text-center max-w-[600px] mx-auto">
+              <div className="sm:text-3xl text-2xl font-bold mb-5">
+                Subscribe Newsletter
+              </div>
+              <p className="text-sm leading-7 text-gray">
+                Subscribe to our newsletter and never miss out on the latest
+                inventory management tips, financial insights, and exclusive
+                offers. Join our community of business owners and professionals
+                who are taking their inventory and financial management to the
+                next level.{" "}
+              </p>
+              <motion.form
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.3 }}
+                className="mt-5"
+              >
+                <input
+                  type="text"
+                  placeholder="Enter your email address"
+                  className="sm:p-3 p-2 border-gray-200 text-sm shadow-md sm:w-72 w-60"
+                />
+                <button className="text-sm text-white bg-Teal sm:p-3 p-2 bg-indigo-600 shadow-md font-bold">
+                  Subscribe
+                </button>
+              </motion.form>
+            </div>
+          </div>
 
           <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
             <svg

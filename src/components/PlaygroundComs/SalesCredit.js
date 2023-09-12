@@ -8,7 +8,7 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 function SalesCredit( {receipts}) {
   return (
     <Card className="max-w-xs">
-      <div className="flex  space-x-0 ">
+      <div className="flex  space-x-2 ">
         <Title>Sales credit</Title>
                         <Icon
                           icon={InformationCircleIcon}
